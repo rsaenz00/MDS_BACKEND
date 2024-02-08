@@ -441,7 +441,7 @@ namespace MDS.Infrastructure.DbUtility
 
             return null; // default state
         }
-        public async Task<T> ExecuteStoredProcByParam<T>(string storedProcName, SqlParameter[] procParams) where T : class
+        public async Task<List<T>> ExecuteStoredProcByParam<T>(string storedProcName, SqlParameter[] procParams) where T : class
         {
             DbConnection conn = Context.Database.GetDbConnection();
             try
@@ -485,7 +485,7 @@ namespace MDS.Infrastructure.DbUtility
                     }
                     reader.Dispose();
 
-                    return objList.FirstOrDefault();
+                    return objList;
                 }
             }
             catch (Exception e)

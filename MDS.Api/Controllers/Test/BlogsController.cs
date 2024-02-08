@@ -1,14 +1,17 @@
-﻿using MDS.Api.Infrastructure;
+﻿using Azure;
+using MDS.Api.Infrastructure;
 using MDS.Api.Models;
 using MDS.Api.Utility.Extensions;
+using MDS.DbContext.Entities;
 using MDS.Dto;
+using MDS.Infrastructure.DbUtility;
 using MDS.Services;
 using MDS.Services.Blog;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MDS.Api.Controllers.Test
 {
-    
+
     [ApiController]
     [Route("[controller]")]
     public class BlogsController : BaseController
@@ -19,18 +22,24 @@ namespace MDS.Api.Controllers.Test
         {
             _blogService = blogService;
         }
+
         [HttpGet, Route("GetBlogs")]
         public async Task<IActionResult> GetBlogs()
         {
-            var blogs = await _blogService.GetBlogs();
-            return blogs != null ? Ok(blogs) : StatusCode(500);
+            var response = await _blogService.GetBlogs();
+
+            if (response.codeResult == 200)
+                return Ok(response);
+            return StatusCode(500);
         }
 
         [HttpGet, Route("GetBlog")]
         public async Task<IActionResult> GetBlog(long blogId)
         {
-            var blog = await _blogService.GetBlog(blogId);
-            return blog != null ? Ok(blog) : StatusCode(500);
+            var response = await _blogService.GetBlog(blogId);
+            if (response.codeResult == 200)
+                return Ok(response);
+            return StatusCode(500);
         }
 
         [HttpPost, Route("AddBlog")]
@@ -44,8 +53,10 @@ namespace MDS.Api.Controllers.Test
                 Url = model.Url
             };
 
-            var blog = await _blogService.AddBlog(dto);
-            return blog != null ? Ok(blog) : StatusCode(500);
+            var response = await _blogService.AddBlog(dto);
+            if (response.codeResult == 200)
+                return Ok(response);
+            return StatusCode(500);
         }
 
         [HttpPut, Route("UpdateBlog")]
@@ -60,8 +71,10 @@ namespace MDS.Api.Controllers.Test
                 Url = model.Url
             };
 
-            var blog = await _blogService.UpdateBlog(dto);
-            return blog != null ? Ok(blog) : StatusCode(500);
+            var response = await _blogService.UpdateBlog(dto);
+            if (response.codeResult == 200)
+                return Ok(response);
+            return StatusCode(500);
         }
 
         [HttpDelete, Route("DeleteBlog")]
@@ -75,8 +88,10 @@ namespace MDS.Api.Controllers.Test
                 Id = model.Id
             };
 
-            var blog = await _blogService.DeleteBlog(dto);
-            return blog != null ? Ok(blog) : StatusCode(500);
+            var response = await _blogService.DeleteBlog(dto);
+            if (response.codeResult == 200)
+                return Ok(response);
+            return StatusCode(500);
         }
     }
 }

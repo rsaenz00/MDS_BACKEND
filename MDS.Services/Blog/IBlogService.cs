@@ -1,4 +1,5 @@
 ﻿using MDS.Dto;
+using MDS.Infrastructure.DbUtility;
 using MDS.Infrastructure.Services;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,11 @@ namespace MDS.Services.Blog
 {
     public interface IBlogService : IService
     {
-        Task<List<BlogDto>> GetBlogs();
-        Task<BlogDto> GetBlog(long blogId);
-        Task<BlogDto> AddBlog(BlogDto dto);
-        Task<BlogDto> UpdateBlog(BlogDto dto);
-        Task<BlogDto> DeleteBlog(BlogDto dto);
+        Task<Response> GetBlogs();
+        Task<Response> GetBlog(long blogId);
+        Task<Response> AddBlog(BlogDto dto);
+        Task<Response> UpdateBlog(BlogDto dto);
+        Task<Response> DeleteBlog(BlogDto dto);
     }
 }
 
