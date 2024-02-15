@@ -47,13 +47,20 @@ builder.Services.AutoRegisterServices();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("default", policy =>
+    options.AddPolicy("development", policy =>
+    {
+        policy.WithOrigins("*")
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+    });
+
+    options.AddPolicy("production", policy =>
     {
         policy.WithOrigins(appSettings.ClientBaseUrl)
-            .SetIsOriginAllowed(isOriginAllowed: _ => true)
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowCredentials();
+        .SetIsOriginAllowed(isOriginAllowed: _ => true)
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
     });
 });
 
@@ -65,6 +72,13 @@ if (app.Environment.IsDevelopment())
     // Enable middleware to serve generated Swagger as a JSON endpoint.
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors("development");
+}
+else 
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    app.UseCors("production");
 }
 
 app.UseHttpsRedirection();
