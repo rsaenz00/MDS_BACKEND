@@ -13,6 +13,7 @@ using Microsoft.Data.SqlClient;
 using System.Data;
 using MDS.DbContext.Entities;
 using System.Numerics;
+using MDS.Infrastructure.Helper;
 
 
 namespace MDS.Services.Blog.Implementation
@@ -26,7 +27,7 @@ namespace MDS.Services.Blog.Implementation
             _uow = uow;
         }
 
-        public async Task<Response> GetBlogs()
+        public async Task<ServiceResponse> GetBlogs()
         {
             try
             {
@@ -38,19 +39,19 @@ namespace MDS.Services.Blog.Implementation
 
                 listBlog = blogs.Select(s => new BlogDto { Id = s.Id, Url = s.Url }).ToList();
 
-                if (!listBlog.Any())
-                    return new Response(200, "Sin datos", "No se encontraron registros", DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), null);
-
-                return new Response(200, "Datos encontrados", "Se encontró " + listBlog.Count() + " registros.", DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), listBlog);
+                if (!blogs.Any())
+                    return ServiceResponse.ReturnResultWith204();
+                
+                return ServiceResponse.ReturnResultWith200(listBlog);
             }
             catch (Exception e)
             {
                 //_logger.Error(e);
-                return new Response(500, "Error", e.Message, DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), null);
+                return ServiceResponse.Return500(e);
             }
         }
 
-        public async Task<Response> GetBlog(long blogId)
+        public async Task<ServiceResponse> GetBlog(long blogId)
         {
             try
             {
@@ -63,90 +64,77 @@ namespace MDS.Services.Blog.Implementation
 
                 blogs = await _uow.ExecuteStoredProcByParam<DbContext.Entities.Blog>("SPRMDS_LIST_BLOG_BY_PARAM", parameters);
 
-                if (!blogs.Any())
-                    return new Response(200, "Sin datos", "No se encontraron registros", DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), null);
+                List<BlogDto> listBlog = new List<BlogDto>();
 
-                return new Response(200, "Registro encontrado", "Se encontró " + blogs.Count() + " registros.", DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), blogs);
+                listBlog = blogs.Select(s => new BlogDto { Id = s.Id, Url = s.Url }).ToList();
+
+                if (!listBlog.Any())
+                    return ServiceResponse.Return404();
+
+                return ServiceResponse.ReturnResultWith200(listBlog);
             }
             catch (Exception e)
             {
                 //_logger.Error(e);
-                return new Response(500, "Error", e.Message, DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), null);
+                return ServiceResponse.Return500(e);
             }
         }
 
-        public async Task<Response> AddBlog(BlogDto dto)
+        public async Task<ServiceResponse> AddBlog(BlogDto dto)
         {
             try
             {
-                var dbBlog = new DbContext.Entities.Blog
-                {
-                    Url = dto.Url
-                };
-
                 SqlParameter[] parameters =
                 {
-                    new SqlParameter("@url", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dbBlog.Url },
+                    new SqlParameter("@url", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.Url },
                     new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
                 };
 
                 int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_CREATE_BLOG", parameters);
 
                 dto.Id = Convert.ToInt64(response);
-                dto.Url = dto.Url;
 
-                return new Response(200, "Registro agregado", "Se registró correctamente: " + dto.Url, DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), dto);
+                return ServiceResponse.ReturnResultWith201(dto);
+
             }
             catch (Exception e)
             {
                 //_logger.Error(e);
-                return new Response(500, "Error", e.Message, DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), dto);
+                return ServiceResponse.Return500(e);
             }
         }
 
-        public async Task<Response> UpdateBlog(BlogDto dto)
+        public async Task<ServiceResponse> UpdateBlog(BlogDto dto)
         {
             try
             {
-                var dbBlog = new DbContext.Entities.Blog
-                {
-                    Id = dto.Id,
-                    Url = dto.Url
-                };
-
                 SqlParameter[] parameters =
                 {
-                    new SqlParameter("@id", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dbBlog.Id },
-                    new SqlParameter("@url", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dbBlog.Url },
+                    new SqlParameter("@id", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.Id },
+                    new SqlParameter("@url", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.Url },
                     new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
                 };
 
                 int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_UPDATE_BLOG", parameters);
 
                 dto.Id = Convert.ToInt64(response);
-                dto.Url = dto.Url;
 
-                return new Response(200, "Registro actualizado", "Se actualizó correctamente: " + dto.Id, DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), dto);
+                return ServiceResponse.ReturnResultWith201(dto);
             }
             catch (Exception e)
             {
                 //_logger.Error(e);
-                return new Response(500, "Error", e.Message, DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), dto);
+                return ServiceResponse.Return500(e);
             }
         }
 
-        public async Task<Response> DeleteBlog(BlogDto dto)
+        public async Task<ServiceResponse> DeleteBlog(BlogDto dto)
         {
             try
             {
-                var dbBlog = new DbContext.Entities.Blog
-                {
-                    Id = dto.Id
-                };
-
                 SqlParameter[] parameters =
                 {
-                    new SqlParameter("@id", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dbBlog.Id },
+                    new SqlParameter("@id", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.Id },
                     new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
                 };
 
@@ -155,12 +143,13 @@ namespace MDS.Services.Blog.Implementation
                 dto.Id = Convert.ToInt64(response);
                 dto.Url = "borrado";
 
-                return new Response(200, "Registro eliminado", "Se eliminó correctamente: " + dto.Id, DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), dto);
+                return ServiceResponse.ReturnSuccess();
+
             }
             catch (Exception e)
             {
                 //_logger.Error(e);
-                return new Response(500, "Error", e.Message, DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), dto);
+                return ServiceResponse.Return500(e);
             }
         }
     }

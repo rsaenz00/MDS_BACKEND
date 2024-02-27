@@ -11,9 +11,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MDS.Api.Controllers.Test
 {
-
+    
     [ApiController]
     [Route("[controller]")]
+
     public class BlogsController : BaseController
     {
         private readonly IBlogService _blogService;
@@ -28,18 +29,15 @@ namespace MDS.Api.Controllers.Test
         {
             var response = await _blogService.GetBlogs();
 
-            if (response.codeResult == 200)
-                return Ok(response);
-            return StatusCode(500);
+            return ReturnFormattedResponse(response);
         }
 
         [HttpGet, Route("GetBlog")]
         public async Task<IActionResult> GetBlog(long blogId)
         {
             var response = await _blogService.GetBlog(blogId);
-            if (response.codeResult == 200)
-                return Ok(response);
-            return StatusCode(500);
+
+            return ReturnFormattedResponse(response);
         }
 
         [HttpPost, Route("AddBlog")]
@@ -54,9 +52,8 @@ namespace MDS.Api.Controllers.Test
             };
 
             var response = await _blogService.AddBlog(dto);
-            if (response.codeResult == 200)
-                return Ok(response);
-            return StatusCode(500);
+
+            return ReturnFormattedResponse(response);
         }
 
         [HttpPut, Route("UpdateBlog")]
@@ -72,9 +69,8 @@ namespace MDS.Api.Controllers.Test
             };
 
             var response = await _blogService.UpdateBlog(dto);
-            if (response.codeResult == 200)
-                return Ok(response);
-            return StatusCode(500);
+
+            return ReturnFormattedResponse(response);
         }
 
         [HttpDelete, Route("DeleteBlog")]
@@ -89,9 +85,8 @@ namespace MDS.Api.Controllers.Test
             };
 
             var response = await _blogService.DeleteBlog(dto);
-            if (response.codeResult == 200)
-                return Ok(response);
-            return StatusCode(500);
+
+            return ReturnFormattedResponse(response);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MDS.Api.Utility.Extensions;
-using MDS.Infrastructure.DbUtility;
+using MDS.Infrastructure.Helper;
 
 namespace MDS.Api.Infrastructure
 {
@@ -13,6 +13,16 @@ namespace MDS.Api.Infrastructure
         {
             var fileContents = new FileStream(filePath, FileMode.Open);
             return fileContents;
+        }
+
+        [NonAction]
+        internal IActionResult ReturnFormattedResponse(ServiceResponse response)
+        {
+            if (response.Success)
+            {
+                return Ok(response);
+            }
+            return StatusCode(response.StatusCode, response);
         }
     }
 }
