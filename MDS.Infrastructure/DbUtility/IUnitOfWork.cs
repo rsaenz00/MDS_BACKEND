@@ -32,8 +32,10 @@ namespace MDS.Infrastructure.DbUtility
         IQueryable<T> GetQueryable<T>() where T : class, IEntity;
 
         Task<List<T>> ExecuteStoredProcAll<T>(string storedProcName) where T : class;
+        Task<T> ExecuteStoredProcObjectByParam<T>(string storedProcName, SqlParameter[] procParams) where T : class;
         Task<List<T>> ExecuteStoredProcByParam<T>(string storedProcName, SqlParameter[] procParams) where T : class;
         Task<int> ExecuteStoredProcReturnValue(string storedProcName, SqlParameter[] procParams);
+
         Task ExecuteInTransactionAsync(Func<Task> action);
     }
 

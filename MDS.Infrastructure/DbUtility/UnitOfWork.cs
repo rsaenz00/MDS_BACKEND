@@ -500,6 +500,67 @@ namespace MDS.Infrastructure.DbUtility
             return null; // default state
         }
 
+        public async Task<T> ExecuteStoredProcObjectByParam<T>(string storedProcName, SqlParameter[] procParams) where T : class
+        {
+            DbConnection conn = Context.Database.GetDbConnection();
+
+            try
+            {
+                if (conn.State != ConnectionState.Open)
+                    await conn.OpenAsync();
+
+                await using (DbCommand command = conn.CreateCommand())
+                {
+                    if (IsInTransaction())
+                    {
+                        command.Transaction = Context.Database.CurrentTransaction.GetDbTransaction();
+                    }
+
+                    command.CommandText = storedProcName;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddRange(procParams);
+
+                    DbDataReader reader = await command.ExecuteReaderAsync();
+
+                    T obj = Activator.CreateInstance<T>();
+
+                    if (reader != null) 
+                    {
+                        IEnumerable<PropertyInfo> props = typeof(T).GetRuntimeProperties();
+
+                        Dictionary<string, DbColumn> colMapping = reader.GetColumnSchema()
+                            .Where(x => props.Any(y => y.Name.ToLower() == x.ColumnName.ToLower()))
+                            .ToDictionary(key => key.ColumnName.ToLower());
+
+                        while (await reader.ReadAsync())
+                        {
+                            foreach (PropertyInfo prop in props)
+                            {
+                                object val =
+                                    reader.GetValue(colMapping[prop.Name.ToLower()].ColumnOrdinal.Value);
+                                prop.SetValue(obj, val == DBNull.Value ? null : val);
+                            }
+                        }
+
+                    }
+
+                    reader.Dispose();
+
+                    return obj;
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message, e.InnerException);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return null; // default state
+        }
+
         public async Task<int> ExecuteStoredProcReturnValue(string storedProcName, SqlParameter[] procParams)
         {
             int response = 0;

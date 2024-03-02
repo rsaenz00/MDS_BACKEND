@@ -5,6 +5,7 @@ using MDS.Infrastructure.Services;
 using MDS.Infrastructure.Settings;
 using MDS.Services.Blog;
 using MDS.Services.Blog.Implementation;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
@@ -12,19 +13,12 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add(new ProducesAttribute("application/json"));
+});
 
 builder.Services.AddEndpointsApiExplorer();
-
-builder.Services.AddSwaggerGen(options =>
-{
-    options.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Version = "v1",
-        Title = "MediSanna API",
-        Description = "A big project with an amazing team for a great company"
-    });
-});
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 IConfiguration configuration = builder.Configuration;
@@ -35,10 +29,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 
 IdentityHelper.ConfigureService(builder.Services);
 AuthenticationHelper.ConfigureService(builder.Services, appSettings.Issuer, appSettings.Audience, appSettings.Key);
-
+SwaggerHelper.ConfigureService(builder.Services);
 
 builder.Services.AddScoped<Microsoft.EntityFrameworkCore.DbContext, ApplicationDbContext>();
-//builder.Services.AddScoped<IBlogService, BlogService>();
 builder.Services.AddUnitOfWork();
 builder.Services.AddUnitOfWork<ApplicationDbContext>();
 
@@ -80,6 +73,7 @@ else
     app.UseSwaggerUI();
     app.UseCors("production");
 }
+
 
 app.UseHttpsRedirection();
 

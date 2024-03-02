@@ -60,6 +60,11 @@ namespace MDS.Infrastructure.Helper
             return new ServiceResponse(204, null);
         }
 
+        public static ServiceResponse ReturnUnauthorized()
+        {
+            return new ServiceResponse(401, null);
+        }
+
         public static ServiceResponse Return404(string message)
         {
             return new ServiceResponse(404, new List<string> { message });
