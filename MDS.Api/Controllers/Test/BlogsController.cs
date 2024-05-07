@@ -1,18 +1,13 @@
-﻿using Azure;
-using MDS.Api.Infrastructure;
+﻿using MDS.Api.Infrastructure;
 using MDS.Api.Models;
 using MDS.Api.Utility.Extensions;
-using MDS.DbContext.Entities;
 using MDS.Dto;
-using MDS.Infrastructure.DbUtility;
-using MDS.Services;
 using MDS.Services.Blog;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MDS.Api.Controllers.Test
 {
-    [Authorize]
+    
     [ApiController]
     [Route("[controller]")]
 
