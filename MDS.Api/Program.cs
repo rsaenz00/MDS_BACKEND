@@ -5,6 +5,7 @@ using MDS.Infrastructure.Services;
 using MDS.Infrastructure.Settings;
 using MDS.Services.Blog;
 using MDS.Services.Blog.Implementation;
+using MDS.Services.Hub.Implementation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -36,15 +37,21 @@ builder.Services.AddUnitOfWork();
 builder.Services.AddUnitOfWork<ApplicationDbContext>();
 
 builder.Services.AutoRegisterServices();
-
+//builder.Services.AddSignalR();
+builder.Services.AddSignalR(e => {
+    e.MaximumReceiveMessageSize = 102400000;
+});
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("development", policy =>
     {
-        policy.WithOrigins("*")
-        .AllowAnyMethod()
-        .AllowAnyHeader();
+        policy.WithOrigins("http://localhost:5001")
+        .WithExposedHeaders("X-Pagination")
+        .AllowAnyHeader()
+        .AllowCredentials()
+        .WithMethods("POST", "PUT", "PATCH", "GET", "DELETE")
+        .SetIsOriginAllowed(host => true);
     });
 
     options.AddPolicy("production", policy =>
@@ -56,29 +63,37 @@ builder.Services.AddCors(options =>
         .AllowCredentials();
     });
 });
-
 var app = builder.Build();
 
+//app.UsePathBase("/api");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     // Enable middleware to serve generated Swagger as a JSON endpoint.
-    app.UseSwagger();
-    app.UseSwaggerUI();
     app.UseCors("development");
 }
 else 
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
     app.UseCors("production");
 }
 
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
-
+//app.UseAuthentication();
 app.UseAuthorization();
+//app.UseRouting();
+//app.UseResponseCompression();
+
+//app.UseEndpoints(endpoints =>
+//{
+//    endpoints.MapControllers();
+//    endpoints.MapHub<HubClienteService>("/userHub");
+//});
 
 app.MapControllers();
+
+//app.MapHub<HubClienteService>("/userHub");
 
 app.Run();

@@ -10,7 +10,7 @@ namespace MDS.Infrastructure.Helper
     public class  ServiceResponse
     {
 
-        public int StatusCode { get; set; } = 200;
+        public int StatusCode { get; set; } = 200;  
         public List<string> Errors { get; set; } = new List<string>();
         public string Datetime { get; set; } = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
         public object ResultData { get; set; }

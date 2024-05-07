@@ -1,4 +1,5 @@
 ﻿using MDS.Dto;
+using MDS.Dto.List;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -34,6 +35,7 @@ namespace MDS.Infrastructure.DbUtility
         Task<List<T>> ExecuteStoredProcAll<T>(string storedProcName) where T : class;
         Task<T> ExecuteStoredProcObjectByParam<T>(string storedProcName, SqlParameter[] procParams) where T : class;
         Task<List<T>> ExecuteStoredProcByParam<T>(string storedProcName, SqlParameter[] procParams) where T : class;
+        Task<TablaPaginacionList> ExecuteStoredProcPagination<T>(string storedProcName, SqlParameter[] procParams, int skip, int pageSize) where T : class;
         Task<int> ExecuteStoredProcReturnValue(string storedProcName, SqlParameter[] procParams);
 
         Task ExecuteInTransactionAsync(Func<Task> action);

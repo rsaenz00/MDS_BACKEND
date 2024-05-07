@@ -18,6 +18,7 @@ using Newtonsoft.Json;
 using System.Runtime.InteropServices.JavaScript;
 using System.Collections;
 using Microsoft.Data.SqlClient;
+using MDS.Dto.List;
 
 namespace MDS.Infrastructure.DbUtility
 {
@@ -441,6 +442,80 @@ namespace MDS.Infrastructure.DbUtility
 
             return null; // default state
         }
+        public async Task<TablaPaginacionList> ExecuteStoredProcPagination<T>(string storedProcName, SqlParameter[] procParams, int skip, int pageSize) where T : class
+        {
+            DbConnection conn = Context.Database.GetDbConnection();
+            int response = 0;
+
+            try
+            {
+                if (conn.State != ConnectionState.Open)
+                    await conn.OpenAsync();
+                await using (DbCommand command = conn.CreateCommand())
+                {
+                    if (IsInTransaction())
+                    {
+                        command.Transaction = Context.Database.CurrentTransaction.GetDbTransaction();
+                    }
+
+                    command.CommandText = storedProcName;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddRange(procParams);
+
+                    var menu = new List<object>();
+
+                    using (DbDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync()) 
+                        {
+                            response = (int)reader["TOTAL"];
+                        }
+
+                        reader.NextResult();
+
+                        while (await reader.ReadAsync())
+                        {
+                            IEnumerable<PropertyInfo> props = typeof(T).GetRuntimeProperties();
+                            Dictionary<string, DbColumn> colMapping = reader.GetColumnSchema()
+                                .Where(x => props.Any(y => y.Name.ToLower() == x.ColumnName.ToLower()))
+                                .ToDictionary(key => key.ColumnName.ToLower());
+
+                            T obj = Activator.CreateInstance<T>();
+
+                            foreach (PropertyInfo prop in props)
+                            {
+                                object val =
+                                    reader.GetValue(colMapping[prop.Name.ToLower()].ColumnOrdinal.Value);
+                                prop.SetValue(obj, val == DBNull.Value ? null : val);
+                            }
+                            menu.Add(obj);
+                        }                    
+                        reader.Dispose();
+                    }
+                    var tablaPaginacionList = new TablaPaginacionList();
+                    tablaPaginacionList.TotalCount = response;
+                    tablaPaginacionList.PageSize = pageSize;
+                    tablaPaginacionList.Skip = skip;
+                    tablaPaginacionList.TotalPages = (int)Math.Ceiling(response / (double)pageSize);
+                    tablaPaginacionList.Result = menu;
+
+                    //var tablaPaginacionList = new TablaPaginacionList(menu,response, skip, pageSize);
+
+                    return tablaPaginacionList;
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message, e.InnerException);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return null; // default state
+        }
+
         public async Task<List<T>> ExecuteStoredProcByParam<T>(string storedProcName, SqlParameter[] procParams) where T : class
         {
             DbConnection conn = Context.Database.GetDbConnection();
@@ -524,7 +599,7 @@ namespace MDS.Infrastructure.DbUtility
 
                     T obj = Activator.CreateInstance<T>();
 
-                    if (reader != null) 
+                    if (reader.HasRows)
                     {
                         IEnumerable<PropertyInfo> props = typeof(T).GetRuntimeProperties();
 
@@ -541,9 +616,12 @@ namespace MDS.Infrastructure.DbUtility
                                 prop.SetValue(obj, val == DBNull.Value ? null : val);
                             }
                         }
-
                     }
-
+                    else 
+                    {
+                        return null;
+                    }
+                    
                     reader.Dispose();
 
                     return obj;
