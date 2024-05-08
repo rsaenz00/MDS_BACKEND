@@ -7,7 +7,7 @@ namespace MDS.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class MotivosController : BaseController
     {
         private readonly IMotivoService _motivoService;

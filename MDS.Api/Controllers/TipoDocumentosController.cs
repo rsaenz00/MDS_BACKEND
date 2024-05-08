@@ -11,7 +11,7 @@ namespace MDS.Api.Controllers.Test
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class TipoDocumentosController : BaseController
     {
         private readonly ITipoDocumentoService _tipoDocumentoService;

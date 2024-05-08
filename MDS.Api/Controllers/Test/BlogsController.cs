@@ -10,7 +10,7 @@ namespace MDS.Api.Controllers.Test
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class BlogsController : BaseController
     {
         private readonly IBlogService _blogService;

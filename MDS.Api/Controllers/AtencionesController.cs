@@ -10,7 +10,7 @@ namespace MDS.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class AtencionesController : BaseController
     {
         private readonly IAtencionService _atencionService;

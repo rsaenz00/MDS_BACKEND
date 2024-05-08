@@ -7,7 +7,7 @@ namespace MDS.Api.Controllers.Test
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ClientesController : BaseController
     {
         private readonly IClienteService _clienteService;

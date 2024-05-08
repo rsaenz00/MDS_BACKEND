@@ -7,7 +7,7 @@ namespace MDS.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class UbigeosController : BaseController
     {
         private readonly IUbigeoService _ubigeoService;

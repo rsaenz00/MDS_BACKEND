@@ -7,7 +7,7 @@ namespace MDS.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class PlanesController : BaseController
     {
         private readonly IPlanService _planService;

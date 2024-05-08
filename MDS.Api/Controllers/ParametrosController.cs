@@ -7,7 +7,7 @@ namespace MDS.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ParametrosController : BaseController
     {
         private readonly IParametroService _parametroService;

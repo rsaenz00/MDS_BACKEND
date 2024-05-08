@@ -11,7 +11,7 @@ namespace MDS.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ClinicasController : BaseController
     {
         private readonly IClinicaService _clinicaService;
