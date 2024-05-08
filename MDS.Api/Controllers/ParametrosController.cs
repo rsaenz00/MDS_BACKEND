@@ -1,11 +1,13 @@
 ﻿using MDS.Api.Infrastructure;
 using MDS.Services.Blog;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MDS.Api.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
+    [Authorize]
     public class ParametrosController : BaseController
     {
         private readonly IParametroService _parametroService;

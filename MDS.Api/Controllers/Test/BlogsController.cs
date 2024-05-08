@@ -3,14 +3,14 @@ using MDS.Api.Models;
 using MDS.Api.Utility.Extensions;
 using MDS.Dto;
 using MDS.Services.Blog;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MDS.Api.Controllers.Test
 {
-    
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
-
+    [Authorize]
     public class BlogsController : BaseController
     {
         private readonly IBlogService _blogService;

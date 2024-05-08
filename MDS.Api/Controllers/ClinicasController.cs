@@ -4,12 +4,14 @@ using MDS.Api.Utility.Extensions;
 using MDS.Dto;
 using MDS.Services.Clinica;
 using MDS.Utility.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MDS.Api.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
+    [Authorize]
     public class ClinicasController : BaseController
     {
         private readonly IClinicaService _clinicaService;

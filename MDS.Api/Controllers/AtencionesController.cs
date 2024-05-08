@@ -3,12 +3,14 @@ using MDS.Api.Models;
 using MDS.Api.Utility.Extensions;
 using MDS.Dto;
 using MDS.Services.Atencion;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MDS.Api.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
+    [Authorize]
     public class AtencionesController : BaseController
     {
         private readonly IAtencionService _atencionService;
