@@ -26,26 +26,27 @@ namespace MDS.Api.Models
         public string? fecha_accidente { get; set; }
         public string? hora_accidente { get; set; }
         public string observacion { get; set; }
-        public string primera_atencion { get; set; }
+        public string? primera_atencion { get; set; }
         //[Required]
         public string? metodo_validacion { get; set; }
         //[Required]
-        public string hoja_atencion { get; set; }
+        public string? hoja_atencion { get; set; }
         //[Required]
         public string? ubigeo { get; set; }
         //[Required]
         public int skill { get; set; }
         //[Required]
         public int motivo_skill { get; set; }
-        public Boolean centro_clinico { get; set; }
-        public Boolean empresa { get; set; }
-        public Boolean corredor_seguro { get; set; }
-        public Boolean paciente_asegurado { get; set; }
+        public int centro_clinico { get; set; }
+        public int empresa { get; set; }
+        public int corredor_seguro { get; set; }
+        public int paciente_asegurado { get; set; }
         public string? persona_reporta_clinica { get; set; }
         public string? persona_reporta_empresa { get; set; }
         public string? persona_reporta_seguro { get; set; }
         public string? persona_reporta_asegurado { get; set; }
         public int usuario_creacion { get; set; }
+        public int estado { get; set; }
     }
     public class UpdateAtencionViewModel
     {

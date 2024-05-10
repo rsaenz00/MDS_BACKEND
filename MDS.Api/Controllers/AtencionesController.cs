@@ -73,7 +73,9 @@ namespace MDS.Api.Controllers
                 persona_reporta_clinica = model.persona_reporta_clinica,
                 persona_reporta_asegurado = model.persona_reporta_asegurado,
                 persona_reporta_empresa = model.persona_reporta_empresa,
-                persona_reporta_seguro = model.persona_reporta_seguro
+                persona_reporta_seguro = model.persona_reporta_seguro,
+                usuario_creacion=model.usuario_creacion,
+                estado=model.estado
             };
 
             var response = await _atencionService.AddAtencion(dto);

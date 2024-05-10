@@ -24,16 +24,16 @@ namespace MDS.DbContext.Entities
         public string CUBI_UBIGEO { get; set; }
         public int NATE_SKILL { get; set; }
         public int NATE_MOTIVO_SKILL { get; set; }
-        public Boolean FATE_CENTRO_CLINICO { get; set; }
-        public Boolean FATE_EMPRESA { get; set; }
-        public Boolean FATE_CORREDOR_SEGURO { get; set; }
-        public Boolean FATE_PACIENTE_ASEGURADO { get; set; }
+        public int FATE_CENTRO_CLINICO { get; set; }
+        public int FATE_EMPRESA { get; set; }
+        public int FATE_CORREDOR_SEGURO { get; set; }
+        public int FATE_PACIENTE_ASEGURADO { get; set; }
         public string SATE_PERSONA_REPORTA_CLINICA { get; set; }
         public string SATE_PERSONA_REPORTA_EMPRESA { get; set; }
         public string SATE_PERSONA_REPORTA_SEGURO { get; set; }
         public string SATE_PERSONA_REPORTA_ASEGURADO { get; set; }
-        public Boolean FATE_ESTADO { get; set; }
-        //public int NATE_USUARIO_CREACION { get; set; }
+        public int FATE_ESTADO { get; set; }
+        public int NATE_USUARIO_CREACION { get; set; }
         //public DateTime DATE_FECHA_CREACION { get; set; }
         //public int NATE_USUARIO_MODIFICACION { get; set; }
         //public DateTime DATE_FECHA_MODIFICACION { get; set; }
