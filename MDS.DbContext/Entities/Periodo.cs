@@ -5,8 +5,8 @@ namespace MDS.DbContext.Entities
     {
         public long CPER_IDPERIODO { get; set; }
 
-        public string? Nombre { get; set; }
+        public string? SPER_NOMBRE { get; set; }
 
-        public bool Estado { get; set; }
+        public bool FPER_ESTADO { get; set; }
     }
 }

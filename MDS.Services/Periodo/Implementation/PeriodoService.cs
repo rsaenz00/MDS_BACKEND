@@ -26,7 +26,7 @@ namespace MDS.Services.Periodo.Implementation
 
                 List<PeriodoDto> listPeriodo = new List<PeriodoDto>();
 
-                listPeriodo = periodos.Select(p => new PeriodoDto { CPER_IDPERIODO = p.CPER_IDPERIODO, Nombre = p.Nombre, Estado = p.Estado }).ToList();
+                listPeriodo = periodos.Select(p => new PeriodoDto { id_periodo = p.CPER_IDPERIODO, Nombre = p.SPER_NOMBRE, Estado = p.FPER_ESTADO }).ToList();
 
                 if (!periodos.Any())
                     return ServiceResponse.ReturnResultWith204();
@@ -56,7 +56,7 @@ namespace MDS.Services.Periodo.Implementation
 
                 List<PeriodoDto> listPeriodo = new List<PeriodoDto>();
 
-                listPeriodo = periodos.Select(p => new PeriodoDto { CPER_IDPERIODO = p.CPER_IDPERIODO, Nombre = p.Nombre, Estado = p.Estado }).ToList();
+                listPeriodo = periodos.Select(p => new PeriodoDto { id_periodo = p.CPER_IDPERIODO, Nombre = p.SPER_NOMBRE, Estado = p.FPER_ESTADO }).ToList();
 
                 if (!listPeriodo.Any())
                     return ServiceResponse.Return404();
@@ -84,7 +84,7 @@ namespace MDS.Services.Periodo.Implementation
 
                 int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_CREATE_PERIODO", parameters);
 
-                dto.CPER_IDPERIODO = Convert.ToInt64(response);
+                dto.id_periodo = Convert.ToInt64(response);
 
                 return ServiceResponse.ReturnResultWith201(dto);
 
