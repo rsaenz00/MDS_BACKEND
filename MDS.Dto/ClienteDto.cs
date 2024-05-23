@@ -25,95 +25,95 @@
     public class MantenimientoClienteDto
     {
 
-        public long NCLI_IDCLIENTE { get; set; }
+        public long id_cliente { get; set; }
 
-        public bool FCLI_ESTADO { get; set; }
+        public bool estado { get; set; }
 
-        public string? SCLI_NOMBRE { get; set; }
+        public string? nombre { get; set; }
 
-        public string? SCLI_DESCRIPCION { get; set; }
+        public string? descripcion { get; set; }
 
-        public string? SCLI_DIRECCION { get; set; }
+        public string? direccion { get; set; }
 
-        public string? SCLI_DISTRITO { get; set; }
+        public string? distrito { get; set; }
 
-        public string? SCLI_RUC { get; set; }
+        public string? ruc { get; set; }
 
-        public int NCLI_DSCTO_PED { get; set; }
+        public int dscto_ped { get; set; }
 
-        public decimal NCLI_FACTOR_LAB { get; set; }
+        public decimal factor_lab { get; set; }
 
-        public int NCLI_DSCTO_LAB { get; set; }
+        public int dscto_lab { get; set; }
 
-        public decimal NCLI_COSTO { get; set; }
+        public decimal costo { get; set; }
 
-        public string? CCLI_CONV_EMP { get; set; }
+        public string? conv_emp { get; set; }
 
-        public decimal NCLI_COSTO_ALT { get; set; }
+        public decimal costo_alt { get; set; }
 
-        public string? SCLI_FLAG_TIPO { get; set; }
+        public string? flag_tipo { get; set; }
 
-        public bool FCLI_ACTIVI_OPERACIONES { get; set; }
+        public bool activi_operaciones { get; set; }
 
-        public decimal NCLI_FACTOR_LAB_PROV { get; set; }
+        public decimal factor_lab_prov { get; set; }
 
-        public string? SCLI_COD_GRU_FACT { get; set; }
+        public string? cod_gru_fact { get; set; }
 
-        public bool FCLI_ACTIVO_FACT { get; set; }
+        public bool activo_fact { get; set; }
 
-        public int NCLI_RELACIONADO { get; set; }
+        public int relacionado { get; set; }
 
-        public bool FCLI_ACTIVO_LAB { get; set; }
+        public bool activo_lab { get; set; }
 
-        public bool FCLI_ACTIVO_AMB { get; set; }
+        public bool activo_amb { get; set; }
 
-        public bool FCLI_CLIENTE_PLAYA { get; set; }
+        public bool cliente_playa { get; set; }
 
-        public string? SCLI_EMAIL { get; set; }
+        public string? email { get; set; }
 
-        public string? SCLI_URBANIZACION { get; set; }
+        public string? urbanizacion { get; set; }
 
-        public int NCLI_DIAS_PLAZO { get; set; }
-
-
-        public string SCLI_COD_TIPO_DOC_ID { get; set; }
+        public int dias_plazo { get; set; }
 
 
-        public string SCLI_EMAIL_CON_COPIA { get; set; }
-
-        public string SCLI_PERSONAL_CONTACTO { get; set; }
-
-        public string SCLI_TLF_CONTACTO { get; set; }
-
-        public int NCLI_ID_DOC_ID { get; set; }
-
-        public bool FCLI_SAP_FLG_REGISTRADO { get; set; }
-
-        public bool FCLI_ACTIVO_DRONLINE { get; set; }
-
-        public bool FCLI_FLG_CARGAR_BD { get; set; }
-
-        public string? SCLI_NOM_ASEG_ONBASE { get; set; }
-
-        public bool SCLI_VISIBLE_MELCHORITA { get; set; }
-
-        public bool SCLI_VISIBLE_CALLMEDICO { get; set; }
-
-        public int NCLI_DIAS_CREDITO { get; set; }
-
-        public bool FCLI_FLG_CAPITADO { get; set; }
-
-        public bool FCLI_VISIBLE_HOME_CARE { get; set; }
+        public string cod_tipo_doc_id { get; set; }
 
 
-        public int NCLI_USUARIO_CREACION { get; set; }
+        public string email_con_copia { get; set; }
 
-        public DateTime DCLI_FECHA_CREACION { get; set; }
+        public string personal_contacto { get; set; }
+
+        public string tlf_contacto { get; set; }
+
+        public int id_doc_id { get; set; }
+
+        public bool sap_flg_registrado { get; set; }
+
+        public bool activo_dronline { get; set; }
+
+        public bool flg_cargar_bd { get; set; }
+
+        public string? nom_aseg_onbase { get; set; }
+
+        public bool visible_melchorita { get; set; }
+
+        public bool visible_callmedico { get; set; }
+
+        public int dias_credito { get; set; }
+
+        public bool flg_capitado { get; set; }
+
+        public bool visible_home_care { get; set; }
 
 
-        public int NCLI_USUARIO_MODIFICACION { get; set; }
+        public int usuario_creacion { get; set; }
 
-        public DateTime DCLI_FECHA_MODIFICACION { get; set; }
+        public DateTime fecha_creacion { get; set; }
+
+
+        public int usuario_modificacion { get; set; }
+
+        public DateTime fecha_modificacion { get; set; }
 
 
 
