@@ -1,11 +1,9 @@
-﻿
-namespace MDS.DbContext.Entities
+﻿namespace MDS.DbContext.Entities
 {
 
     public class Cliente
     {
-        public bool FCLI_ESTADO { get; set; }
-
+        
         public long NCLI_IDCLIENTE { get; set; }
 
         public string? SCLI_NOMBRE { get; set; }
@@ -13,6 +11,14 @@ namespace MDS.DbContext.Entities
         public string? SCLI_DESCRIPCION { get; set; }
 
         public string? SCLI_DIRECCION { get; set; }
+
+        public string? SCLI_DISTRITO { get; set; }
+
+        public string? SCLI_RUC { get; set; }
+
+        public bool FCLI_ESTADO { get; set; }
+
+
     }
 
 

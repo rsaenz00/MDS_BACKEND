@@ -14,8 +14,10 @@ namespace MDS.Services.Cliente
     {
         Task<ServiceResponse> GetClientes();
 
-        Task<ServiceResponse> GetCliente(long clienteId);
+        Task<ServiceResponse> GetConsultaCliente(string vCondicion,string vBusqueda);
 
         Task<ServiceResponse> AddCliente(MantenimientoClienteDto dto);
+
+        Task<ServiceResponse> GetClienteByRuc(string ruc);
     }
 }

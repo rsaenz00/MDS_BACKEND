@@ -1,35 +1,26 @@
-﻿using MDS.Api.Infrastructure;
+﻿using Azure;
+using MDS.Api.Infrastructure;
 using MDS.Api.Models;
 using MDS.Api.Utility.Extensions;
+using MDS.DbContext.Entities;
 using MDS.Dto;
+using MDS.Infrastructure.DbUtility;
+using MDS.Services;
 using MDS.Services.Cliente;
-using MDS.Utility.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-//using Azure;
-//using MDS.Api.Infrastructure;
-//using MDS.Api.Models;
-//using MDS.Api.Utility.Extensions;
-//using MDS.DbContext.Entities;
-//using MDS.Dto;
-//using MDS.Infrastructure.DbUtility;
-//using MDS.Services;
-//using MDS.Services.Cliente;
-//using Microsoft.AspNetCore.Authorization;
-//using Microsoft.AspNetCore.Mvc;
 
-
-namespace MDS.Api.Controllers.Test
+namespace MDS.Api.Controllers
 {
     //[Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class ClienteController : BaseController
+    public class ClientesController : BaseController
     {
         private readonly IClienteService _clienteService;
 
-        public ClienteController(IClienteService clienteService)
+        public ClientesController(IClienteService clienteService)
         {
             _clienteService = clienteService;
 
@@ -45,10 +36,10 @@ namespace MDS.Api.Controllers.Test
 
 
 
-        [HttpGet, Route("GetCliente")]
-        public async Task<IActionResult> GetCliente(long clienteId)
+        [HttpGet, Route("GetConsultaCliente")]
+        public async Task<IActionResult> GetConsultaCliente(string vCondicion,string vBusqueda)
         {
-            var response = await _clienteService.GetCliente(clienteId);
+            var response = await _clienteService.GetConsultaCliente(vCondicion,vBusqueda);
 
             return ReturnFormattedResponse(response);
         }
@@ -111,6 +102,16 @@ namespace MDS.Api.Controllers.Test
 
             return ReturnFormattedResponse(response);
         }
+
+        //By Henrry Torres
+        [HttpGet, Route("GetClienteByRuc")]
+        public async Task<IActionResult> GetClienteByRuc(string ruc)
+        {
+            var response = await _clienteService.GetClienteByRuc(ruc);
+
+            return ReturnFormattedResponse(response);
+        }
+
 
     }
 }

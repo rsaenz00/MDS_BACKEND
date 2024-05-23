@@ -3,15 +3,22 @@
 
     public class ClienteDto
     {
-        public long NCLI_IDCLIENTE { get; set; }
+        public long id_cliente { get; set; }
 
-        public bool FCLI_ESTADO { get; set; }
+        
+        public string? nombre { get; set; }
 
-        public string? SCLI_NOMBRE { get; set; }
+        public string? descripcion { get; set; }
 
-        public string? SCLI_DESCRIPCION { get; set; }
+        public string? direccion { get; set; }
 
-        public string? SCLI_DIRECCION { get; set; }
+        public string? distrito { get; set; }
+
+        public string? ruc { get; set; }
+
+
+        public bool estado { get; set; }
+
     }
 
 

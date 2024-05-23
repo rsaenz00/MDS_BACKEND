@@ -10,17 +10,17 @@ using MDS.Services.Periodo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MDS.Api.Controllers.Test
+namespace MDS.Api.Controllers
 {
 
     //[Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class PeriodoController : BaseController
+    public class PeriodosController : BaseController
     {
         private readonly IPeriodoService _periodoService;
 
-        public PeriodoController(IPeriodoService periodoService)
+        public PeriodosController(IPeriodoService periodoService)
         {
             _periodoService = periodoService;
         }
