@@ -21,19 +21,19 @@ namespace MDS.Api.Controllers
         }
 
         //By Henrry Torres
-        [HttpGet, Route("GetAtenciones")]
-        public async Task<IActionResult> GetAtenciones()
+        [HttpGet, Route("GetAtencionByCodigo")]
+        public async Task<IActionResult> GetAtencionByCodigo(string cod_atencion)
         {
-            var response = await _atencionService.GetAtenciones();
+            var response = await _atencionService.GetAtencionByCodigo(cod_atencion);
 
             return ReturnFormattedResponse(response);
         }
 
         //By Henrry Torres
         [HttpGet, Route("GetAtencionesBandeja")]
-        public async Task<IActionResult> GetAtencionesBandeja()
+        public async Task<IActionResult> GetAtencionesBandeja(string fechaInicio, string fechaFin, string condicion)
         {
-            var response = await _atencionService.GetAtencionesBandeja();
+            var response = await _atencionService.GetAtencionesBandeja(fechaInicio, fechaFin, condicion);
 
             return ReturnFormattedResponse(response);
         }
@@ -45,15 +45,13 @@ namespace MDS.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelStateExtensions.GetErrorMessage(ModelState));
 
-            AtencionDto dto = new AtencionDto
+            AtencionMtoDto dto = new AtencionMtoDto
             {
                 id_persona = model.id_persona,
                 id_clinica = model.id_clinica,
                 id_empresa = model.id_empresa,
                 id_motivo = model.id_motivo,
                 id_plan = model.id_plan,
-                telefono = model.telefono,
-                anexo = model.anexo,
                 horario_trabajo = model.horario_trabajo,
                 cargo = model.cargo,
                 relato = model.relato,
@@ -74,11 +72,29 @@ namespace MDS.Api.Controllers
                 persona_reporta_asegurado = model.persona_reporta_asegurado,
                 persona_reporta_empresa = model.persona_reporta_empresa,
                 persona_reporta_seguro = model.persona_reporta_seguro,
-                usuario_creacion=model.usuario_creacion,
-                estado=model.estado
+                usuario_creacion = model.usuario_creacion,
+                estado = model.estado
             };
 
             var response = await _atencionService.AddAtencion(dto);
+
+            return ReturnFormattedResponse(response);
+        }
+
+        //By Henrry Torres
+        [HttpDelete, Route("DeleteAtencion")]
+        public async Task<IActionResult> DeleteAtencion(DeleteAtencionViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelStateExtensions.GetErrorMessage(ModelState));
+
+            AtencionMtoDto dto = new AtencionMtoDto
+            {
+                id_atencion = model.id_atencion,
+                usuario_eliminacion = model.usuario_eliminacion
+            };
+
+            var response = await _atencionService.DeleteAtencion(dto);
 
             return ReturnFormattedResponse(response);
         }

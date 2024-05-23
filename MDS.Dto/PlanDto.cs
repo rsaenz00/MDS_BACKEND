@@ -2,7 +2,7 @@
 {
     public class PlanDto
     {
-        public long id_plan { get; set; }
+        public string id_plan { get; set; }
         public string nombre { get; set; }
         public Boolean estado { get; set; }
         //public int usuario_creacion { get; set; }

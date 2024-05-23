@@ -13,11 +13,7 @@ namespace MDS.Api.Models
         //[Required]
         public long id_motivo { get; set; }
         //[Required]
-        public long id_plan { get; set; }
-        //[Required]
-        public string? telefono { get; set; }
-        //[Required]
-        public string? anexo { get; set; }
+        public string id_plan { get; set; }
         //[Required]
         public string? horario_trabajo { get; set; }
         //[Required]
@@ -63,10 +59,6 @@ namespace MDS.Api.Models
         [Required]
         public long CPLA_ID { get; set; }
         [Required]
-        public string SATE_TELEFONO { get; set; }
-        [Required]
-        public string SATE_ANEXO { get; set; }
-        [Required]
         public string SATE_HORARIO_TRABAJO { get; set; }
         [Required]
         public string SATE_CARGO { get; set; }
@@ -101,6 +93,7 @@ namespace MDS.Api.Models
     public class DeleteAtencionViewModel
     {
         [Required]
-        public long CATE_ID { get; set; }
+        public long id_atencion { get; set; }
+        public int usuario_eliminacion{ get; set; }
     }
 }

@@ -6,7 +6,12 @@ namespace MDS.Services.Cliente
 {
     public interface IClienteService : IService
     {
-        //By Henrry Torres
+        Task<ServiceResponse> GetClientes();
+
+        Task<ServiceResponse> GetConsultaCliente(string vCondicion,string vBusqueda);
+
+        Task<ServiceResponse> AddCliente(MantenimientoClienteDto dto);
+
         Task<ServiceResponse> GetClienteByRuc(string ruc);
     }
 }

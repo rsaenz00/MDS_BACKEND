@@ -12,8 +12,9 @@ namespace MDS.Api.Models
         public string direccion { get; set; }
         [Required]
         public string telefono { get; set; }
+        public string anexo { get; set; }
         [Required]
-        public int afiliado { get; set; }
+        public string afiliado { get; set; }
         //[Required]
         public int plan_huerfano_ilimitado { get; set; }
         public int estado { get; set; }
@@ -31,8 +32,9 @@ namespace MDS.Api.Models
         public string direccion { get; set; }
         [Required]
         public string telefono { get; set; }
+        public string anexo { get; set; }
         [Required]
-        public int afiliado { get; set; }
+        public string afiliado { get; set; }
         //[Required]
         public int plan_huerfano_ilimitado { get; set; }
         public int estado { get; set; }
