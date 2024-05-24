@@ -25,6 +25,7 @@ namespace MDS.Api.Controllers
             _periodoService = periodoService;
         }
 
+        //By William Vilca
         [HttpGet, Route("GetPeriodos")]
         public async Task<IActionResult> GetPeriodos()
         {
@@ -33,7 +34,7 @@ namespace MDS.Api.Controllers
             return ReturnFormattedResponse(response);
         }
 
-
+        //By William Vilca
         [HttpGet, Route("GetPeriodo")]
         public async Task<IActionResult> GetPeriodo(long periodoId)
         {
@@ -42,7 +43,7 @@ namespace MDS.Api.Controllers
             return ReturnFormattedResponse(response);
         }
 
-
+        //By William Vilca
         [HttpPost, Route("AddPeriodo")]
         public async Task<IActionResult> AddPeriodo(CreatePeriodoViewModel model)
         {
@@ -59,8 +60,6 @@ namespace MDS.Api.Controllers
 
             return ReturnFormattedResponse(response);
         }
-
-
 
     }
 }

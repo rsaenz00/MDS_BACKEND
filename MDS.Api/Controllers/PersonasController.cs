@@ -22,6 +22,7 @@ namespace MDS.Api.Controllers.Test
             _personaService = personaService;
         }
 
+        //By William Vilca
         [HttpGet, Route("GetPersonas")]
         public async Task<IActionResult> GetPersonas()
         {
@@ -30,7 +31,7 @@ namespace MDS.Api.Controllers.Test
             return ReturnFormattedResponse(response);
         }
 
-
+        //By William Vilca
         [HttpGet, Route("GetPersona")]
         public async Task<IActionResult> GetPersona(long personaId)
         {
@@ -40,7 +41,7 @@ namespace MDS.Api.Controllers.Test
         }
 
 
-
+        //By William Vilca
         [HttpPost, Route("AddPersona")]
         public async Task<IActionResult> AddPersona(CreatePersonaViewModel model)
         {
@@ -50,28 +51,28 @@ namespace MDS.Api.Controllers.Test
             MantenimientoPersonaDto dto = new MantenimientoPersonaDto
             {
 
-                CPAI_IDPAIS = model.CPAI_IDPAIS,
-                CUBI_IDUBIGEO = model.CUBI_IDUBIGEO,
-                SPER_NOMBRES = model.SPER_NOMBRES,
-                SPER_APELLIDO_PATERNO = model.SPER_APELLIDO_PATERNO,
-                SPER_APELLIDO_MATERNO = model.SPER_APELLIDO_MATERNO,
-                SPER_DNI = model.SPER_DNI,
-                DPER_FECHA_NACIMIENTO = model.DPER_FECHA_NACIMIENTO,
-                SPER_GENERO = model.SPER_GENERO,
-                SPER_DEPARTAMENTO = model.SPER_DEPARTAMENTO,
-                SPER_PROVINCIA = model.SPER_PROVINCIA,
-                SPER_DISTRITO = model.SPER_DISTRITO,
-                SPER_DIRECCION = model.SPER_DIRECCION,
-                SPER_EMAIL1 = model.SPER_EMAIL1,
-                SPER_EMAIL2 = model.SPER_EMAIL2,
-                SPER_TELEFONO_CASA = model.SPER_TELEFONO_CASA,
-                SPER_TELEFONO_CELULAR = model.SPER_TELEFONO_CELULAR,
-                SPER_TELEFONO_CORPORATIVO = model.SPER_TELEFONO_CORPORATIVO,
-                FPER_ESTADO = model.FPER_ESTADO,
-                NPER_USUARIO_CREACION = model.NPER_USUARIO_CREACION,
-                DPER_FECHA_CREACION = model.DPER_FECHA_CREACION,
-                NPER_USUARIO_MODIFICACION = model.NPER_USUARIO_MODIFICACION,
-                DPER_FECHA_MODIFICACION = model.DPER_FECHA_MODIFICACION
+                id_pais = model.CPAI_IDPAIS,
+                id_ubigeo = model.CUBI_IDUBIGEO,
+                nombre = model.SPER_NOMBRES,
+                paterno = model.SPER_APELLIDO_PATERNO,
+                materno = model.SPER_APELLIDO_MATERNO,
+                dni = model.SPER_DNI,
+                fecha_naciemiento = model.DPER_FECHA_NACIMIENTO,
+                genero = model.SPER_GENERO,
+                departamento = model.SPER_DEPARTAMENTO,
+                provincia = model.SPER_PROVINCIA,
+                distrito = model.SPER_DISTRITO,
+                direccion = model.SPER_DIRECCION,
+                email1 = model.SPER_EMAIL1,
+                email2 = model.SPER_EMAIL2,
+                telefono_casa = model.SPER_TELEFONO_CASA,
+                telefono_celular = model.SPER_TELEFONO_CELULAR,
+                telefono_corporativo = model.SPER_TELEFONO_CORPORATIVO,
+                estado = model.FPER_ESTADO,
+                usuario_creacion = model.NPER_USUARIO_CREACION,
+                fecha_creacion = model.DPER_FECHA_CREACION,
+                usuario_modificacion = model.NPER_USUARIO_MODIFICACION,
+                fecha_modificacion = model.DPER_FECHA_MODIFICACION
 
             };
 
@@ -79,7 +80,6 @@ namespace MDS.Api.Controllers.Test
 
             return ReturnFormattedResponse(response);
         }
-
 
     }
 }

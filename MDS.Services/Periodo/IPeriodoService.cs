@@ -12,11 +12,13 @@ namespace MDS.Services.Periodo
 {
     public interface IPeriodoService : IService
     {
-
+        //By William Vilca
         Task<ServiceResponse> GetPeriodos();
 
+        //By William Vilca
         Task<ServiceResponse> GetPeriodo(long PeriodoId);
 
+        //By William Vilca
         Task<ServiceResponse> AddPeriodo(PeriodoDto dto);
 
     }

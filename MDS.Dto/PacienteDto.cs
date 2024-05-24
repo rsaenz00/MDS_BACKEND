@@ -14,74 +14,74 @@
     public class MantenimientoPacienteDto
     {
 
-        public long Id { get; set; }
-        public int CPER_IDPERSONA { get; set; }
+        public long Id_paciente { get; set; }
+        public int id_persona { get; set; }
 
-        public int CSER_IDSERVICIO { get; set; }
+        public int id_servicio { get; set; }
 
-        public DateTime DPAC_FINC { get; set; }
+        public DateTime finc { get; set; }
 
-        public string SPAC_COD_PAR { get; set; }
+        public string cod_par { get; set; }
 
-        public DateTime DPAC_FCRE { get; set; }
+        public DateTime fcre { get; set; }
 
-        public bool FPAC_BOL_ACT { get; set; }
+        public bool bol_act { get; set; }
 
-        public string SPAC_OBS { get; set; }
+        public string obs { get; set; }
 
-        public bool FPAC_FLG_CORREO { get; set; }
+        public bool flg_correo { get; set; }
 
-        public string SPAC_USUCRE_EMAIL { get; set; }
+        public string usucre_email { get; set; }
 
-        public string SPAC_USUMODIF_EMAIL { get; set; }
+        public string usumodif_email { get; set; }
 
-        public string SPAC_FLAG_FICHA { get; set; }
+        public string flag_ficha { get; set; }
 
-        public bool FPAC_FLAG_BLOQ { get; set; }
+        public bool flag_bloq { get; set; }
 
-        public bool FPAC_FLAG_VIP { get; set; }
+        public bool flag_vip { get; set; }
 
-        public int NPAC_CLASIFICACION { get; set; }
+        public int clasificacion { get; set; }
 
-        public string SPAC_VIP { get; set; }
-        public int NPAC_COD_SUBCLASIF { get; set; }
+        public string vip { get; set; }
+        public int cod_subclasif { get; set; }
 
-        public DateTime DPAC_FECHA_VIGENCIA { get; set; }
+        public DateTime fecha_vigencia { get; set; }
 
-        public bool FPAC_FLG_REGISTRAR_PAC_TABLET { get; set; }
+        public bool flg_registrar_pac_tablet { get; set; }
 
-        public bool FPAC_CLAVE { get; set; }
+        public bool clave { get; set; }
 
-        public string SPAC_TIPO_CLAVE { get; set; }
+        public string tipo_clave { get; set; }
 
-        public string SPAC_OBS_CLAVE { get; set; }
+        public string obs_clave { get; set; }
 
-        public bool FPAC_CONSENT_INFORMADO { get; set; }
+        public bool consent_informado { get; set; }
 
-        public bool FPAC_CONSENT_RECIBIR_INFO { get; set; }
+        public bool consent_recibir_info { get; set; }
 
-        public bool FPAC_CONSENT_FIRMA_CONST { get; set; }
+        public bool consent_firma_const { get; set; }
 
-        public bool FPAC_CONSMT_RI { get; set; }
+        public bool consmt_ri { get; set; }
 
-        public bool FPAC_FLG_CONFLICTIVO_CALLMED { get; set; }
+        public bool flg_conflictivo_callmed { get; set; }
 
-        public bool FPAC_FLG_ACTIVO_FARMACIA { get; set; }
+        public bool flg_activo_farmacia { get; set; }
 
-        public int NPAC_NORDEN_OBS { get; set; }
+        public int norden_obs { get; set; }
 
-        public string SPAC_GRUPO_CRONICOS { get; set; }
+        public string grupo_cronicos { get; set; }
 
-        public bool FPAC_FLG_PAQUETE_SALUD { get; set; }
-        public bool FPAC_ESTADO { get; set; }
+        public bool flg_paquete_salud { get; set; }
+        public bool estado { get; set; }
 
-        public int NPAC_USUARIO_CREACION { get; set; }
+        public int usuario_creacion { get; set; }
 
-        public DateTime DPAC_FECHA_CREACION { get; set; }
+        public DateTime fecha_creacion { get; set; }
 
-        public int NPAC_USUARIO_MODIFICACION { get; set; }
+        public int usuario_modificacion { get; set; }
 
-        public DateTime DPAC_FECHA_MODIFICACION { get; set; }
+        public DateTime fecha_modificacion { get; set; }
 
     }
 
