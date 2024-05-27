@@ -12,7 +12,6 @@ namespace MDS.Api.Controllers.Test
     [Route("[controller]")]
     public class ServicioNegociosController : BaseController
     {
-
         private readonly IServicioNegocio _servicionegocio;
 
         public ServicioNegociosController(IServicioNegocio ServicioNegocio)
@@ -20,9 +19,7 @@ namespace MDS.Api.Controllers.Test
             _servicionegocio = ServicioNegocio;
         }
 
-
-        //----------------------------------------------------------------------------------
-
+        //By William Vilca
         [HttpGet, Route("GetServicioNegocios")]
         public async Task<IActionResult> GetServicioNegocios()
         {
@@ -31,8 +28,7 @@ namespace MDS.Api.Controllers.Test
             return ReturnFormattedResponse(response);
         }
 
-        //-----------------------------------------------------------------------------------
-
+        //By William Vilca
         [HttpGet, Route("GetServicioNegocio")]
         public async Task<IActionResult> GetServicioNegocio(long servicioId)
         {
@@ -41,9 +37,7 @@ namespace MDS.Api.Controllers.Test
             return ReturnFormattedResponse(response);
         }
 
-
-        //----------------------------------------------------------------------------------
-
+        //By William Vilca
         [HttpPost, Route("AddServicioNegocio")]
         public async Task<IActionResult> AddServicioNegocio(CreateServicioNegocioViewModel model)
         {

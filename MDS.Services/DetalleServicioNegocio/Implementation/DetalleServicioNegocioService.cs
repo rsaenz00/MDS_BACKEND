@@ -16,6 +16,7 @@ namespace MDS.Services.DetalleServicioNegocio.Implementation
             _uow = uow;
         }
 
+        //By William Vilca
         public async Task<ServiceResponse> GetDetalleServicioNegocios()
         {
             try
@@ -40,7 +41,7 @@ namespace MDS.Services.DetalleServicioNegocio.Implementation
             }
         }
 
-
+        //By William Vilca
         public async Task<ServiceResponse> GetDetalleServicioNegocio(long detservicioId)
         {
             try
@@ -71,6 +72,7 @@ namespace MDS.Services.DetalleServicioNegocio.Implementation
             }
         }
 
+        //By William Vilca
 
         public async Task<ServiceResponse> AddDetalleServicioNegocio(MantenimientoDetalleServicioNegocioDto dto)
         {
@@ -101,7 +103,6 @@ namespace MDS.Services.DetalleServicioNegocio.Implementation
                 return ServiceResponse.Return500(e);
             }
         }
-
 
     }
 }

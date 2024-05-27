@@ -16,6 +16,7 @@ namespace MDS.Services.MedicoParticular.Implementation
             _uow = uow;
         }
 
+        //By William Vilca
         public async Task<ServiceResponse> GetMedicoParticulares()
         {
             try
@@ -40,7 +41,7 @@ namespace MDS.Services.MedicoParticular.Implementation
             }
         }
 
-
+        //By William Vilca
         public async Task<ServiceResponse> GetMedicoParticular(long medicoId)
         {
             try
@@ -71,8 +72,7 @@ namespace MDS.Services.MedicoParticular.Implementation
             }
         }
 
-
-
+        //By William Vilca
         public async Task<ServiceResponse> AddMedicoParticular(MantenimientoMedicoParticularDto dto)
         {
             try
@@ -108,9 +108,6 @@ namespace MDS.Services.MedicoParticular.Implementation
                 return ServiceResponse.Return500(e);
             }
         }
-
-
-
 
     }
 }

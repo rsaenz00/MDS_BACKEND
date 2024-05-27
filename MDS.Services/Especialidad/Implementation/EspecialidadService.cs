@@ -15,6 +15,7 @@ namespace MDS.Services.Especialidad.Implementation
             _uow = uow;
         }
 
+        //By William Vilca
         public async Task<ServiceResponse> GetEspecialidades()
         {
             try
@@ -39,7 +40,7 @@ namespace MDS.Services.Especialidad.Implementation
             }
         }
 
-
+        //By William Vilca
         public async Task<ServiceResponse> GetEspecialidad(string especialidadId)
         {
             try
@@ -69,7 +70,7 @@ namespace MDS.Services.Especialidad.Implementation
             }
         }
 
-
+        //By William Vilca
         public async Task<ServiceResponse> AddEspecialidad(MantenimientoEspecialidadDto dto)
         {
             try
@@ -105,7 +106,6 @@ namespace MDS.Services.Especialidad.Implementation
                 return ServiceResponse.Return500(e);
             }
         }
-
 
     }
 }

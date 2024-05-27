@@ -17,6 +17,7 @@ namespace MDS.Services.Medico.Implementation
             _uow = uow;
         }
 
+        //By William Vilca
         public async Task<ServiceResponse> GetMedicos()
         {
             try
@@ -41,7 +42,7 @@ namespace MDS.Services.Medico.Implementation
             }
         }
 
-
+        //By William Vilca
         public async Task<ServiceResponse> GetMedico(long medicoId)
         {
             try
@@ -72,8 +73,7 @@ namespace MDS.Services.Medico.Implementation
             }
         }
 
-
-
+        //By William Vilca
         public async Task<ServiceResponse> AddMedico(MantenimientoMedicoDto dto)
         {
             try
@@ -140,9 +140,6 @@ namespace MDS.Services.Medico.Implementation
                 return ServiceResponse.Return500(e);
             }
         }
-
-
-
 
     }
 }

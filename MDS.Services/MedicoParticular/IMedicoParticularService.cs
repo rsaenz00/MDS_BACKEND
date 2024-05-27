@@ -12,10 +12,13 @@ namespace MDS.Services.MedicoParticular
 {
     public interface IMedicoParticularService : IService
     {
+        //By William Vilca
         Task<ServiceResponse> GetMedicoParticulares();
 
+        //By William Vilca
         Task<ServiceResponse> GetMedicoParticular(long medicoId);
 
+        //By William Vilca
         Task<ServiceResponse> AddMedicoParticular(MantenimientoMedicoParticularDto dto);
     }
 }

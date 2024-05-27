@@ -23,6 +23,7 @@ namespace MDS.Api.Controllers.Test
             _medicoparticularService = medicoparticularService;
         }
 
+        //By William Vilca
         [HttpGet, Route("GetMedicoParticulares")]
         public async Task<IActionResult> GetMedicoParticulares()
         {
@@ -31,8 +32,7 @@ namespace MDS.Api.Controllers.Test
             return ReturnFormattedResponse(response);
         }
 
-        //----------------------------------------------------------------------------------
-
+        //By William Vilca
         [HttpGet, Route("GetMedicoParticular")]
         public async Task<IActionResult> GetMedicoParticular(long medicoId)
         {
@@ -41,8 +41,7 @@ namespace MDS.Api.Controllers.Test
             return ReturnFormattedResponse(response);
         }
 
-        //----------------------------------------------------------------------------------
-
+        //By William Vilca
         [HttpPost, Route("AddMedicoParticular")]
         public async Task<IActionResult> AddMedicoParticular(CreateMedicoParticularViewModel model)
         {
@@ -71,7 +70,6 @@ namespace MDS.Api.Controllers.Test
 
             return ReturnFormattedResponse(response);
         }
-
 
     }
 }

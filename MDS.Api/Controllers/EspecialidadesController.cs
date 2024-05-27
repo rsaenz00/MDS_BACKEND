@@ -20,6 +20,7 @@ namespace MDS.Api.Controllers.Test
             _especialidadService = especialidadService;
         }
 
+        //By William Vilca
         [HttpGet, Route("GetEspecialidades")]
         public async Task<IActionResult> GetEspecialidades()
         {
@@ -28,7 +29,7 @@ namespace MDS.Api.Controllers.Test
             return ReturnFormattedResponse(response);
         }
 
-
+        //By William Vilca
         [HttpGet, Route("GetEspecialidad")]
         public async Task<IActionResult> GetEspecialidad(string especialidadId)
         {
@@ -37,8 +38,7 @@ namespace MDS.Api.Controllers.Test
             return ReturnFormattedResponse(response);
         }
 
-
-
+        //By William Vilca
         [HttpPost, Route("AddEspecialidad")]
         public async Task<IActionResult> AddEspecialidad(CreateEspecialidadViewModel model)
         {
