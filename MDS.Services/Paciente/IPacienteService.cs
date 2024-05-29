@@ -16,6 +16,9 @@ namespace MDS.Services.Paciente
         //By William Vilca
         Task<ServiceResponse> GetPacientes();
 
+        //By Henrry Torres
+        Task<ServiceResponse> GetPacientesFiltro(string busqueda, string condicion);
+
         //By William Vilca
         Task<ServiceResponse> GetPaciente(string pacienteId);
 

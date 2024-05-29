@@ -20,5 +20,8 @@ namespace MDS.Services.Persona
 
         //By William Vilca
         Task<ServiceResponse> AddPersona(MantenimientoPersonaDto dto);
+
+        //By Henrry Torres
+        Task<ServiceResponse> AddPersonaSctr(MantenimientoPersonaDto dto);
     }
 }

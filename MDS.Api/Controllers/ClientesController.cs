@@ -48,14 +48,13 @@ namespace MDS.Api.Controllers
                 return BadRequest(ModelStateExtensions.GetErrorMessage(ModelState));
 
             MantenimientoClienteDto dto = new MantenimientoClienteDto
-
             {
                 estado = model.FCLI_ESTADO,
-                nombre = model.SCLI_NOMBRE,
+                nombre = model.nombre,
                 descripcion = model.SCLI_DESCRIPCION,
                 direccion = model.SCLI_DIRECCION,
                 distrito = model.SCLI_DISTRITO,
-                ruc = model.SCLI_RUC,
+                ruc = model.ruc,
                 dscto_ped = model.NCLI_DSCTO_PED,
                 factor_lab = model.NCLI_FACTOR_LAB,
                 dscto_lab = model.NCLI_DSCTO_LAB,
@@ -88,7 +87,7 @@ namespace MDS.Api.Controllers
                 dias_credito = model.NCLI_DIAS_CREDITO,
                 flg_capitado = model.FCLI_FLG_CAPITADO,
                 visible_home_care = model.FCLI_VISIBLE_HOME_CARE,
-                usuario_creacion = model.NCLI_USUARIO_CREACION,
+                usuario_creacion = model.usuario_creacion,
                 fecha_creacion = model.DCLI_FECHA_CREACION,
                 usuario_modificacion = model.NCLI_USUARIO_MODIFICACION,
                 fecha_modificacion = model.DCLI_FECHA_MODIFICACION
@@ -104,6 +103,25 @@ namespace MDS.Api.Controllers
         public async Task<IActionResult> GetClienteByRuc(string ruc)
         {
             var response = await _clienteService.GetClienteByRuc(ruc);
+
+            return ReturnFormattedResponse(response);
+        }
+
+        //By Henrry Torres
+        [HttpPost, Route("AddClienteSctr")]
+        public async Task<IActionResult> AddClienteSctr(CreateClienteViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelStateExtensions.GetErrorMessage(ModelState));
+
+            MantenimientoClienteDto dto = new MantenimientoClienteDto
+            {
+                nombre = model.nombre,
+                ruc = model.ruc,
+                usuario_creacion = model.usuario_creacion
+            };
+
+            var response = await _clienteService.AddClienteSctr(dto);
 
             return ReturnFormattedResponse(response);
         }

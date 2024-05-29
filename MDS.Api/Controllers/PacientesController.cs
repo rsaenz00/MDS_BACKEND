@@ -30,6 +30,15 @@ namespace MDS.Api.Controllers.Test
             return ReturnFormattedResponse(response);
         }
 
+        //By Henrry Torres
+        [HttpGet, Route("GetPacientesFiltro")]
+        public async Task<IActionResult> GetPacientesFiltro(string? busqueda, string? condicion)
+        {
+            var response = await _pacienteService.GetPacientesFiltro(busqueda, condicion);
+
+            return ReturnFormattedResponse(response);
+        }
+
         //By William Vilca
         [HttpGet, Route("GetPaciente")]
         public async Task<IActionResult> GetPaciente(string pacienteId)
@@ -48,7 +57,7 @@ namespace MDS.Api.Controllers.Test
 
             MantenimientoPacienteDto dto = new MantenimientoPacienteDto
             {
-                id_persona = model.CPER_IDPERSONA,
+                id_persona = model.id_persona,
                 id_servicio = model.CSER_IDSERVICIO,
                 finc= model.DPAC_FINC,
                 cod_par = model.SPAC_COD_PAR,

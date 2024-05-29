@@ -3,9 +3,17 @@
     public class PacienteDto
     {
         public long id_paciente { get; set; }
-        public long id_persona { get; set; }
-        public int id_servicio { get; set; }
-        public bool estado { get; set; }
+        public string dni { get; set; }
+        public string nombres { get; set; }
+        public string apellido_paterno { get; set; }
+        public string apellido_materno { get; set; }
+        public string sexo { get; set; }
+        //public string fecha_nacimiento { get; set; }
+        public DateTime fecha_nacimiento { get; set; }
+        public string movil { get; set; }
+        public long? id_persona { get; set; }
+        public int? id_servicio { get; set; }
+        public bool? estado { get; set; }
     }
 
     public class MantenimientoPacienteDto

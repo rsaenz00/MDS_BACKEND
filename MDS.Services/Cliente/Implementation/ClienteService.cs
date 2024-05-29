@@ -170,5 +170,32 @@ namespace MDS.Services.Cliente.Implementation
             }
         }
 
+        //By Henrry Torres
+        public async Task<ServiceResponse> AddClienteSctr(MantenimientoClienteDto dto)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@SCLI_NOMBRE", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.nombre },
+                    new SqlParameter("@SCLI_RUC", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.ruc},
+                    new SqlParameter("@NCLI_USUARIO_CREACION", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.usuario_creacion },
+                    new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
+                };
+
+                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_CREATE_CLIENTE", parameters);
+
+                dto.id_cliente = Convert.ToInt64(response);
+
+                return ServiceResponse.ReturnResultWith201(dto);
+
+            }
+            catch (Exception e)
+            {
+                //_logger.Error(e);
+                return ServiceResponse.Return500(e);
+            }
+        }
+
     }
 }

@@ -80,6 +80,7 @@ namespace MDS.Services.Persona.Implementation
             {
                 SqlParameter[] parameters =
                 {
+                    new SqlParameter("@CPER_IDTIPOPERSONA", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.id_tipopersona },
                     new SqlParameter("@CPAI_IDPAIS", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.id_pais },
                     new SqlParameter("@CUBI_IDUBIGEO", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.id_ubigeo },
                     new SqlParameter("@SPER_NOMBRES", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.nombre },
@@ -99,12 +100,44 @@ namespace MDS.Services.Persona.Implementation
                     new SqlParameter("@SPER_TELEFONO_CORPORATIVO", SqlDbType.Bit) {Direction = ParameterDirection.Input, Value = dto.telefono_corporativo },
                     new SqlParameter("@NPER_USUARIO_CREACION", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.usuario_creacion },
                     new SqlParameter("@DPER_FECHA_CREACION", SqlDbType.DateTime) {Direction = ParameterDirection.Input, Value = dto.fecha_creacion },
-                    new SqlParameter("@NPER_USUARIO_MODIFICACION", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.usuario_modificacion },
-                    new SqlParameter("@DPER_FECHA_MODIFICACION", SqlDbType.DateTime) {Direction = ParameterDirection.Input, Value = dto.fecha_modificacion },
+                   new SqlParameter("@NPER_USUARIO_MODIFICACION", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.usuario_modificacion },
+                   new SqlParameter("@DPER_FECHA_MODIFICACION", SqlDbType.DateTime) {Direction = ParameterDirection.Input, Value = dto.fecha_modificacion },
                     new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
                 };
 
                 int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_CREATE_PERSONA", parameters);
+
+                dto.Id_persona = Convert.ToInt64(response);
+
+                return ServiceResponse.ReturnResultWith201(dto);
+
+            }
+            catch (Exception e)
+            {
+                //_logger.Error(e);
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By Henrry Torres
+        public async Task<ServiceResponse> AddPersonaSctr(MantenimientoPersonaDto dto)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@SPER_NOMBRES", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.nombre },
+                    new SqlParameter("@SPER_APELLIDO_PATERNO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.paterno },
+                    new SqlParameter("@SPER_APELLIDO_MATERNO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.materno },
+                    new SqlParameter("@SPER_DNI", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.dni },
+                    new SqlParameter("@DPER_FECHA_NACIMIENTO", SqlDbType.DateTime) {Direction = ParameterDirection.Input, Value = dto.fecha_naciemiento },
+                    new SqlParameter("@SPER_GENERO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.genero },
+                    new SqlParameter("@SPER_TELEFONO_CELULAR", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.telefono_celular },
+                    new SqlParameter("@NPER_USUARIO_CREACION", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.usuario_creacion },
+                    new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
+                };
+
+                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_CREATE_PACIENTE_SCTR", parameters);
 
                 dto.Id_persona = Convert.ToInt64(response);
 
