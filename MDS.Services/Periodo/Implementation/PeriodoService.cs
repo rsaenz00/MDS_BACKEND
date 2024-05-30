@@ -28,14 +28,13 @@ namespace MDS.Services.Periodo.Implementation
 
                 listPeriodo = periodos.Select(p => new PeriodoDto { id_periodo = p.CPER_IDPERIODO, Nombre = p.SPER_NOMBRE, Estado = p.FPER_ESTADO }).ToList();
 
-                if (!periodos.Any())
-                    return ServiceResponse.ReturnResultWith204();
+                //if (!periodos.Any())
+                //    return ServiceResponse.ReturnResultWith204();
 
                 return ServiceResponse.ReturnResultWith200(listPeriodo);
             }
             catch (Exception e)
             {
-                //_logger.Error(e);
                 return ServiceResponse.Return500(e);
             }
         }
@@ -58,8 +57,8 @@ namespace MDS.Services.Periodo.Implementation
 
                 listPeriodo = periodos.Select(p => new PeriodoDto { id_periodo = p.CPER_IDPERIODO, Nombre = p.SPER_NOMBRE, Estado = p.FPER_ESTADO }).ToList();
 
-                if (!listPeriodo.Any())
-                    return ServiceResponse.Return404();
+                //if (!listPeriodo.Any())
+                //    return ServiceResponse.Return404();
 
                 return ServiceResponse.ReturnResultWith200(listPeriodo);
             }

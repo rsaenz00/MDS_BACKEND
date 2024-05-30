@@ -8,4 +8,10 @@
         public bool Estado { get; set; }
 
     }
+
+    public class MantenimientoPeriodoDto
+    {
+
+    }
+
 }

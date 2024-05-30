@@ -18,3 +18,4 @@ namespace MDS.Services.Medico
 
         Task<ServiceResponse> AddMedico(MantenimientoMedicoDto dto);
     }
+}
