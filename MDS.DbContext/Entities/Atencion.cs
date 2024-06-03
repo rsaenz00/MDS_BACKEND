@@ -9,6 +9,7 @@ namespace MDS.DbContext.Entities
         public string fecha_nacimiento { get; set; }
         public int edad { get; set; }
         public string sexo { get; set; }
+        public string celular { get; set; }
         public string documento_identidad { get; set; }
         public string numero_documento_id { get; set; }
         public string fecha_creacion { get; set; }
@@ -28,6 +29,16 @@ namespace MDS.DbContext.Entities
         public string motivo { get; set; }
         public string observacion { get; set; }
         public string ipress_primera_ate { get; set; }
+        public long id_clinica { get; set; }
+        public string persona_reporta { get; set; }
+        public long id_cliente { get; set; }
+        public int? id_motivo { get; set; }
+        public string numero_atencion { get; set; }
+        public string metodo_validacion { get; set; }
+        public Boolean hoja_atencion { get; set; }
+        public string id_plan { get; set; }
+        public int skill { get; set; }
+        public int motivo_skill { get; set; }
     }
 
     public class AtencionBandejaSctr

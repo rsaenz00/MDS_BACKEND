@@ -20,7 +20,8 @@
         public string nombre { get; set; }
         public string paterno { get; set; }
         public string materno { get; set; }
-        public string dni { get; set; }
+        public string tipo_documento { get; set; }
+        public string numero_documento { get; set; }
         public DateTime fecha_naciemiento { get; set; }
         public string genero { get; set; }
         public string? departamento { get; set; }

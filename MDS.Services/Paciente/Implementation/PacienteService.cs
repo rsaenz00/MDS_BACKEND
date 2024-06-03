@@ -28,7 +28,7 @@ namespace MDS.Services.Paciente.Implementation
 
                 List<PacienteDto> listPaciente = new List<PacienteDto>();
 
-                listPaciente = pacientes.Select(p => new PacienteDto { id_paciente = p.CPAC_IDPACIENTE, id_persona = p.CPER_IDPERSONA, id_servicio = p.CSER_IDSERVICIO, estado = p.FPAC_ESTADO }).ToList();
+                listPaciente = pacientes.Select(p => new PacienteDto { id_paciente = p.CPAC_ID, id_persona = p.CPER_ID, id_servicio = p.CSER_IDSERVICIO, estado = p.FPAC_ESTADO }).ToList();
 
                 if (!pacientes.Any())
                     return ServiceResponse.ReturnResultWith204();
@@ -59,7 +59,7 @@ namespace MDS.Services.Paciente.Implementation
 
                 List<PacienteDto> listClinicas = new List<PacienteDto>();
 
-                listClinicas = clinicas.Select(s => new PacienteDto { id_paciente = s.CPAC_IDPACIENTE, dni = s.SPER_DNI, nombres = s.SPER_NOMBRES, apellido_paterno = s.SPER_APELLIDO_PATERNO, apellido_materno = s.SPER_APELLIDO_MATERNO, sexo = s.SPER_GENERO, fecha_nacimiento = s.DPER_FECHA_NACIMIENTO, movil = s.SPER_TELEFONO_CELULAR }).ToList();
+                listClinicas = clinicas.Select(s => new PacienteDto { id_paciente = s.CPAC_ID, numero_documento = s.SPER_NUMERO_DOCUMENTO, tipo_documento = s.STDO_DESCRIPCION, nombres = s.SPER_NOMBRES, apellido_paterno = s.SPER_APELLIDO_PATERNO, apellido_materno = s.SPER_APELLIDO_MATERNO, sexo = s.NPER_GENERO, fecha_nacimiento = s.DPER_FECHA_NACIMIENTO, movil = s.SPER_TELEFONO_CELULAR }).ToList();
 
                 /*if (!listClinicas.Any())
                     return ServiceResponse.Return404();*/
@@ -89,7 +89,7 @@ namespace MDS.Services.Paciente.Implementation
 
                 List<PacienteDto> listPaciente = new List<PacienteDto>();
 
-                listPaciente = pacientes.Select(p => new PacienteDto { id_paciente = p.CPAC_IDPACIENTE, id_persona = p.CPER_IDPERSONA, id_servicio = p.CSER_IDSERVICIO, estado = p.FPAC_ESTADO }).ToList();
+                listPaciente = pacientes.Select(p => new PacienteDto { id_paciente = p.CPAC_ID, id_persona = p.CPER_ID, id_servicio = p.CSER_IDSERVICIO, estado = p.FPAC_ESTADO }).ToList();
 
                 if (!listPaciente.Any())
                     return ServiceResponse.Return404();
@@ -110,7 +110,7 @@ namespace MDS.Services.Paciente.Implementation
             {
                 SqlParameter[] parameters =
                 {
-                    new SqlParameter("@CPER_IDPERSONA", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.id_persona },
+                    new SqlParameter("@CPER_ID", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.id_persona },
                     new SqlParameter("@CSER_IDSERVICIO", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.id_servicio },
                     new SqlParameter("@DPAC_FINC", SqlDbType.DateTime) {Direction = ParameterDirection.Input, Value = dto.finc },
                     new SqlParameter("@SPAC_COD_PAR", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.cod_par },

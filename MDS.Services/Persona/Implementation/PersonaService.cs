@@ -28,7 +28,7 @@ namespace MDS.Services.Persona.Implementation
 
                 List<PersonaDto> listPersona = new List<PersonaDto>();
 
-                listPersona = personas.Select(p => new PersonaDto { id_persona = p.CPER_IDPERSONA, paterno = p.SPER_APELLIDO_PATERNO, materno = p.SPER_APELLIDO_MATERNO, nombre = p.SPER_NOMBRES, dni = p.SPER_DNI, genero = p.SPER_GENERO, estado = p.FPER_ESTADO }).ToList();
+                listPersona = personas.Select(p => new PersonaDto { id_persona = p.CPER_ID, paterno = p.SPER_APELLIDO_PATERNO, materno = p.SPER_APELLIDO_MATERNO, nombre = p.SPER_NOMBRES, dni = p.SPER_NUMERO_DOCUMENTO, genero = p.NPER_GENERO, estado = p.FPER_ESTADO }).ToList();
 
                 if (!personas.Any())
                     return ServiceResponse.ReturnResultWith204();
@@ -59,7 +59,7 @@ namespace MDS.Services.Persona.Implementation
 
                 List<PersonaDto> listPersona = new List<PersonaDto>();
 
-                listPersona = personas.Select(p => new PersonaDto { id_persona = p.CPER_IDPERSONA, paterno = p.SPER_APELLIDO_PATERNO, materno = p.SPER_APELLIDO_MATERNO, nombre = p.SPER_NOMBRES, dni = p.SPER_DNI, genero = p.SPER_GENERO, estado = p.FPER_ESTADO }).ToList();
+                listPersona = personas.Select(p => new PersonaDto { id_persona = p.CPER_ID, paterno = p.SPER_APELLIDO_PATERNO, materno = p.SPER_APELLIDO_MATERNO, nombre = p.SPER_NOMBRES, dni = p.SPER_NUMERO_DOCUMENTO, genero = p.NPER_GENERO, estado = p.FPER_ESTADO }).ToList();
 
                 if (!listPersona.Any())
                     return ServiceResponse.Return404();
@@ -86,9 +86,9 @@ namespace MDS.Services.Persona.Implementation
                     new SqlParameter("@SPER_NOMBRES", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.nombre },
                     new SqlParameter("@SPER_APELLIDO_PATERNO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.paterno },
                     new SqlParameter("@SPER_APELLIDO_MATERNO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.materno },
-                    new SqlParameter("@SPER_DNI", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.dni },
+                    new SqlParameter("@SPER_DNI", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.numero_documento },
                     new SqlParameter("@DPER_FECHA_NACIMIENTO", SqlDbType.DateTime) {Direction = ParameterDirection.Input, Value = dto.fecha_naciemiento },
-                    new SqlParameter("@SPER_GENERO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.genero },
+                    new SqlParameter("@NPER_GENERO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.genero },
                     new SqlParameter("@SPER_DEPARTAMENTO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.departamento },
                     new SqlParameter("@SPER_PROVINCIA", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.provincia },
                     new SqlParameter("@SPER_DISTRITO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.distrito },
@@ -100,8 +100,8 @@ namespace MDS.Services.Persona.Implementation
                     new SqlParameter("@SPER_TELEFONO_CORPORATIVO", SqlDbType.Bit) {Direction = ParameterDirection.Input, Value = dto.telefono_corporativo },
                     new SqlParameter("@NPER_USUARIO_CREACION", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.usuario_creacion },
                     new SqlParameter("@DPER_FECHA_CREACION", SqlDbType.DateTime) {Direction = ParameterDirection.Input, Value = dto.fecha_creacion },
-                   new SqlParameter("@NPER_USUARIO_MODIFICACION", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.usuario_modificacion },
-                   new SqlParameter("@DPER_FECHA_MODIFICACION", SqlDbType.DateTime) {Direction = ParameterDirection.Input, Value = dto.fecha_modificacion },
+                    new SqlParameter("@NPER_USUARIO_MODIFICACION", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.usuario_modificacion },
+                    new SqlParameter("@DPER_FECHA_MODIFICACION", SqlDbType.DateTime) {Direction = ParameterDirection.Input, Value = dto.fecha_modificacion },
                     new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
                 };
 
@@ -129,9 +129,10 @@ namespace MDS.Services.Persona.Implementation
                     new SqlParameter("@SPER_NOMBRES", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.nombre },
                     new SqlParameter("@SPER_APELLIDO_PATERNO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.paterno },
                     new SqlParameter("@SPER_APELLIDO_MATERNO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.materno },
-                    new SqlParameter("@SPER_DNI", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.dni },
+                    new SqlParameter("@CTDO_ID", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.tipo_documento },
+                    new SqlParameter("@SPER_NUMERO_DOCUMENTO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.numero_documento },
                     new SqlParameter("@DPER_FECHA_NACIMIENTO", SqlDbType.DateTime) {Direction = ParameterDirection.Input, Value = dto.fecha_naciemiento },
-                    new SqlParameter("@SPER_GENERO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.genero },
+                    new SqlParameter("@NPER_GENERO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.genero },
                     new SqlParameter("@SPER_TELEFONO_CELULAR", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.telefono_celular },
                     new SqlParameter("@NPER_USUARIO_CREACION", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.usuario_creacion },
                     new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}

@@ -26,7 +26,7 @@ namespace MDS.Services.Cliente.Implementation
 
                 List<ClienteDto> listCliente = new List<ClienteDto>();
 
-                listCliente = clientes.Select(c => new ClienteDto { id_cliente = c.NCLI_IDCLIENTE, nombre = c.SCLI_NOMBRE, descripcion = c.SCLI_DESCRIPCION, direccion = c.SCLI_DIRECCION, distrito = c.SCLI_DISTRITO, ruc = c.SCLI_RUC, estado = c.FCLI_ESTADO }).ToList();
+                listCliente = clientes.Select(c => new ClienteDto { id_cliente = c.NCLI_ID, nombre = c.SCLI_NOMBRE, descripcion = c.SCLI_DESCRIPCION, direccion = c.SCLI_DIRECCION, distrito = c.SCLI_DISTRITO, ruc = c.SCLI_RUC, estado = c.FCLI_ESTADO }).ToList();
 
                 if (!clientes.Any())
                     return ServiceResponse.ReturnResultWith204();
@@ -59,7 +59,7 @@ namespace MDS.Services.Cliente.Implementation
 
                 List<ClienteDto> listCliente = new List<ClienteDto>();
 
-                listCliente = clientes.Select(c => new ClienteDto { id_cliente = c.NCLI_IDCLIENTE, nombre = c.SCLI_NOMBRE, descripcion = c.SCLI_DESCRIPCION, direccion = c.SCLI_DIRECCION,distrito = c.SCLI_DISTRITO,ruc = c.SCLI_RUC, estado = c.FCLI_ESTADO }).ToList();
+                listCliente = clientes.Select(c => new ClienteDto { id_cliente = c.NCLI_ID, nombre = c.SCLI_NOMBRE, descripcion = c.SCLI_DESCRIPCION, direccion = c.SCLI_DIRECCION,distrito = c.SCLI_DISTRITO,ruc = c.SCLI_RUC, estado = c.FCLI_ESTADO }).ToList();
 
                 if (!listCliente.Any())
                     return ServiceResponse.Return404();
@@ -156,7 +156,7 @@ namespace MDS.Services.Cliente.Implementation
 
                 List<ClienteDto> listClientes = new List<ClienteDto>();
 
-                listClientes = clientes.Select(s => new ClienteDto { id_cliente = s.NCLI_IDCLIENTE, nombre = s.SCLI_NOMBRE, descripcion = s.SCLI_DESCRIPCION, direccion = s.SCLI_DIRECCION, distrito = s.SCLI_DISTRITO, ruc = s.SCLI_RUC, estado = s.FCLI_ESTADO }).ToList();
+                listClientes = clientes.Select(s => new ClienteDto { id_cliente = s.NCLI_ID, nombre = s.SCLI_NOMBRE, descripcion = s.SCLI_DESCRIPCION, direccion = s.SCLI_DIRECCION, distrito = s.SCLI_DISTRITO, ruc = s.SCLI_RUC, estado = s.FCLI_ESTADO }).ToList();
 
                 /*if (!listClientes.Any())
                     return ServiceResponse.Return404();*/
@@ -183,7 +183,8 @@ namespace MDS.Services.Cliente.Implementation
                     new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
                 };
 
-                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_CREATE_CLIENTE", parameters);
+                //int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_CREATE_CLIENTE", parameters);
+                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_CREATE_CLIENTE_SCTR", parameters);
 
                 dto.id_cliente = Convert.ToInt64(response);
 

@@ -73,10 +73,56 @@ namespace MDS.Api.Controllers
                 persona_reporta_empresa = model.persona_reporta_empresa,
                 persona_reporta_seguro = model.persona_reporta_seguro,
                 usuario_creacion = model.usuario_creacion,
+                id_clinica_primera_atencion = model.id_clinica_primera_atencion,
                 estado = model.estado
             };
 
             var response = await _atencionService.AddAtencion(dto);
+
+            return ReturnFormattedResponse(response);
+        }
+        
+        //By Henrry Torres
+        [HttpPut, Route("UpdateAtencion")]
+        public async Task<IActionResult> UpdateAtencion(UpdateAtencionViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelStateExtensions.GetErrorMessage(ModelState));
+
+            AtencionMtoDto dto = new AtencionMtoDto
+            {
+                id_atencion = model.id_atencion,
+                id_persona = model.id_persona,
+                id_clinica = model.id_clinica,
+                id_empresa = model.id_empresa,
+                id_motivo = model.id_motivo,
+                id_plan = model.id_plan,
+                horario_trabajo = model.horario_trabajo,
+                cargo = model.cargo,
+                relato = model.relato,
+                fecha_accidente = model.fecha_accidente,
+                hora_accidente = model.hora_accidente,
+                observacion = model.observacion,
+                primera_atencion = model.primera_atencion,
+                metodo_validacion = model.metodo_validacion,
+                hoja_atencion = model.hoja_atencion,
+                ubigeo = model.ubigeo,
+                skill = model.skill,
+                motivo_skill = model.motivo_skill,
+                centro_clinico = model.centro_clinico,
+                empresa = model.empresa,
+                corredor_seguro = model.corredor_seguro,
+                paciente_asegurado = model.paciente_asegurado,
+                persona_reporta_clinica = model.persona_reporta_clinica,
+                persona_reporta_asegurado = model.persona_reporta_asegurado,
+                persona_reporta_empresa = model.persona_reporta_empresa,
+                persona_reporta_seguro = model.persona_reporta_seguro,
+                usuario_creacion = model.usuario_modificacion,
+                id_clinica_primera_atencion = model.id_clinica_primera_atencion,
+                estado = model.estado
+            };
+
+            var response = await _atencionService.UpdateAtencion(dto);
 
             return ReturnFormattedResponse(response);
         }

@@ -5,7 +5,7 @@ namespace MDS.Api.Models
     public class CreatePersonaViewModel
     {
         //[Required]
-        public int? CPER_IDPERSONA { get; set; }
+        public int? CPER_ID { get; set; }
         //[Required]
         public int? CPAI_IDPAIS { get; set; }
         //[Required]
@@ -17,7 +17,9 @@ namespace MDS.Api.Models
         [Required]
         public string apellido_materno { get; set; }
         [Required]
-        public string dni { get; set; }
+        public string tipo_documento { get; set; }
+        [Required]
+        public string numero_documento { get; set; }
         //[Required]
         public DateTime fecha_nacimiento { get; set; }
         //[Required]

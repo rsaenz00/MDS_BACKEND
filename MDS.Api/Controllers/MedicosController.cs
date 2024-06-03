@@ -51,7 +51,7 @@ namespace MDS.Api.Controllers.Test
 
             MantenimientoMedicoDto dto = new MantenimientoMedicoDto
             {
-                id_persona = model.CPER_IDPERSONA,
+                id_persona = model.CPER_ID,
                 id_servicionegocio = model.CSER_IDSERVICIO_NEGOCIO,
                 id_medicoparticular = model.CPAR_IDMEDICO_PARTICULAR,
                 id_especialiadad = model.CESP_IDESPECIALIDAD,

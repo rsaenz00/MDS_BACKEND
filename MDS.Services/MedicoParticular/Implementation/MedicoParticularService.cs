@@ -82,7 +82,7 @@ namespace MDS.Services.MedicoParticular.Implementation
                     new SqlParameter("@SMED_DESCRIPCION", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.descripcion },
                     new SqlParameter("@SMED_TELEFONO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.telefono },
                     new SqlParameter("@SMED_EMAIL", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.email },
-                    new SqlParameter("@FMED_EMAIL_CULMINACION", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.email_culminacion },
+                    new SqlParameter("@SMED_EMAIL_CULMINACION", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.email_culminacion },
                     new SqlParameter("@FMED_ENVIAR_EMAIL", SqlDbType.Bit) {Direction = ParameterDirection.Input, Value = dto.enviar_email },
                     new SqlParameter("@FMED_FLG_PROVEEDOR_DRMAS", SqlDbType.Bit) {Direction = ParameterDirection.Input, Value = dto.flg_proveedor_drmas},
                     new SqlParameter("@SMED_NOM_USU", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.nom_usu},

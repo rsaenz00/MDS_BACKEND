@@ -5,7 +5,7 @@ namespace MDS.Api.Models
     public class CreateMedicoViewModel
     {
         [Required]
-        public int CPER_IDPERSONA { get; set; }
+        public int CPER_ID { get; set; }
         [Required]
         public int CSER_IDSERVICIO_NEGOCIO { get; set; }
         [Required]

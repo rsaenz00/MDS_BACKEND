@@ -4,15 +4,15 @@ namespace MDS.DbContext.Entities
 {
     public class Medico
     {
-        public long CMED_IDMEDICO { get; set; }
-        public long CPER_IDPERSONA { get; set; }
+        public long CMED_ID { get; set; }
+        public long CPER_ID { get; set; }
         public int CESP_IDESPECIALIDAD { get; set; }
         public bool FMED_ESTADO { get; set; }
     }
     public class MantenimientoMedico
     {
-        public long CMED_IDMEDICO { get; set; }
-        public long CPER_IDPERSONA { get; set; }
+        public long CMED_ID { get; set; }
+        public long CPER_ID { get; set; }
         public int CSER_IDSERVICIO_NEGOCIO { get; set; }
         public int CPAR_IDMEDICO_PARTICULAR { get; set; }
         public int CESP_IDESPECIALIDAD { get; set; }

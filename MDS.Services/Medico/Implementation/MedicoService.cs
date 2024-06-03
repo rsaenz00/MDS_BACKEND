@@ -28,7 +28,7 @@ namespace MDS.Services.Medico.Implementation
 
                 List<MedicoDto> listMedico = new List<MedicoDto>();
 
-                listMedico = medicos.Select(m => new MedicoDto { id_medico = m.CMED_IDMEDICO, id_persona = m.CPER_IDPERSONA, id_especialidad = m.CESP_IDESPECIALIDAD, estado = m.FMED_ESTADO }).ToList();
+                listMedico = medicos.Select(m => new MedicoDto { id_medico = m.CMED_ID, id_persona = m.CPER_ID, id_especialidad = m.CESP_IDESPECIALIDAD, estado = m.FMED_ESTADO }).ToList();
 
                 if (!medicos.Any())
                     return ServiceResponse.ReturnResultWith204();
@@ -59,7 +59,7 @@ namespace MDS.Services.Medico.Implementation
 
                 List<MedicoDto> listMedico = new List<MedicoDto>();
 
-                listMedico = medicos.Select(m => new MedicoDto { id_medico = m.CMED_IDMEDICO, id_persona = m.CPER_IDPERSONA, id_especialidad = m.CESP_IDESPECIALIDAD, estado = m.FMED_ESTADO }).ToList();
+                listMedico = medicos.Select(m => new MedicoDto { id_medico = m.CMED_ID, id_persona = m.CPER_ID, id_especialidad = m.CESP_IDESPECIALIDAD, estado = m.FMED_ESTADO }).ToList();
 
                 if (!medicos.Any())
                     return ServiceResponse.Return404();
@@ -80,7 +80,7 @@ namespace MDS.Services.Medico.Implementation
             {
                 SqlParameter[] parameters =
                 {
-                    new SqlParameter("@CPER_IDPERSONA", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.id_persona },
+                    new SqlParameter("@CPER_ID", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.id_persona },
                     new SqlParameter("@CSER_IDSERVICIO_NEGOCIO", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.id_servicionegocio },
                     new SqlParameter("@CPAR_IDMEDICO_PARTICULAR", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.id_medicoparticular },
                     new SqlParameter("@CESP_IDESPECIALIDAD", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.id_especialiadad },

@@ -17,6 +17,9 @@ namespace MDS.Services.Atencion
         Task<ServiceResponse> AddAtencion(AtencionMtoDto dto);
 
         //By Henrry Torres
+        Task<ServiceResponse> UpdateAtencion(AtencionMtoDto dto);
+
+        //By Henrry Torres
         Task<ServiceResponse> DeleteAtencion(AtencionMtoDto dto);
     }
 }

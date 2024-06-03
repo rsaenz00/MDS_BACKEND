@@ -3,7 +3,8 @@
     public class PacienteDto
     {
         public long id_paciente { get; set; }
-        public string dni { get; set; }
+        public string numero_documento { get; set; }
+        public string tipo_documento { get; set; }
         public string nombres { get; set; }
         public string apellido_paterno { get; set; }
         public string apellido_materno { get; set; }

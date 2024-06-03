@@ -120,6 +120,7 @@ namespace MDS.Services.Atencion.Implementation
                     fecha_nacimiento = s.fecha_nacimiento,
                     edad = s.edad,
                     sexo = s.sexo,
+                    celular = s.celular,
                     documento_identidad = s.documento_identidad,
                     numero_documento_id = s.numero_documento_id,
                     fecha_creacion = s.fecha_creacion,
@@ -138,7 +139,17 @@ namespace MDS.Services.Atencion.Implementation
                     tipo_pase_atencion = s.tipo_pase_atencion,
                     motivo = s.motivo,
                     observacion = s.observacion,
-                    ipress_primera_ate = s.ipress_primera_ate
+                    ipress_primera_ate = s.ipress_primera_ate,
+                    id_clinica = s.id_clinica,
+                    persona_reporta = s.persona_reporta,
+                    id_cliente = s.id_cliente,
+                    id_motivo = s.id_motivo,
+                    numero_atencion = s.numero_atencion,
+                    metodo_validacion = s.metodo_validacion,
+                    hoja_atencion = s.hoja_atencion,
+                    id_plan = s.id_plan,
+                    skill = s.skill,
+                    motivo_skill = s.motivo_skill
                 }).ToList();
 
                 if (!Atencions.Any())
@@ -185,11 +196,65 @@ namespace MDS.Services.Atencion.Implementation
                     new SqlParameter("@isPersonaReportaSeguro", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.persona_reporta_seguro },
                     new SqlParameter("@isPersonaReportaAsegurado", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.persona_reporta_asegurado },
                     new SqlParameter("@inCodigoUsuario", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.usuario_creacion },
+                    new SqlParameter("@inCodigoClinicaPrimeraAtencion", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.id_clinica_primera_atencion },
                     new SqlParameter("@inEstado", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.estado },
                     new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
                 };
 
                 int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_ADD_ATENCION", parameters);
+
+                dto.id_atencion = Convert.ToInt64(response);
+
+                return ServiceResponse.ReturnResultWith201(dto);
+
+            }
+            catch (Exception e)
+            {
+                //_logger.Error(e);
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By Henrry Torres
+        public async Task<ServiceResponse> UpdateAtencion(AtencionMtoDto dto)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@inCodigoAtencion", SqlDbType.BigInt) {Direction = ParameterDirection.Input, Value = dto.id_atencion },
+                    new SqlParameter("@inCodigoPersona", SqlDbType.BigInt) {Direction = ParameterDirection.Input, Value = dto.id_persona },
+                    new SqlParameter("@inCodigoEmpresa", SqlDbType.BigInt) {Direction = ParameterDirection.Input, Value = dto.id_empresa },
+                    new SqlParameter("@inCodigoClinica", SqlDbType.BigInt) {Direction = ParameterDirection.Input, Value = dto.id_clinica },
+                    new SqlParameter("@inCodigoMotivo", SqlDbType.BigInt) {Direction = ParameterDirection.Input, Value = dto.id_motivo },
+                    new SqlParameter("@inCodigoPlan", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.id_plan },
+                    new SqlParameter("@isHorarioTrabajo", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.horario_trabajo },
+                    new SqlParameter("@isCargo", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.cargo },
+                    new SqlParameter("@isRelato", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.relato },
+                    new SqlParameter("@isFechaAccidente", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.fecha_accidente },
+                    new SqlParameter("@isHoraAccidente", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.hora_accidente },
+                    new SqlParameter("@isObservacion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.observacion },
+                    new SqlParameter("@isPrimeraAtencion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.primera_atencion },
+                    new SqlParameter("@isMetodoValidacion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.metodo_validacion },
+                    new SqlParameter("@isHojaAtencion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.hoja_atencion },
+                    new SqlParameter("@isUbigeo", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.ubigeo },
+                    new SqlParameter("@isSkill", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.skill },
+                    new SqlParameter("@isMotivoSkill", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.motivo_skill },
+                    new SqlParameter("@isCentroClinico", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.centro_clinico },
+                    new SqlParameter("@isEmpresa", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.empresa },
+                    new SqlParameter("@isCorredorSeguro", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.corredor_seguro },
+                    new SqlParameter("@isPacienteAsegurado", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.paciente_asegurado },
+                    new SqlParameter("@isPersonaReportaClinica", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.persona_reporta_clinica },
+                    new SqlParameter("@isPersonaReportaEmpresa", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.persona_reporta_empresa },
+                    new SqlParameter("@isPersonaReportaSeguro", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.persona_reporta_seguro },
+                    new SqlParameter("@isPersonaReportaAsegurado", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.persona_reporta_asegurado },
+                    new SqlParameter("@inCodigoUsuario", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.usuario_creacion },
+                    new SqlParameter("@inCodigoClinicaPrimeraAtencion", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.id_clinica_primera_atencion },
+                    new SqlParameter("@inEstado", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.estado },
+                    new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
+                };
+
+                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_UPDATE_ATENCION", parameters);
 
                 dto.id_atencion = Convert.ToInt64(response);
 
