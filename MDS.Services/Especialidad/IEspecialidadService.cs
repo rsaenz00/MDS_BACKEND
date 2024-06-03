@@ -13,10 +13,13 @@ namespace MDS.Services.Especialidad
 {
     public interface IEspecialidadService : IService
     {
+        //By William Vilca
         Task<ServiceResponse> GetEspecialidades();
 
+        //By William Vilca
         Task<ServiceResponse> GetEspecialidad(string especialidadId);
 
+        //By William Vilca
         Task<ServiceResponse> AddEspecialidad(MantenimientoEspecialidadDto dto);
     }
 }

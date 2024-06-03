@@ -14,10 +14,13 @@ namespace MDS.Services.ServicioNegocio
 {
     public interface IServicioNegocio : IService
     {
+        //By William Vilca
         Task<ServiceResponse> GetServicioNegocios();
 
+        //By William Vilca
         Task<ServiceResponse> GetServicioNegocio(long servicioId);
 
+        //By William Vilca
         Task<ServiceResponse> AddServicioNegocio(MantenimientoServicioNegocioDto dto);
 
     }

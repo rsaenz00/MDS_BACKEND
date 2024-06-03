@@ -1,7 +1,11 @@
-﻿using MDS.Api.Infrastructure;
+﻿using Azure;
+using MDS.Api.Infrastructure;
 using MDS.Api.Models;
 using MDS.Api.Utility.Extensions;
+using MDS.DbContext.Entities;
 using MDS.Dto;
+using MDS.Infrastructure.DbUtility;
+using MDS.Services;
 using MDS.Services.Periodo;
 using MDS.Utility.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -22,6 +26,7 @@ namespace MDS.Api.Controllers
             _periodoService = periodoService;
         }
 
+        //By William Vilca
         [HttpGet, Route("GetPeriodos")]
         public async Task<IActionResult> GetPeriodos()
         {
@@ -30,7 +35,6 @@ namespace MDS.Api.Controllers
             return ReturnFormattedResponse(response);
         }
 
-
         [HttpGet, Route("GetPeriodo")]
         public async Task<IActionResult> GetPeriodo(long periodoId)
         {
@@ -38,7 +42,6 @@ namespace MDS.Api.Controllers
 
             return ReturnFormattedResponse(response);
         }
-
 
         [HttpPost, Route("AddPeriodo")]
         public async Task<IActionResult> AddPeriodo(CreatePeriodoViewModel model)

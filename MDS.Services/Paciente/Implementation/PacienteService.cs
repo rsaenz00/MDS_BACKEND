@@ -17,6 +17,7 @@ namespace MDS.Services.Paciente.Implementation
             _uow = uow;
         }
 
+        //By William Vilca
         public async Task<ServiceResponse> GetPacientes()
         {
             try
@@ -41,7 +42,37 @@ namespace MDS.Services.Paciente.Implementation
             }
         }
 
+        //By Henrry Torres
+        public async Task<ServiceResponse> GetPacientesFiltro(string busqueda, string condicion)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@isTextoBusqueda", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = busqueda },
+                    new SqlParameter("@isCondicion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = condicion },
+                };
 
+                List<DbContext.Entities.PacienteFiltro> clinicas = new List<DbContext.Entities.PacienteFiltro>();
+
+                clinicas = await _uow.ExecuteStoredProcByParam<DbContext.Entities.PacienteFiltro>("SPRMDS_LIST_PACIENTE_FILTRO", parameters);
+
+                List<PacienteDto> listClinicas = new List<PacienteDto>();
+
+                listClinicas = clinicas.Select(s => new PacienteDto { id_paciente = s.CPAC_IDPACIENTE, dni = s.SPER_DNI, nombres = s.SPER_NOMBRES, apellido_paterno = s.SPER_APELLIDO_PATERNO, apellido_materno = s.SPER_APELLIDO_MATERNO, sexo = s.SPER_GENERO, fecha_nacimiento = s.DPER_FECHA_NACIMIENTO, movil = s.SPER_TELEFONO_CELULAR }).ToList();
+
+                /*if (!listClinicas.Any())
+                    return ServiceResponse.Return404();*/
+
+                return ServiceResponse.ReturnResultWith200(listClinicas);
+            }
+            catch (Exception e)
+            {
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By William Vilca
         public async Task<ServiceResponse> GetPaciente(string pacienteId)
         {
             try
@@ -71,8 +102,6 @@ namespace MDS.Services.Paciente.Implementation
                 return ServiceResponse.Return500(e);
             }
         }
-
-
 
         public async Task<ServiceResponse> AddPaciente(MantenimientoPacienteDto dto)
         {

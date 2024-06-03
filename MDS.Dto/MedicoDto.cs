@@ -2,8 +2,6 @@
 {
     public class MedicoDto
     {
-        public int id_medico { get; set; }
-        public int id_persona { get; set; }
         public int id_especialidad { get; set; }
 
         public bool estado { get; set; }
@@ -11,11 +9,6 @@
     public class MantenimientoMedicoDto
     {
         public long id_medico { get; set; }
-
-        public int id_persona { get; set; }
-
-        public int id_servicionegocio{ get; set; }
-
         public int id_medicoparticular { get; set; }
 
         public int id_especialiadad { get; set; }

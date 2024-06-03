@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MDS.Api.Controllers
 {
+
     //[Authorize]
     [ApiController]
     [Route("api/[controller]")]
@@ -26,6 +27,7 @@ namespace MDS.Api.Controllers
 
         }
 
+        //By William Vilca
         [HttpGet, Route("GetClientes")]
         public async Task<IActionResult> GetClientes()
         {
@@ -34,8 +36,6 @@ namespace MDS.Api.Controllers
             return ReturnFormattedResponse(response);
         }
 
-
-
         [HttpGet, Route("GetConsultaCliente")]
         public async Task<IActionResult> GetConsultaCliente(string vCondicion,string vBusqueda)
         {
@@ -43,7 +43,6 @@ namespace MDS.Api.Controllers
 
             return ReturnFormattedResponse(response);
         }
-
 
         [HttpPost, Route("AddCliente")]
         public async Task<IActionResult> AddCliente(CreateClienteViewModel model)
@@ -55,11 +54,9 @@ namespace MDS.Api.Controllers
 
             {
                 estado = model.FCLI_ESTADO,
-                nombre = model.SCLI_NOMBRE,
                 descripcion = model.SCLI_DESCRIPCION,
                 direccion = model.SCLI_DIRECCION,
                 distrito = model.SCLI_DISTRITO,
-                ruc = model.SCLI_RUC,
                 dscto_ped = model.NCLI_DSCTO_PED,
                 factor_lab = model.NCLI_FACTOR_LAB,
                 dscto_lab = model.NCLI_DSCTO_LAB,
@@ -92,7 +89,6 @@ namespace MDS.Api.Controllers
                 dias_credito = model.NCLI_DIAS_CREDITO,
                 flg_capitado = model.FCLI_FLG_CAPITADO,
                 visible_home_care = model.FCLI_VISIBLE_HOME_CARE,
-                usuario_creacion = model.NCLI_USUARIO_CREACION,
                 fecha_creacion = model.DCLI_FECHA_CREACION,
                 usuario_modificacion = model.NCLI_USUARIO_MODIFICACION,
                 fecha_modificacion = model.DCLI_FECHA_MODIFICACION
@@ -112,6 +108,25 @@ namespace MDS.Api.Controllers
             return ReturnFormattedResponse(response);
         }
 
+        //By Henrry Torres
+        [HttpPost, Route("AddClienteSctr")]
+        public async Task<IActionResult> AddClienteSctr(CreateClienteSctrViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelStateExtensions.GetErrorMessage(ModelState));
+
+            MantenimientoCliente_SctrDto dto = new MantenimientoCliente_SctrDto
+            {
+                nombre = model.SCLI_NOMBRE,
+                ruc = model.SCLI_RUC,
+                estado = model.FCLI_ESTADO,
+                usuario_creacion = model.NCLI_USUARIO_CREACION
+            };
+
+            var response = await _clienteService.AddClienteSctr(dto);
+
+            return ReturnFormattedResponse(response);
+        }
 
     }
 }

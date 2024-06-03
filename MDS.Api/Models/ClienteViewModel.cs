@@ -104,4 +104,22 @@ namespace MDS.Api.Models
         public DateTime DCLI_FECHA_MODIFICACION { get; set; }
 
     }
+
+    public class CreateClienteSctrViewModel
+    {
+
+        [Required]
+        public bool FCLI_ESTADO { get; set; }
+
+        [Required]
+        public string? SCLI_NOMBRE { get; set; }
+        [Required]
+
+        public string? SCLI_RUC { get; set; }
+
+        [Required]
+        public int NCLI_USUARIO_CREACION { get; set; }
+
+    }
+
 }

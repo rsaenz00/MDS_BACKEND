@@ -13,8 +13,16 @@ namespace MDS.Services.Paciente
 {
     public interface IPacienteService : IService
     {
+        //By William Vilca
         Task<ServiceResponse> GetPacientes();
+
+        //By Henrry Torres
+        Task<ServiceResponse> GetPacientesFiltro(string busqueda, string condicion);
+
+        //By William Vilca
         Task<ServiceResponse> GetPaciente(string pacienteId);
+
+        //By William Vilca
         Task<ServiceResponse> AddPaciente(MantenimientoPacienteDto dto);
     }
 }

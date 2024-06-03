@@ -2,10 +2,6 @@
 {
     public class Paciente
     {
-        public string? CPAC_IDPACIENTE { get; set; }
-
-        public int CPER_IDPERSONA { get; set; }
-
         public int CSER_IDSERVICIO { get; set; }
 
         public bool FPAC_ESTADO { get; set; }
@@ -14,11 +10,6 @@
 
     public class MantenimientoPaciente
     {
-
-        public int CPER_IDPERSONA { get; set; }
-
-        public int CSER_IDSERVICIO { get; set; }
-
         public DateTime DPAC_FINC { get; set; }
 
         public string SPAC_COD_PAR { get; set; }
@@ -82,6 +73,18 @@
         public int NPAC_USUARIO_MODIFICACION { get; set; }
 
         public DateTime DPAC_FECHA_MODIFICACION { get; set; }
+    }
 
+    public class PacienteFiltro
+    {
+        public long CPAC_IDPACIENTE { get; set; }
+        public string SPER_DNI { get; set; }
+        public string SPER_NOMBRES { get; set; }
+        public string SPER_APELLIDO_PATERNO { get; set; }
+        public string SPER_APELLIDO_MATERNO { get; set; }
+        public string SPER_GENERO { get; set; }
+        //public string DPER_FECHA_NACIMIENTO { get; set; }
+        public DateTime DPER_FECHA_NACIMIENTO { get; set; }
+        public string SPER_TELEFONO_CELULAR { get; set; }
     }
 }

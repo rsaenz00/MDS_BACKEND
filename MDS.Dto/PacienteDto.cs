@@ -2,21 +2,12 @@
 {
     public class PacienteDto
     {
-        public string? id_paciente { get; set; }
-
-        public int id_persona { get; set; }
-
-        public int id_servicio { get; set; }
-
-        public bool estado { get; set; }
     }
 
     public class MantenimientoPacienteDto
     {
 
         public long Id_paciente { get; set; }
-        public int id_persona { get; set; }
-
         public int id_servicio { get; set; }
 
         public DateTime finc { get; set; }

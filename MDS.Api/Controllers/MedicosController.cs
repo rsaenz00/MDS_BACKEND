@@ -24,6 +24,7 @@ namespace MDS.Api.Controllers.Test
             _medicoService = medicoService;
         }
 
+        //By William Vilca
         [HttpGet, Route("GetMedicos")]
         public async Task<IActionResult> GetMedicos()
         {
@@ -32,8 +33,6 @@ namespace MDS.Api.Controllers.Test
             return ReturnFormattedResponse(response);
         }
 
-        //----------------------------------------------------------------------------------
-
         [HttpGet, Route("GetMedico")]
         public async Task<IActionResult> GetMedico(long medicoId)
         {
@@ -41,8 +40,6 @@ namespace MDS.Api.Controllers.Test
 
             return ReturnFormattedResponse(response);
         }
-
-        //----------------------------------------------------------------------------------
 
         [HttpPost, Route("AddMedico")]
         public async Task<IActionResult> AddMedico(CreateMedicoViewModel model)

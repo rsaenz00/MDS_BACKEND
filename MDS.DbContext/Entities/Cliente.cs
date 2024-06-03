@@ -3,8 +3,7 @@
 
     public class Cliente
     {
-        
-        public long NCLI_IDCLIENTE { get; set; }
+        public long NCLI_ID { get; set; }
 
         public string? SCLI_NOMBRE { get; set; }
 
@@ -16,9 +15,8 @@
 
         public string? SCLI_RUC { get; set; }
 
+
         public bool FCLI_ESTADO { get; set; }
-
-
     }
 
 
@@ -26,7 +24,7 @@
     {
         public bool FCLI_ESTADO { get; set; }
 
-        public long NCLI_IDCLIENTE { get; set; }
+        public long NCLI_ID { get; set; }
 
         public string? SCLI_NOMBRE { get; set; }
 
@@ -114,6 +112,23 @@
 
         public DateTime DCLI_FECHA_MODIFICACION { get; set; }
 
+    }
+
+    public class MantenimientoCliente_SCTR
+    {
+        public long NCLI_ID { get; set; }
+
+        public string? SCLI_NOMBRE { get; set; }
+
+        public string? SCLI_RUC { get; set; }
+
+
+        public bool FCLI_ESTADO { get; set; }
+
+        public int NCLI_USUARIO_CREACION { get; set; }
+
+
 
     }
+
 }

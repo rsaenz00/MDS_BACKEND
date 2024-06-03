@@ -15,7 +15,6 @@ using MDS.DbContext.Entities;
 using System.Numerics;
 using MDS.Infrastructure.Helper;
 
-
 namespace MDS.Services.Blog.Implementation
 {
     public class BlogService : IBlogService

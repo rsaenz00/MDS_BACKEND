@@ -12,10 +12,16 @@ namespace MDS.Services.Persona
 {
     public interface IPersonaService : IService
     {
+        //By William Vilca
         Task<ServiceResponse> GetPersonas();
 
+        //By William Vilca
         Task<ServiceResponse> GetPersona(long personaId);
 
+        //By William Vilca
         Task<ServiceResponse> AddPersona(MantenimientoPersonaDto dto);
+
+        //By Henrry Torres
+        Task<ServiceResponse> AddPersonaSctr(MantenimientoPersonaDto dto);
     }
 }

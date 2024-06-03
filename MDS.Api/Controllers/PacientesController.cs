@@ -21,6 +21,7 @@ namespace MDS.Api.Controllers.Test
             _pacienteService = pacienteService;
         }
 
+        //By William Vilca
         [HttpGet, Route("GetPacientes")]
         public async Task<IActionResult> GetPacientes()
         {
@@ -29,8 +30,11 @@ namespace MDS.Api.Controllers.Test
             return ReturnFormattedResponse(response);
         }
 
-        //----------------------------------------------------------------------------------
 
+            return ReturnFormattedResponse(response);
+        }
+
+        //By William Vilca
         [HttpGet, Route("GetPaciente")]
         public async Task<IActionResult> GetPaciente(string pacienteId)
         {
@@ -38,8 +42,6 @@ namespace MDS.Api.Controllers.Test
 
             return ReturnFormattedResponse(response);
         }
-
-        //----------------------------------------------------------------------------------
 
         [HttpPost, Route("AddPaciente")]
         public async Task<IActionResult> AddPaciente(CreatePacienteViewModel model)
@@ -49,7 +51,6 @@ namespace MDS.Api.Controllers.Test
 
             MantenimientoPacienteDto dto = new MantenimientoPacienteDto
             {
-                id_persona = model.CPER_IDPERSONA,
                 id_servicio = model.CSER_IDSERVICIO,
                 finc= model.DPAC_FINC,
                 cod_par = model.SPAC_COD_PAR,

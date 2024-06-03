@@ -5,7 +5,6 @@
     {
         public long id_cliente { get; set; }
 
-        
         public string? nombre { get; set; }
 
         public string? descripcion { get; set; }
@@ -15,10 +14,7 @@
         public string? distrito { get; set; }
 
         public string? ruc { get; set; }
-
-
         public bool estado { get; set; }
-
     }
 
 
@@ -115,7 +111,29 @@
 
         public DateTime fecha_modificacion { get; set; }
 
+    }
+
+
+    public class MantenimientoCliente_SctrDto
+    {
+
+        public long id_cliente { get; set; }
+
+        public string? nombre { get; set; }
+
+        public string? ruc { get; set; }
+
+
+        public bool estado { get; set; }
+
+
+        public int usuario_creacion { get; set; }
+
+
+
 
 
     }
+
+
 }

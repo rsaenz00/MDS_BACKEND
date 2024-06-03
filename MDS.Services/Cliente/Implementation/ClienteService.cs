@@ -1,9 +1,11 @@
 ﻿using MDS.Dto;
 using MDS.Infrastructure.DbUtility;
+using Microsoft.Data.SqlClient;
 using System.Data;
 using MDS.Infrastructure.Helper;
-using Microsoft.Data.SqlClient;
 using MDS.DbContext.Entities;
+using MDS.Services;
+
 
 namespace MDS.Services.Cliente.Implementation
 {
@@ -17,6 +19,7 @@ namespace MDS.Services.Cliente.Implementation
             _uow = uow;
         }
 
+        //By William Vilca
         public async Task<ServiceResponse> GetClientes()
         {
             try
@@ -27,7 +30,7 @@ namespace MDS.Services.Cliente.Implementation
 
                 List<ClienteDto> listCliente = new List<ClienteDto>();
 
-                listCliente = clientes.Select(c => new ClienteDto { id_cliente = c.NCLI_IDCLIENTE, nombre = c.SCLI_NOMBRE, descripcion = c.SCLI_DESCRIPCION, direccion = c.SCLI_DIRECCION, distrito = c.SCLI_DISTRITO, ruc = c.SCLI_RUC, estado = c.FCLI_ESTADO }).ToList();
+                listCliente = clientes.Select(c => new ClienteDto { id_cliente = c.NCLI_ID, nombre = c.SCLI_NOMBRE, descripcion = c.SCLI_DESCRIPCION, direccion = c.SCLI_DIRECCION, distrito = c.SCLI_DISTRITO, ruc = c.SCLI_RUC, estado = c.FCLI_ESTADO }).ToList();
 
                 if (!clientes.Any())
                     return ServiceResponse.ReturnResultWith204();
@@ -40,7 +43,6 @@ namespace MDS.Services.Cliente.Implementation
                 return ServiceResponse.Return500(e);
             }
         }
-
 
         public async Task<ServiceResponse> GetConsultaCliente(string vCondicion,string vBusqueda)
         {
@@ -60,7 +62,7 @@ namespace MDS.Services.Cliente.Implementation
 
                 List<ClienteDto> listCliente = new List<ClienteDto>();
 
-                listCliente = clientes.Select(c => new ClienteDto { id_cliente = c.NCLI_IDCLIENTE, nombre = c.SCLI_NOMBRE, descripcion = c.SCLI_DESCRIPCION, direccion = c.SCLI_DIRECCION,distrito = c.SCLI_DISTRITO,ruc = c.SCLI_RUC, estado = c.FCLI_ESTADO }).ToList();
+                listCliente = clientes.Select(c => new ClienteDto { id_cliente = c.NCLI_ID, nombre = c.SCLI_NOMBRE, descripcion = c.SCLI_DESCRIPCION, direccion = c.SCLI_DIRECCION,distrito = c.SCLI_DISTRITO,ruc = c.SCLI_RUC, estado = c.FCLI_ESTADO }).ToList();
 
                 if (!listCliente.Any())
                     return ServiceResponse.Return404();
@@ -74,6 +76,7 @@ namespace MDS.Services.Cliente.Implementation
             }
         }
 
+        //By William Vilca
         public async Task<ServiceResponse> AddCliente(MantenimientoClienteDto dto)
         {
             try
@@ -148,8 +151,8 @@ namespace MDS.Services.Cliente.Implementation
             {
                 SqlParameter[] parameters =
                 {
-                            new SqlParameter("@isRuc", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = ruc },
-                        };
+                    new SqlParameter("@isRuc", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = ruc },
+                };
 
                 List<DbContext.Entities.Cliente> clientes = new List<DbContext.Entities.Cliente>();
 
@@ -157,12 +160,40 @@ namespace MDS.Services.Cliente.Implementation
 
                 List<ClienteDto> listClientes = new List<ClienteDto>();
 
-                listClientes = clientes.Select(s => new ClienteDto { id_cliente = s.NCLI_IDCLIENTE, nombre = s.SCLI_NOMBRE, descripcion = s.SCLI_DESCRIPCION, direccion = s.SCLI_DIRECCION, distrito = s.SCLI_DISTRITO, ruc = s.SCLI_RUC, estado = s.FCLI_ESTADO }).ToList();
+                listClientes = clientes.Select(s => new ClienteDto { id_cliente = s.NCLI_ID, nombre = s.SCLI_NOMBRE, descripcion = s.SCLI_DESCRIPCION, direccion = s.SCLI_DIRECCION, distrito = s.SCLI_DISTRITO, ruc = s.SCLI_RUC, estado = s.FCLI_ESTADO }).ToList();
 
                 /*if (!listClientes.Any())
                     return ServiceResponse.Return404();*/
 
                 return ServiceResponse.ReturnResultWith200(listClientes);
+            }
+            catch (Exception e)
+            {
+                //_logger.Error(e);
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By Henrry Torres
+        public async Task<ServiceResponse> AddClienteSctr(MantenimientoCliente_SctrDto dto)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@SCLI_NOMBRE", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.nombre },
+                    new SqlParameter("@SCLI_RUC", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.ruc},
+                    new SqlParameter("@FCLI_ESTADO", SqlDbType.Bit) {Direction = ParameterDirection.Input, Value = dto.estado},
+                    new SqlParameter("@NCLI_USUARIO_CREACION", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.usuario_creacion },
+                    new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
+                };
+
+                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_CREATE_CLIENTE", parameters);
+
+                dto.id_cliente = Convert.ToInt64(response);
+
+                return ServiceResponse.ReturnResultWith201(dto);
+
             }
             catch (Exception e)
             {
