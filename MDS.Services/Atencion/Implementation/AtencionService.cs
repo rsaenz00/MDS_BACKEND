@@ -149,13 +149,61 @@ namespace MDS.Services.Atencion.Implementation
                     hoja_atencion = s.hoja_atencion,
                     id_plan = s.id_plan,
                     skill = s.skill,
-                    motivo_skill = s.motivo_skill
+                    motivo_skill = s.motivo_skill,
+                    id_clinica_primera_atencion = s.id_clinica_primera_atencion
                 }).ToList();
 
                 if (!Atencions.Any())
                     return ServiceResponse.ReturnResultWith204();
 
                 return ServiceResponse.ReturnResultWith200(listAtencions);
+            }
+            catch (Exception e)
+            {
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By Henrry Torres
+        public async Task<ServiceResponse> GetAtencionesFiltro(string fechaInicio, string fechaFin, string? busqueda = null, string? condicion = null)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@isFechaInicio", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = fechaInicio },
+                    new SqlParameter("@isFechaFin", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = fechaFin },
+                    new SqlParameter("@isTextoBusqueda", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = busqueda },
+                    new SqlParameter("@isCondicion", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = condicion },
+                };
+
+                List<DbContext.Entities.AtencionBandejaSctr> AtencionesSctr = new List<DbContext.Entities.AtencionBandejaSctr>();
+
+                List<AtencionBandejaDto> listAtenciones = new List<AtencionBandejaDto>();
+
+                AtencionesSctr = await _uow.ExecuteStoredProcByParam<DbContext.Entities.AtencionBandejaSctr>("SPRMDS_LIST_ATENCION_FILTRO", parameters);
+
+                listAtenciones = AtencionesSctr.Select(s => new AtencionBandejaDto
+                {
+                    cod_atencion = s.cod_atencion,
+                    tipo_atencion = s.tipo_atencion,
+                    estado = s.estado,
+                    fecha_creacion = s.fecha_creacion,
+                    hora_creacion = s.hora_creacion,
+                    documento_identidad = s.documento_identidad,
+                    numero = s.numero,
+                    paciente = s.paciente,
+                    fecha_nacimiento = s.fecha_nacimiento,
+                    clinica = s.clinica,
+                    empresa = s.empresa,
+                    empresa_ruc = s.empresa_ruc,
+                    usuario_creacion = s.usuario_creacion,
+                    motivo = s.motivo,
+                    plan = s.plan,
+                    skill = s.skill
+                }).ToList();
+
+                return ServiceResponse.ReturnResultWith200(listAtenciones);
             }
             catch (Exception e)
             {

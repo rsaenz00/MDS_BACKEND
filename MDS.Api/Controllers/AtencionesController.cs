@@ -39,6 +39,15 @@ namespace MDS.Api.Controllers
         }
 
         //By Henrry Torres
+        [HttpGet, Route("GetAtencionesFiltro")]
+        public async Task<IActionResult> GetAtencionesFiltro(string fechaInicio, string fechaFin, string? busqueda, string? condicion)
+        {
+            var response = await _atencionService.GetAtencionesFiltro(fechaInicio, fechaFin, busqueda, condicion);
+
+            return ReturnFormattedResponse(response);
+        }
+
+        //By Henrry Torres
         [HttpPost, Route("AddAtencion")]
         public async Task<IActionResult> AddAtencion(CreateAtencionViewModel model)
         {
@@ -81,7 +90,7 @@ namespace MDS.Api.Controllers
 
             return ReturnFormattedResponse(response);
         }
-        
+
         //By Henrry Torres
         [HttpPut, Route("UpdateAtencion")]
         public async Task<IActionResult> UpdateAtencion(UpdateAtencionViewModel model)

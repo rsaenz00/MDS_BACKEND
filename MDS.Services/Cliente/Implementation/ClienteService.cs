@@ -95,7 +95,6 @@ namespace MDS.Services.Cliente.Implementation
                     new SqlParameter("@SCLI_FLAG_TIPO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.flag_tipo },
                     new SqlParameter("@FCLI_ACTIVI_OPERACIONES", SqlDbType.Bit) {Direction = ParameterDirection.Input, Value = dto.activi_operaciones },
                     new SqlParameter("@NCLI_FACTOR_LAB_PROV", SqlDbType.Decimal) {Direction = ParameterDirection.Input, Value = dto.factor_lab_prov },
-                    new SqlParameter("@SCLI_COD_GRU_FACT", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.cod_gru_fact },
                     new SqlParameter("@FCLI_ACTIVO_FACT", SqlDbType.Bit) {Direction = ParameterDirection.Input, Value = dto.activo_fact },
                     new SqlParameter("@NCLI_RELACIONADO", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.relacionado },
                     new SqlParameter("@FCLI_ACTIVO_LAB", SqlDbType.Bit) {Direction = ParameterDirection.Input, Value = dto.activo_lab },

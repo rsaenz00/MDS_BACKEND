@@ -64,7 +64,6 @@ namespace MDS.Api.Controllers
                 flag_tipo = model.SCLI_FLAG_TIPO,
                 activi_operaciones = model.FCLI_ACTIVI_OPERACIONES,
                 factor_lab_prov = model.NCLI_FACTOR_LAB_PROV,
-                cod_gru_fact = model.SCLI_COD_GRU_FACT,
                 activo_fact = model.FCLI_ACTIVO_FACT,
                 relacionado = model.NCLI_RELACIONADO,
                 activo_lab = model.FCLI_ACTIVO_LAB,

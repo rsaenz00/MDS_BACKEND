@@ -35,8 +35,6 @@ namespace MDS.Api.Models
         //[Required]
         public decimal? NCLI_FACTOR_LAB_PROV { get; set; }
         //[Required]
-        public string? SCLI_COD_GRU_FACT { get; set; }
-        //[Required]
         public bool? FCLI_ACTIVO_FACT { get; set; }
         //[Required]
         public int? NCLI_RELACIONADO { get; set; }

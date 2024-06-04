@@ -33,6 +33,7 @@ namespace MDS.DbContext.Entities
         public string persona_reporta { get; set; }
         public long id_cliente { get; set; }
         public int? id_motivo { get; set; }
+        public int? id_clinica_primera_atencion { get; set; }
         public string numero_atencion { get; set; }
         public string metodo_validacion { get; set; }
         public Boolean hoja_atencion { get; set; }

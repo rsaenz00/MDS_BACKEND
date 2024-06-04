@@ -32,7 +32,6 @@ namespace MDS.DbContext.Entities
         public string? SCLI_FLAG_TIPO { get; set; }
         public bool FCLI_ACTIVI_OPERACIONES { get; set; }
         public decimal NCLI_FACTOR_LAB_PROV { get; set; }
-        public string? SCLI_COD_GRU_FACT { get; set; }
         public bool FCLI_ACTIVO_FACT { get; set; }
         public int NCLI_RELACIONADO { get; set; }
         public bool FCLI_ACTIVO_LAB { get; set; }

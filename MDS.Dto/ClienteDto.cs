@@ -29,7 +29,6 @@
         public string? flag_tipo { get; set; }
         public bool? activi_operaciones { get; set; }
         public decimal? factor_lab_prov { get; set; }
-        public string? cod_gru_fact { get; set; }
         public bool? activo_fact { get; set; }
         public int? relacionado { get; set; }
         public bool? activo_lab { get; set; }

@@ -14,6 +14,9 @@ namespace MDS.Services.Atencion
         Task<ServiceResponse> GetAtencionByCodigo(string cod_atencion);
 
         //By Henrry Torres
+        Task<ServiceResponse> GetAtencionesFiltro(string fechaInicio, string fechaFin, string busqueda, string condicion);
+
+        //By Henrry Torres
         Task<ServiceResponse> AddAtencion(AtencionMtoDto dto);
 
         //By Henrry Torres
