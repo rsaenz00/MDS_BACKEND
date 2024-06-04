@@ -20,36 +20,37 @@ namespace MDS.Api.Controllers
             _atencionService = atencionService;
         }
 
+        //SERVICIO SCTR
         //By Henrry Torres
-        [HttpGet, Route("GetAtencionByCodigo")]
-        public async Task<IActionResult> GetAtencionByCodigo(string cod_atencion)
+        [HttpGet, Route("GetAtencionSctrByCodigo")]
+        public async Task<IActionResult> GetAtencionSctrByCodigo(string cod_atencion)
         {
-            var response = await _atencionService.GetAtencionByCodigo(cod_atencion);
+            var response = await _atencionService.GetAtencionSctrByCodigo(cod_atencion);
 
             return ReturnFormattedResponse(response);
         }
 
         //By Henrry Torres
-        [HttpGet, Route("GetAtencionesBandeja")]
-        public async Task<IActionResult> GetAtencionesBandeja(string fechaInicio, string fechaFin, string condicion)
+        [HttpGet, Route("GetAtencionesSctrBandeja")]
+        public async Task<IActionResult> GetAtencionesSctrBandeja(string fechaInicio, string fechaFin, string condicion)
         {
-            var response = await _atencionService.GetAtencionesBandeja(fechaInicio, fechaFin, condicion);
+            var response = await _atencionService.GetAtencionesSctrBandeja(fechaInicio, fechaFin, condicion);
 
             return ReturnFormattedResponse(response);
         }
 
         //By Henrry Torres
-        [HttpGet, Route("GetAtencionesFiltro")]
-        public async Task<IActionResult> GetAtencionesFiltro(string fechaInicio, string fechaFin, string? busqueda, string? condicion)
+        [HttpGet, Route("GetAtencionesSctrFiltro")]
+        public async Task<IActionResult> GetAtencionesSctrFiltro(string fechaInicio, string fechaFin, string? busqueda, string? condicion)
         {
-            var response = await _atencionService.GetAtencionesFiltro(fechaInicio, fechaFin, busqueda, condicion);
+            var response = await _atencionService.GetAtencionesSctrFiltro(fechaInicio, fechaFin, busqueda, condicion);
 
             return ReturnFormattedResponse(response);
         }
 
         //By Henrry Torres
-        [HttpPost, Route("AddAtencion")]
-        public async Task<IActionResult> AddAtencion(CreateAtencionViewModel model)
+        [HttpPost, Route("AddAtencionSctr")]
+        public async Task<IActionResult> AddAtencionSctr(CreateAtencionViewModel model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelStateExtensions.GetErrorMessage(ModelState));
@@ -86,14 +87,14 @@ namespace MDS.Api.Controllers
                 estado = model.estado
             };
 
-            var response = await _atencionService.AddAtencion(dto);
+            var response = await _atencionService.AddAtencionSctr(dto);
 
             return ReturnFormattedResponse(response);
         }
 
         //By Henrry Torres
-        [HttpPut, Route("UpdateAtencion")]
-        public async Task<IActionResult> UpdateAtencion(UpdateAtencionViewModel model)
+        [HttpPut, Route("UpdateAtencionSctr")]
+        public async Task<IActionResult> UpdateAtencionSctr(UpdateAtencionViewModel model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelStateExtensions.GetErrorMessage(ModelState));
@@ -131,14 +132,14 @@ namespace MDS.Api.Controllers
                 estado = model.estado
             };
 
-            var response = await _atencionService.UpdateAtencion(dto);
+            var response = await _atencionService.UpdateAtencionSctr(dto);
 
             return ReturnFormattedResponse(response);
         }
 
         //By Henrry Torres
-        [HttpDelete, Route("DeleteAtencion")]
-        public async Task<IActionResult> DeleteAtencion(DeleteAtencionViewModel model)
+        [HttpDelete, Route("DeleteAtencionSctr")]
+        public async Task<IActionResult> DeleteAtencionSctr(DeleteAtencionViewModel model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelStateExtensions.GetErrorMessage(ModelState));
@@ -149,10 +150,10 @@ namespace MDS.Api.Controllers
                 usuario_eliminacion = model.usuario_eliminacion
             };
 
-            var response = await _atencionService.DeleteAtencion(dto);
+            var response = await _atencionService.DeleteAtencionSctr(dto);
 
             return ReturnFormattedResponse(response);
         }
-
+        //FIN SERVICIO SCTR
     }
 }

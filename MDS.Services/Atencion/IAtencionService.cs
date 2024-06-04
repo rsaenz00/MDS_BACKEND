@@ -6,24 +6,25 @@ namespace MDS.Services.Atencion
 {
     public interface IAtencionService : IService
     {
+        //SERVICIO SCTR
+        //By Henrry Torres
+        Task<ServiceResponse> GetAtencionesSctrBandeja(string fechaInicio, string fechaFin, string condicion);
 
         //By Henrry Torres
-        Task<ServiceResponse> GetAtencionesBandeja(string fechaInicio, string fechaFin, string condicion);
+        Task<ServiceResponse> GetAtencionSctrByCodigo(string cod_atencion);
 
         //By Henrry Torres
-        Task<ServiceResponse> GetAtencionByCodigo(string cod_atencion);
+        Task<ServiceResponse> GetAtencionesSctrFiltro(string fechaInicio, string fechaFin, string busqueda, string condicion);
 
         //By Henrry Torres
-        Task<ServiceResponse> GetAtencionesFiltro(string fechaInicio, string fechaFin, string busqueda, string condicion);
+        Task<ServiceResponse> AddAtencionSctr(AtencionMtoDto dto);
 
         //By Henrry Torres
-        Task<ServiceResponse> AddAtencion(AtencionMtoDto dto);
+        Task<ServiceResponse> UpdateAtencionSctr(AtencionMtoDto dto);
 
         //By Henrry Torres
-        Task<ServiceResponse> UpdateAtencion(AtencionMtoDto dto);
-
-        //By Henrry Torres
-        Task<ServiceResponse> DeleteAtencion(AtencionMtoDto dto);
+        Task<ServiceResponse> DeleteAtencionSctr(AtencionMtoDto dto);
+        //FIN SERVICIO SCTR
     }
 }
 

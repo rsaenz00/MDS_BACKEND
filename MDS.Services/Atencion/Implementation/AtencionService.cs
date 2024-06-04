@@ -17,8 +17,9 @@ namespace MDS.Services.Atencion.Implementation
             _uow = uow;
         }
 
+        //SERVICIO SCTR
         //By Henrry Torres
-        public async Task<ServiceResponse> GetAtencionesBandeja(string fechaInicio, string fechaFin, string condicion)
+        public async Task<ServiceResponse> GetAtencionesSctrBandeja(string fechaInicio, string fechaFin, string condicion)
         {
             try
             {
@@ -98,7 +99,7 @@ namespace MDS.Services.Atencion.Implementation
         }
 
         //By Henrry Torres
-        public async Task<ServiceResponse> GetAtencionByCodigo(string cod_atencion)
+        public async Task<ServiceResponse> GetAtencionSctrByCodigo(string cod_atencion)
         {
             try
             {
@@ -165,7 +166,7 @@ namespace MDS.Services.Atencion.Implementation
         }
 
         //By Henrry Torres
-        public async Task<ServiceResponse> GetAtencionesFiltro(string fechaInicio, string fechaFin, string? busqueda = null, string? condicion = null)
+        public async Task<ServiceResponse> GetAtencionesSctrFiltro(string fechaInicio, string fechaFin, string? busqueda = null, string? condicion = null)
         {
             try
             {
@@ -212,7 +213,7 @@ namespace MDS.Services.Atencion.Implementation
         }
 
         //By Henrry Torres
-        public async Task<ServiceResponse> AddAtencion(AtencionMtoDto dto)
+        public async Task<ServiceResponse> AddAtencionSctr(AtencionMtoDto dto)
         {
             try
             {
@@ -264,7 +265,7 @@ namespace MDS.Services.Atencion.Implementation
         }
 
         //By Henrry Torres
-        public async Task<ServiceResponse> UpdateAtencion(AtencionMtoDto dto)
+        public async Task<ServiceResponse> UpdateAtencionSctr(AtencionMtoDto dto)
         {
             try
             {
@@ -317,7 +318,7 @@ namespace MDS.Services.Atencion.Implementation
         }
 
         //By Henrry Torres
-        public async Task<ServiceResponse> DeleteAtencion(AtencionMtoDto dto)
+        public async Task<ServiceResponse> DeleteAtencionSctr(AtencionMtoDto dto)
         {
             try
             {
@@ -341,6 +342,6 @@ namespace MDS.Services.Atencion.Implementation
                 return ServiceResponse.Return500(e);
             }
         }
-
+        //FIN SERVICIO SCTR
     }
 }
