@@ -6,7 +6,7 @@ using MDS.Utility.Extensions;
 
 namespace MDS.Infrastructure.Settings
 {
-    public interface IAppSettings : IJwtSettings, IClientAppSettings, IEmailSettings, IDocumentSettings, ILoggerConfiguration
+    public interface IAppSettings : IJwtSettings, IClientAppSettings, IEmailSettings, IDocumentSettings, ILoggerConfiguration, IServicesConfiguration
     {
         int OrganizationType { get; }
         bool IsDebug { get; }
@@ -58,6 +58,10 @@ namespace MDS.Infrastructure.Settings
 
         // Logger configuration
         public string LogsFolder => ReadString("LogsFolder");
+
+        //Urls Webs Services
+        public string Siteds => ReadString("UriWsSiteds");
+        public string Reniec => ReadString("UriWsReniec");
 
         // Utility functions
         private string ReadString(string key)
