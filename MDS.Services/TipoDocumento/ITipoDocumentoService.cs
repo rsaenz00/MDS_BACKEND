@@ -7,6 +7,9 @@ namespace MDS.Services.TipoDocumento
     {
         //By Henrry Torres
         Task<ServiceResponse> GetTipoDocumentos();
+
+        //By Henrry Torres
+        Task<ServiceResponse> GetTipoDocumentosSusalud();
     }
 }
 

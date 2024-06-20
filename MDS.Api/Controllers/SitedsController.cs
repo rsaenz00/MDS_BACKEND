@@ -94,9 +94,9 @@ namespace MDS.Api.Controllers
                 RUC = request.RUC,
                 SUNASA = request.SUNASA,
                 IAFAS = request.IAFAS,
-                NombresAfiliado = request.NombresAfiliado,
-                ApellidoPaternoAfiliado = request.ApellidoPaternoAfiliado,
-                ApellidoMaternoAfiliado = request.ApellidoMaternoAfiliado,
+                NombresAfiliado = request.NombresAfiliado.ToUpper(),
+                ApellidoPaternoAfiliado = request.ApellidoPaternoAfiliado.ToUpper(),
+                ApellidoMaternoAfiliado = request.ApellidoMaternoAfiliado.ToUpper(),
                 CodEspecialidad = request.CodEspecialidad
             };
 
@@ -129,8 +129,8 @@ namespace MDS.Api.Controllers
         }
 
         //By Henrry Torres -> ConsultaAsegCod
-        [HttpPost, Route("GetByCodigo")]
-        public async Task<ServiceResponse> GetByCodigo(Request_Asegurado request)
+        [HttpPost, Route("TestGetByCodigo")]
+        public async Task<ServiceResponse> TestGetByCodigo(Request_Asegurado request)
         {
             //PARTE ConsultaAsegNom
             string uriWebAPI = _appSettings.Siteds + "ConsultaAsegNom";
@@ -265,6 +265,71 @@ namespace MDS.Api.Controllers
                 else
                 {
                     return ServiceResponse.Return404(response.Content);
+                }
+            }
+            catch (Exception e)
+            {
+                return ServiceResponse.Return500(e);
+            }
+
+        }
+
+        //By Henrry Torres -> ConsultaAsegCod
+        [HttpPost, Route("GetByCodigo")]
+        public async Task<ServiceResponse> GetByCodigo(Request_AsegCod_Obs_DatAdic_CondMed request)
+        {
+            //PARTE ConsultaAsegCod
+            var uriWebAPI = _appSettings.Siteds + "ConsultaAsegCod";
+
+            var setting = new RestClientOptions(uriWebAPI)
+            {
+                MaxTimeout = 400000
+            };
+
+            var httpClient = new RestClient(setting);
+
+            Request_AsegCod_Obs_DatAdic_CondMed dto_CodigoAsegurado = new Request_AsegCod_Obs_DatAdic_CondMed
+            {
+                SUNASA = request.SUNASA,
+                IAFAS = request.IAFAS,
+                RUC = request.RUC,
+                CodEspecialidad = request.CodEspecialidad,
+                NombresAfiliado = request.NombresAfiliado,
+                ApellidoPaternoAfiliado = request.ApellidoPaternoAfiliado,
+                ApellidoMaternoAfiliado = request.ApellidoMaternoAfiliado,
+                CodigoAfiliado = request.CodigoAfiliado,
+                CodTipoDocumentoAfiliado = request.CodTipoDocumentoAfiliado,
+                NumeroDocumentoAfiliado = request.NumeroDocumentoAfiliado,
+                CodProducto = request.CodProducto,
+                DesProducto = request.DesProducto,
+                NumeroPlan = request.NumeroPlan,
+                CodTipoDocumentoContratante = request.CodTipoDocumentoContratante,
+                NumeroDocumentoContratante = request.NumeroDocumentoContratante,
+                NombreContratante = request.NombreContratante,
+                CodParentesco = request.CodParentesco,
+                TipoCalificadorContratante = request.TipoCalificadorContratante
+            };
+
+            try
+            {
+                string dataJSON_CodigoAsegurado = JsonConvert.SerializeObject(dto_CodigoAsegurado);
+
+                var DataFormBody_CodigoAsegurado = new RestRequest(uriWebAPI, Method.Post);
+                DataFormBody_CodigoAsegurado.AddParameter("application/json", dataJSON_CodigoAsegurado, ParameterType.RequestBody);
+
+                RestResponse response_CodigoAsegurado = httpClient.Execute(DataFormBody_CodigoAsegurado);
+
+                if (response_CodigoAsegurado.IsSuccessful)
+                {
+                    var responseData_CodigoAsegurado = response_CodigoAsegurado.Content;
+
+                    var dataResult_CodigoAsegurado = JsonConvert.DeserializeObject<Response_Siteds>(responseData_CodigoAsegurado);
+
+                    return ServiceResponse.ReturnResultWith200(dataResult_CodigoAsegurado);
+                }
+                else
+                {
+                    return ServiceResponse.Return404(response_CodigoAsegurado.Content);
                 }
             }
             catch (Exception e)

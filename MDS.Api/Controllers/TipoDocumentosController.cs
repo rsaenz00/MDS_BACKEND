@@ -30,5 +30,14 @@ namespace MDS.Api.Controllers.Test
             return ReturnFormattedResponse(response);
         }
 
+        //By Henrry Torres
+        [HttpGet, Route("GetTipoDocumentosSusalud")]
+        public async Task<IActionResult> GetTipoDocumentosSusalud()
+        {
+            var response = await _tipoDocumentoService.GetTipoDocumentosSusalud();
+
+            return ReturnFormattedResponse(response);
+        }
+
     }
 }
