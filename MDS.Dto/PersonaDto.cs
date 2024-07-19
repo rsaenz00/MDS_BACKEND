@@ -8,7 +8,7 @@
         public string nombre { get; set; }
         public string dni { get; set; }
         public string genero { get; set; }
-        public bool estado { get; set; }
+        //public bool estado { get; set; }
     }
 
     public class MantenimientoPersonaDto
@@ -33,7 +33,7 @@
         public string? telefono_casa { get; set; }
         public string telefono_celular { get; set; }
         public string? telefono_corporativo { get; set; }
-        public bool? estado { get; set; }
+        //public bool? estado { get; set; }
         public int usuario_creacion { get; set; }
         public DateTime? fecha_creacion { get; set; }
         public int? usuario_modificacion { get; set; }

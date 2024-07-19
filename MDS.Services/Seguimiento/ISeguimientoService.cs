@@ -8,7 +8,7 @@ namespace MDS.Services.Seguimiento
     {
 
         //By Henrry Torres
-        Task<ServiceResponse> GetSeguimientoByAtencion(string cod_atencion);
+        Task<ServiceResponse> GetSeguimientoByHistoriaClinica(string codHistoriaClinica);
 
         //By Henrry Torres
         Task<ServiceResponse> AddSeguimientoSctr(SeguimientoDto dto);

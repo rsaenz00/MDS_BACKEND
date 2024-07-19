@@ -2,7 +2,7 @@
 using MDS.Api.Models;
 using MDS.Api.Utility.Extensions;
 using MDS.Dto;
-using MDS.Services.Atencion;
+using MDS.Services.HistoriaClinica;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,51 +11,51 @@ namespace MDS.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     //[Authorize]
-    public class AtencionesController : BaseController
+    public class HistoriaClinicaController : BaseController
     {
-        private readonly IAtencionService _atencionService;
+        private readonly IHistoriaClinicaService _historiaClinicaService;
 
-        public AtencionesController(IAtencionService atencionService)
+        public HistoriaClinicaController(IHistoriaClinicaService historiaClinicaService)
         {
-            _atencionService = atencionService;
+            _historiaClinicaService = historiaClinicaService;
         }
 
         //SERVICIO SCTR
         //By Henrry Torres
-        [HttpGet, Route("GetAtencionSctrByCodigo")]
-        public async Task<IActionResult> GetAtencionSctrByCodigo(string cod_atencion)
+        [HttpGet, Route("GetHistoriaClinicaSctrByCodigo")]
+        public async Task<IActionResult> GetHistoriaClinicaSctrByCodigo(string cod_historia_clinica)
         {
-            var response = await _atencionService.GetAtencionSctrByCodigo(cod_atencion);
+            var response = await _historiaClinicaService.GetHistoriaClinicaSctrByCodigo(cod_historia_clinica);
 
             return ReturnFormattedResponse(response);
         }
 
         //By Henrry Torres
-        [HttpGet, Route("GetAtencionesSctrBandeja")]
-        public async Task<IActionResult> GetAtencionesSctrBandeja(string fechaInicio, string fechaFin, string condicion)
+        [HttpGet, Route("GetHistoriasClinicasSctrBandeja")]
+        public async Task<IActionResult> GetHistoriasClinicasSctrBandeja(string fechaInicio, string fechaFin, string condicion)
         {
-            var response = await _atencionService.GetAtencionesSctrBandeja(fechaInicio, fechaFin, condicion);
+            var response = await _historiaClinicaService.GetHistoriasClinicasSctrBandeja(fechaInicio, fechaFin, condicion);
 
             return ReturnFormattedResponse(response);
         }
 
         //By Henrry Torres
-        [HttpGet, Route("GetAtencionesSctrFiltro")]
-        public async Task<IActionResult> GetAtencionesSctrFiltro(string fechaInicio, string fechaFin, string? busqueda, string? condicion)
+        [HttpGet, Route("GetHistoriasClinicasSctrFiltro")]
+        public async Task<IActionResult> GetHistoriasClinicasSctrFiltro(string fechaInicio, string fechaFin, string? busqueda, string? condicion)
         {
-            var response = await _atencionService.GetAtencionesSctrFiltro(fechaInicio, fechaFin, busqueda, condicion);
+            var response = await _historiaClinicaService.GetHistoriasClinicasSctrFiltro(fechaInicio, fechaFin, busqueda, condicion);
 
             return ReturnFormattedResponse(response);
         }
 
         //By Henrry Torres
-        [HttpPost, Route("AddAtencionSctr")]
-        public async Task<IActionResult> AddAtencionSctr(CreateAtencionViewModel model)
+        [HttpPost, Route("AddHistoriaClinicaSctr")]
+        public async Task<IActionResult> AddHistoriaClinicaSctr(CreateHistoriaClinicaViewModel model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelStateExtensions.GetErrorMessage(ModelState));
 
-            AtencionMtoDto dto = new AtencionMtoDto
+            HistoriaClinicaMtoDto dto = new HistoriaClinicaMtoDto
             {
                 id_persona = model.id_persona,
                 id_clinica = model.id_clinica,
@@ -87,21 +87,21 @@ namespace MDS.Api.Controllers
                 estado = model.estado
             };
 
-            var response = await _atencionService.AddAtencionSctr(dto);
+            var response = await _historiaClinicaService.AddHistoriaClinicaSctr(dto);
 
             return ReturnFormattedResponse(response);
         }
 
         //By Henrry Torres
-        [HttpPut, Route("UpdateAtencionSctr")]
-        public async Task<IActionResult> UpdateAtencionSctr(UpdateAtencionViewModel model)
+        [HttpPut, Route("UpdateHistoriaClinicaSctr")]
+        public async Task<IActionResult> UpdateHistoriaClinicaSctr(UpdateHistoriaClinicaViewModel model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelStateExtensions.GetErrorMessage(ModelState));
 
-            AtencionMtoDto dto = new AtencionMtoDto
+            HistoriaClinicaMtoDto dto = new HistoriaClinicaMtoDto
             {
-                id_atencion = model.id_atencion,
+                cod_historia_clinica = model.cod_historia_clinica,
                 id_persona = model.id_persona,
                 id_clinica = model.id_clinica,
                 id_empresa = model.id_empresa,
@@ -132,28 +132,39 @@ namespace MDS.Api.Controllers
                 estado = model.estado
             };
 
-            var response = await _atencionService.UpdateAtencionSctr(dto);
+            var response = await _historiaClinicaService.UpdateHistoriaClinicaSctr(dto);
 
             return ReturnFormattedResponse(response);
         }
 
         //By Henrry Torres
-        [HttpDelete, Route("DeleteAtencionSctr")]
-        public async Task<IActionResult> DeleteAtencionSctr(DeleteAtencionViewModel model)
+        [HttpDelete, Route("DeleteHistoriaClinicaSctr")]
+        public async Task<IActionResult> DeleteHistoriaClinicaSctr(DeleteHistoriaClinicaViewModel model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelStateExtensions.GetErrorMessage(ModelState));
 
-            AtencionMtoDto dto = new AtencionMtoDto
+            HistoriaClinicaMtoDto dto = new HistoriaClinicaMtoDto
             {
-                id_atencion = model.id_atencion,
+                cod_historia_clinica = model.id_historia_clinica,
                 usuario_eliminacion = model.usuario_eliminacion
             };
 
-            var response = await _atencionService.DeleteAtencionSctr(dto);
+            var response = await _historiaClinicaService.DeleteHistoriaClinicaSctr(dto);
 
             return ReturnFormattedResponse(response);
         }
         //FIN SERVICIO SCTR
+
+        //SERVICIO MAD
+        //By Henrry Torres
+        [HttpGet, Route("GetHistoriaClinicaMadByCodigo")]
+        public async Task<IActionResult> GetHistoriaClinicaMadByCodigo(int historiaClinicaId)
+        {
+            var response = await _historiaClinicaService.GetHistoriaClinicaMadByCodigo(historiaClinicaId);
+
+            return ReturnFormattedResponse(response);
+        }
+        //FIN SERVICIO MAD
     }
 }

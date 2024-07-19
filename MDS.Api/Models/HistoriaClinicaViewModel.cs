@@ -2,7 +2,7 @@
 
 namespace MDS.Api.Models
 {
-    public class CreateAtencionViewModel
+    public class CreateHistoriaClinicaViewModel
     {
         //[Required]
         public long id_persona { get; set; }
@@ -13,7 +13,7 @@ namespace MDS.Api.Models
         //[Required]
         public long id_motivo { get; set; }
         //[Required]
-        public string? id_plan { get; set; }
+        public int id_plan { get; set; }
         //[Required]
         public string? horario_trabajo { get; set; }
         //[Required]
@@ -46,10 +46,10 @@ namespace MDS.Api.Models
         public int estado { get; set; }
     }
 
-    public class UpdateAtencionViewModel
+    public class UpdateHistoriaClinicaViewModel
     {
         [Required]
-        public long id_atencion { get; set; }
+        public long cod_historia_clinica { get; set; }
         //[Required]
         public long id_persona { get; set; }
         //[Required]
@@ -59,7 +59,7 @@ namespace MDS.Api.Models
         //[Required]
         public long id_motivo { get; set; }
         //[Required]
-        public string id_plan { get; set; }
+        public int id_plan { get; set; }
         //[Required]
         public string? horario_trabajo { get; set; }
         //[Required]
@@ -92,10 +92,10 @@ namespace MDS.Api.Models
         public int estado { get; set; }
     }
 
-    public class DeleteAtencionViewModel
+    public class DeleteHistoriaClinicaViewModel
     {
         [Required]
-        public long id_atencion { get; set; }
+        public long id_historia_clinica { get; set; }
         public int usuario_eliminacion{ get; set; }
     }
 }

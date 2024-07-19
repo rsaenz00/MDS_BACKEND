@@ -12,7 +12,7 @@ namespace MDS.Api.Models
         public string direccion { get; set; }
         [Required]
         public string telefono { get; set; }
-        public string anexo { get; set; }
+        public string? anexo { get; set; }
         [Required]
         public string afiliado { get; set; }
         //[Required]
@@ -32,7 +32,7 @@ namespace MDS.Api.Models
         public string direccion { get; set; }
         [Required]
         public string telefono { get; set; }
-        public string anexo { get; set; }
+        public string? anexo { get; set; }
         [Required]
         public string afiliado { get; set; }
         //[Required]

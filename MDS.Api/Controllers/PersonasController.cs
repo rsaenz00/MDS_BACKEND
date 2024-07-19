@@ -66,7 +66,7 @@ namespace MDS.Api.Controllers.Test
                 telefono_casa = model.SPER_TELEFONO_CASA,
                 telefono_celular = model.celular,
                 telefono_corporativo = model.SPER_TELEFONO_CORPORATIVO,
-                estado = model.FPER_ESTADO,
+                //estado = model.FPER_ESTADO,
                 usuario_creacion = model.usuario_creacion,
                 fecha_creacion = model.DPER_FECHA_CREACION,
                 usuario_modificacion = model.NPER_USUARIO_MODIFICACION,

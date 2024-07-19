@@ -20,10 +20,10 @@ namespace MDS.Api.Controllers
         }
 
         //By Henrry Torres
-        [HttpGet, Route("GetSeguimientoByAtencion")]
-        public async Task<IActionResult> GetSeguimientoByAtencion(string cod_atencion)
+        [HttpGet, Route("GetSeguimientoByHistoriaClinica")]
+        public async Task<IActionResult> GetSeguimientoByHistoriaClinica(string codHistoriaClinica)
         {
-            var response = await _seguimientoService.GetSeguimientoByAtencion(cod_atencion);
+            var response = await _seguimientoService.GetSeguimientoByHistoriaClinica(codHistoriaClinica);
 
             return ReturnFormattedResponse(response);
         }
@@ -37,7 +37,7 @@ namespace MDS.Api.Controllers
 
             SeguimientoDto dto = new SeguimientoDto
             {
-                cod_atencion = model.cod_atencion,
+                cod_historia_clinica = model.cod_historia_clinica,
                 observacion = model.observacion,
                 usuario = model.usuario
             };

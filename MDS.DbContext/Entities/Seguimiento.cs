@@ -29,7 +29,7 @@ namespace MDS.DbContext.Entities
 
     public class SeguimientoList
     {
-        public string cod_atencion { get; set; }
+        public string cod_historia_clinica { get; set; }
         public string fecha_creacion { get; set; }
         public string hora_creacion { get; set; }
         public string observacion { get; set; }

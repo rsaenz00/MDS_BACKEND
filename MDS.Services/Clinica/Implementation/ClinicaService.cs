@@ -26,7 +26,7 @@ namespace MDS.Services.Clinica.Implementation
 
                 List<ClinicaDto> listClinicas = new List<ClinicaDto>();
 
-                listClinicas = clinicas.Select(s => new ClinicaDto { id_clinica = s.CCLI_ID, clinica = s.CCLI_DESCRIPCION, ubigeo = s.CUBI_UBIGEO, direccion = s.SCLI_DIRECCION, telefono = s.SCLI_TELEFONO, anexo = s.SCLI_ANEXO, afiliado = s.FCLI_AFILIADO, plan_huerfano_ilimitado = s.FCLI_PLAN_HUERFANO_ILIMITADO, estado = s.FCLI_ESTADO, departamento = s.SUBI_DEPARTAMENTO, provincia = s.SUBI_PROVINCIA, distrito = s.SUBI_DISTRITO }).ToList();
+                listClinicas = clinicas.Select(s => new ClinicaDto { id_clinica = s.CCLI_ID, clinica = s.CCLI_DESCRIPCION, ubigeo = s.CUBI_UBIGEO, direccion = s.SCLI_DIRECCION, telefono = s.SCLI_TELEFONO, anexo = s.SCLI_ANEXO, afiliado = s.FCLI_AFILIADO, estado = s.FCLI_ESTADO, departamento = s.SUBI_DEPARTAMENTO, provincia = s.SUBI_PROVINCIA, distrito = s.SUBI_DISTRITO }).ToList();
 
                 if (!clinicas.Any())
                     return ServiceResponse.ReturnResultWith204();
@@ -82,7 +82,6 @@ namespace MDS.Services.Clinica.Implementation
                     new SqlParameter("@isTelefono", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.telefono },
                     new SqlParameter("@isAnexo", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.anexo },
                     new SqlParameter("@isAfiliafo", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.afiliado },
-                    new SqlParameter("@isPlanHuerfanoIlimitado", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.plan_huerfano_ilimitado },
                     new SqlParameter("@inCodigoUsuario", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.usuario_creacion },
                     new SqlParameter("@inEstado", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.estado },
                     new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
@@ -115,7 +114,6 @@ namespace MDS.Services.Clinica.Implementation
                     new SqlParameter("@isTelefono", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.telefono },
                     new SqlParameter("@isAnexo", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.anexo },
                     new SqlParameter("@isAfiliafo", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.afiliado },
-                    new SqlParameter("@isPlanHuerfanoIlimitado", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.plan_huerfano_ilimitado },
                     new SqlParameter("@inCodigoUsuario", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.usuario_modificacion },
                     new SqlParameter("@inEstado", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.estado },
                     new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}

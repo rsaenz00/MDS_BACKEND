@@ -28,7 +28,7 @@ namespace MDS.Services.Persona.Implementation
 
                 List<PersonaDto> listPersona = new List<PersonaDto>();
 
-                listPersona = personas.Select(p => new PersonaDto { id_persona = p.CPER_ID, paterno = p.SPER_APELLIDO_PATERNO, materno = p.SPER_APELLIDO_MATERNO, nombre = p.SPER_NOMBRES, dni = p.SPER_NUMERO_DOCUMENTO, genero = p.NPER_GENERO, estado = p.FPER_ESTADO }).ToList();
+                listPersona = personas.Select(p => new PersonaDto { id_persona = p.CPER_ID, paterno = p.SPER_APELLIDO_PATERNO, materno = p.SPER_APELLIDO_MATERNO, nombre = p.SPER_NOMBRES, dni = p.SPER_NUMERO_DOCUMENTO, genero = p.NPER_GENERO }).ToList();
 
                 if (!personas.Any())
                     return ServiceResponse.ReturnResultWith204();
@@ -59,7 +59,7 @@ namespace MDS.Services.Persona.Implementation
 
                 List<PersonaDto> listPersona = new List<PersonaDto>();
 
-                listPersona = personas.Select(p => new PersonaDto { id_persona = p.CPER_ID, paterno = p.SPER_APELLIDO_PATERNO, materno = p.SPER_APELLIDO_MATERNO, nombre = p.SPER_NOMBRES, dni = p.SPER_NUMERO_DOCUMENTO, genero = p.NPER_GENERO, estado = p.FPER_ESTADO }).ToList();
+                listPersona = personas.Select(p => new PersonaDto { id_persona = p.CPER_ID, paterno = p.SPER_APELLIDO_PATERNO, materno = p.SPER_APELLIDO_MATERNO, nombre = p.SPER_NOMBRES, dni = p.SPER_NUMERO_DOCUMENTO, genero = p.NPER_GENERO }).ToList();
 
                 if (!listPersona.Any())
                     return ServiceResponse.Return404();

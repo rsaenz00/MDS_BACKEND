@@ -8,7 +8,7 @@
         public string SPER_NOMBRES { get; set; }
         public string SPER_NUMERO_DOCUMENTO { get; set; }
         public string NPER_GENERO { get; set; }
-        public bool FPER_ESTADO { get; set; }
+        //public bool FPER_ESTADO { get; set; }
     }
 
     public class MantenimientoPersona
@@ -30,7 +30,7 @@
         public string SPER_TELEFONO_CASA { get; set; }
         public string SPER_TELEFONO_CELULAR { get; set; }
         public string SPER_TELEFONO_CORPORATIVO { get; set; }
-        public bool FPER_ESTADO { get; set; }
+        //public bool FPER_ESTADO { get; set; }
         public int NPER_USUARIO_CREACION { get; set; }
         public DateTime NPER_FECHA_CREACION { get; set; }
         public int NPER_USUARIO_MODIFICACION { get; set; }

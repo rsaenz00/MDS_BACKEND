@@ -8,7 +8,7 @@
         public string nombres { get; set; }
         public string apellido_paterno { get; set; }
         public string apellido_materno { get; set; }
-        public string sexo { get; set; }
+        public int sexo { get; set; }
         //public string fecha_nacimiento { get; set; }
         public DateTime fecha_nacimiento { get; set; }
         public string movil { get; set; }

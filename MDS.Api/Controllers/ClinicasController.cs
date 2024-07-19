@@ -54,7 +54,6 @@ namespace MDS.Api.Controllers
                 telefono = model.telefono,
                 anexo = model.anexo,
                 afiliado = model.afiliado,
-                plan_huerfano_ilimitado = model.plan_huerfano_ilimitado,
                 estado = model.estado,
                 usuario_creacion = model.usuario_creacion
             };
@@ -80,7 +79,6 @@ namespace MDS.Api.Controllers
                 telefono = model.telefono,
                 anexo = model.anexo,
                 afiliado = model.afiliado,
-                plan_huerfano_ilimitado = model.plan_huerfano_ilimitado,
                 estado = model.estado,
                 usuario_modificacion = model.usuario_modificacion
             };

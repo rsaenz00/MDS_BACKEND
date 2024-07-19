@@ -2,24 +2,22 @@
 using MDS.Infrastructure.DbUtility;
 using System.Data;
 using MDS.Infrastructure.Helper;
-using System.Globalization;
 using Microsoft.Data.SqlClient;
-using MDS.DbContext.Entities;
 
-namespace MDS.Services.Atencion.Implementation
+namespace MDS.Services.HistoriaClinica.Implementation
 {
-    public class AtencionService : IAtencionService
+    public class HistoriaClinicaService : IHistoriaClinicaService
     {
         private readonly IUnitOfWork _uow;
 
-        public AtencionService(IUnitOfWork uow)
+        public HistoriaClinicaService(IUnitOfWork uow)
         {
             _uow = uow;
         }
 
         //SERVICIO SCTR
         //By Henrry Torres
-        public async Task<ServiceResponse> GetAtencionesSctrBandeja(string fechaInicio, string fechaFin, string condicion)
+        public async Task<ServiceResponse> GetHistoriasClinicasSctrBandeja(string fechaInicio, string fechaFin, string condicion)
         {
             try
             {
@@ -31,21 +29,21 @@ namespace MDS.Services.Atencion.Implementation
                 };
 
                 int reporte = 0;
-                List<DbContext.Entities.AtencionBandejaSctr> AtencionesSctr = new List<DbContext.Entities.AtencionBandejaSctr>();
-                List<DbContext.Entities.AtencionBandejaOtrasLlamadas> AtencionesOtrasLlamadas = new List<DbContext.Entities.AtencionBandejaOtrasLlamadas>();
+                List<DbContext.Entities.HistoriaClinicaBandejaSctr> HistoriasClinicasSctr = new List<DbContext.Entities.HistoriaClinicaBandejaSctr>();
+                List<DbContext.Entities.HistoriaClinicaBandejaOtrasLlamadas> HistoriasClinicasOtrasLlamadas = new List<DbContext.Entities.HistoriaClinicaBandejaOtrasLlamadas>();
 
-                List<AtencionBandejaDto> listAtenciones = new List<AtencionBandejaDto>();
+                List<HistoriaClinicaBandejaDto> listHistoriasClinicas = new List<HistoriaClinicaBandejaDto>();
 
                 if (condicion.Equals("1"))
                 {
                     reporte = 1;
 
-                    AtencionesSctr = await _uow.ExecuteStoredProcByParam<DbContext.Entities.AtencionBandejaSctr>("SPRMDS_LIST_ATENCION", parameters);
+                    HistoriasClinicasSctr = await _uow.ExecuteStoredProcByParam<DbContext.Entities.HistoriaClinicaBandejaSctr>("SPRMDS_LIST_HISTORIA_CLINICA", parameters);
 
-                    listAtenciones = AtencionesSctr.Select(s => new AtencionBandejaDto
+                    listHistoriasClinicas = HistoriasClinicasSctr.Select(s => new HistoriaClinicaBandejaDto
                     {
-                        cod_atencion = s.cod_atencion,
-                        tipo_atencion = s.tipo_atencion,
+                        cod_historia_clinica = s.cod_historia_clinica,
+                        tipo_historia_clinica = s.tipo_historia_clinica,
                         estado = s.estado,
                         fecha_creacion = s.fecha_creacion,
                         hora_creacion = s.hora_creacion,
@@ -66,11 +64,11 @@ namespace MDS.Services.Atencion.Implementation
                 {
                     reporte = 2;
 
-                    AtencionesOtrasLlamadas = await _uow.ExecuteStoredProcByParam<DbContext.Entities.AtencionBandejaOtrasLlamadas>("SPRMDS_LIST_ATENCION", parameters);
+                    HistoriasClinicasOtrasLlamadas = await _uow.ExecuteStoredProcByParam<DbContext.Entities.HistoriaClinicaBandejaOtrasLlamadas>("SPRMDS_LIST_HISTORIA_CLINICA", parameters);
 
-                    listAtenciones = AtencionesOtrasLlamadas.Select(s => new AtencionBandejaDto
+                    listHistoriasClinicas = HistoriasClinicasOtrasLlamadas.Select(s => new HistoriaClinicaBandejaDto
                     {
-                        cod_atencion = s.cod_atencion,
+                        cod_historia_clinica = s.cod_historia_clinica,
                         estado = s.estado,
                         fecha_creacion = s.fecha_creacion,
                         hora_creacion = s.hora_creacion,
@@ -90,7 +88,7 @@ namespace MDS.Services.Atencion.Implementation
                 if (reporte == 0)
                     return ServiceResponse.ReturnResultWith204();
 
-                return ServiceResponse.ReturnResultWith200(listAtenciones);
+                return ServiceResponse.ReturnResultWith200(listHistoriasClinicas);
             }
             catch (Exception e)
             {
@@ -99,29 +97,30 @@ namespace MDS.Services.Atencion.Implementation
         }
 
         //By Henrry Torres
-        public async Task<ServiceResponse> GetAtencionSctrByCodigo(string cod_atencion)
+        public async Task<ServiceResponse> GetHistoriaClinicaSctrByCodigo(string codHistoriaClinica)
         {
             try
             {
                 SqlParameter[] parameters =
                 {
-                    new SqlParameter("@inCodigoAtencion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = cod_atencion }
+                    new SqlParameter("@inCodigoHistoriaClinica", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = codHistoriaClinica}
                 };
 
-                List<DbContext.Entities.Atencion> Atencions = new List<DbContext.Entities.Atencion>();
+                List<DbContext.Entities.HistoriaClinicaSctr> historiasClinicas = new List<DbContext.Entities.HistoriaClinicaSctr>();
 
-                Atencions = await _uow.ExecuteStoredProcByParam<DbContext.Entities.Atencion>("SPRMDS_LIST_ATENCION_BY_CODIGO", parameters);
+                historiasClinicas = await _uow.ExecuteStoredProcByParam<DbContext.Entities.HistoriaClinicaSctr>("SPRMDS_LIST_HISTORIA_CLINICA_BY_CODIGO", parameters);
 
-                List<AtencionDto> listAtencions = new List<AtencionDto>();
+                List<HistoriaClinicaDto> listHistoriasClinicas = new List<HistoriaClinicaDto>();
 
-                listAtencions = Atencions.Select(s => new AtencionDto
+                listHistoriasClinicas = historiasClinicas.Select(s => new HistoriaClinicaDto
                 {
-                    cod_atencion = s.cod_atencion,
+                    cod_historia_clinica = s.cod_historia_clinica,
                     paciente = s.paciente,
                     fecha_nacimiento = s.fecha_nacimiento,
                     edad = s.edad,
                     sexo = s.sexo,
                     celular = s.celular,
+                    pais = s.pais,
                     documento_identidad = s.documento_identidad,
                     numero_documento_id = s.numero_documento_id,
                     fecha_creacion = s.fecha_creacion,
@@ -136,7 +135,7 @@ namespace MDS.Services.Atencion.Implementation
                     relato = s.relato,
                     fecha_accidente = s.fecha_accidente,
                     hora_accidente = s.hora_accidente,
-                    tipo_atencion = s.tipo_atencion,
+                    tipo_historia_clinica = s.tipo_historia_clinica,
                     tipo_pase_atencion = s.tipo_pase_atencion,
                     motivo = s.motivo,
                     observacion = s.observacion,
@@ -154,10 +153,10 @@ namespace MDS.Services.Atencion.Implementation
                     id_clinica_primera_atencion = s.id_clinica_primera_atencion
                 }).ToList();
 
-                if (!Atencions.Any())
+                if (!historiasClinicas.Any())
                     return ServiceResponse.ReturnResultWith204();
 
-                return ServiceResponse.ReturnResultWith200(listAtencions);
+                return ServiceResponse.ReturnResultWith200(listHistoriasClinicas);
             }
             catch (Exception e)
             {
@@ -166,7 +165,7 @@ namespace MDS.Services.Atencion.Implementation
         }
 
         //By Henrry Torres
-        public async Task<ServiceResponse> GetAtencionesSctrFiltro(string fechaInicio, string fechaFin, string? busqueda = null, string? condicion = null)
+        public async Task<ServiceResponse> GetHistoriasClinicasSctrFiltro(string fechaInicio, string fechaFin, string? busqueda = null, string? condicion = null)
         {
             try
             {
@@ -178,16 +177,16 @@ namespace MDS.Services.Atencion.Implementation
                     new SqlParameter("@isCondicion", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = condicion },
                 };
 
-                List<DbContext.Entities.AtencionBandejaSctr> AtencionesSctr = new List<DbContext.Entities.AtencionBandejaSctr>();
+                List<DbContext.Entities.HistoriaClinicaBandejaSctr> HistoriasClinicasSctr = new List<DbContext.Entities.HistoriaClinicaBandejaSctr>();
 
-                List<AtencionBandejaDto> listAtenciones = new List<AtencionBandejaDto>();
+                List<HistoriaClinicaBandejaDto> listHistoriasClinicas = new List<HistoriaClinicaBandejaDto>();
 
-                AtencionesSctr = await _uow.ExecuteStoredProcByParam<DbContext.Entities.AtencionBandejaSctr>("SPRMDS_LIST_ATENCION_FILTRO", parameters);
+                HistoriasClinicasSctr = await _uow.ExecuteStoredProcByParam<DbContext.Entities.HistoriaClinicaBandejaSctr>("SPRMDS_LIST_HISTORIA_CLINICA_FILTRO", parameters);
 
-                listAtenciones = AtencionesSctr.Select(s => new AtencionBandejaDto
+                listHistoriasClinicas = HistoriasClinicasSctr.Select(s => new HistoriaClinicaBandejaDto
                 {
-                    cod_atencion = s.cod_atencion,
-                    tipo_atencion = s.tipo_atencion,
+                    cod_historia_clinica = s.cod_historia_clinica,
+                    tipo_historia_clinica = s.tipo_historia_clinica,
                     estado = s.estado,
                     fecha_creacion = s.fecha_creacion,
                     hora_creacion = s.hora_creacion,
@@ -204,7 +203,7 @@ namespace MDS.Services.Atencion.Implementation
                     skill = s.skill
                 }).ToList();
 
-                return ServiceResponse.ReturnResultWith200(listAtenciones);
+                return ServiceResponse.ReturnResultWith200(listHistoriasClinicas);
             }
             catch (Exception e)
             {
@@ -213,7 +212,7 @@ namespace MDS.Services.Atencion.Implementation
         }
 
         //By Henrry Torres
-        public async Task<ServiceResponse> AddAtencionSctr(AtencionMtoDto dto)
+        public async Task<ServiceResponse> AddHistoriaClinicaSctr(HistoriaClinicaMtoDto dto)
         {
             try
             {
@@ -250,9 +249,9 @@ namespace MDS.Services.Atencion.Implementation
                     new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
                 };
 
-                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_ADD_ATENCION", parameters);
+                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_ADD_HISTORIA_CLINICA", parameters);
 
-                dto.id_atencion = Convert.ToInt64(response);
+                dto.cod_historia_clinica = Convert.ToInt64(response);
 
                 return ServiceResponse.ReturnResultWith201(dto);
 
@@ -265,13 +264,13 @@ namespace MDS.Services.Atencion.Implementation
         }
 
         //By Henrry Torres
-        public async Task<ServiceResponse> UpdateAtencionSctr(AtencionMtoDto dto)
+        public async Task<ServiceResponse> UpdateHistoriaClinicaSctr(HistoriaClinicaMtoDto dto)
         {
             try
             {
                 SqlParameter[] parameters =
                 {
-                    new SqlParameter("@inCodigoAtencion", SqlDbType.BigInt) {Direction = ParameterDirection.Input, Value = dto.id_atencion },
+                    new SqlParameter("@inCodigoHistoriaClinica", SqlDbType.BigInt) {Direction = ParameterDirection.Input, Value = dto.cod_historia_clinica },
                     new SqlParameter("@inCodigoPersona", SqlDbType.BigInt) {Direction = ParameterDirection.Input, Value = dto.id_persona },
                     new SqlParameter("@inCodigoEmpresa", SqlDbType.BigInt) {Direction = ParameterDirection.Input, Value = dto.id_empresa },
                     new SqlParameter("@inCodigoClinica", SqlDbType.BigInt) {Direction = ParameterDirection.Input, Value = dto.id_clinica },
@@ -303,9 +302,9 @@ namespace MDS.Services.Atencion.Implementation
                     new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
                 };
 
-                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_UPDATE_ATENCION", parameters);
+                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_UPDATE_HISTORIA_CLINICA", parameters);
 
-                dto.id_atencion = Convert.ToInt64(response);
+                dto.cod_historia_clinica = Convert.ToInt64(response);
 
                 return ServiceResponse.ReturnResultWith201(dto);
 
@@ -318,20 +317,20 @@ namespace MDS.Services.Atencion.Implementation
         }
 
         //By Henrry Torres
-        public async Task<ServiceResponse> DeleteAtencionSctr(AtencionMtoDto dto)
+        public async Task<ServiceResponse> DeleteHistoriaClinicaSctr(HistoriaClinicaMtoDto dto)
         {
             try
             {
                 SqlParameter[] parameters =
                 {
-                    new SqlParameter("@inCodigoAtencion", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.id_atencion },
+                    new SqlParameter("@inCodigoHistoriaClinica", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.cod_historia_clinica },
                     new SqlParameter("@inCodigoUsuario", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.usuario_eliminacion },
                     new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
                 };
 
-                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_DELETE_ATENCION", parameters);
+                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_DELETE_HISTORIA_CLINICA", parameters);
 
-                dto.id_atencion = Convert.ToInt64(response);
+                dto.cod_historia_clinica = Convert.ToInt64(response);
                 dto.observacion = "borrado";
 
                 return ServiceResponse.ReturnSuccess();
@@ -343,5 +342,70 @@ namespace MDS.Services.Atencion.Implementation
             }
         }
         //FIN SERVICIO SCTR
+
+        //SERVICIO MAD
+        //By Henrry Torres
+        public async Task<ServiceResponse> GetHistoriaClinicaMadByCodigo(int historiaClinicaId)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@isCodigoHistoriaClinica", SqlDbType.BigInt) {Direction = ParameterDirection.Input, Value = historiaClinicaId },
+                };
+
+                List<DbContext.Entities.HistoriaClinicaMad> historiasClinicas = new List<DbContext.Entities.HistoriaClinicaMad>();
+
+                historiasClinicas = await _uow.ExecuteStoredProcByParam<DbContext.Entities.HistoriaClinicaMad>("SPRMDS_LIST_HISTORIA_CLINICA_BY_CODIGO_MAD", parameters);
+
+                List<HistoriaClinicaDto> listHistoriasClinicas = new List<HistoriaClinicaDto>();
+
+                listHistoriasClinicas = historiasClinicas.Select(p => new HistoriaClinicaDto
+                {
+                    cod_historia_clinica = p.cod_historia_clinica,
+                    id_paciente = p.id_paciente,
+                    id_medico = p.id_medico,
+                    id_cliente = p.id_cliente,
+                    vip = p.vip,
+                    hora_atencion = p.hora_atencion,
+                    fecha_creacion = p.fecha_creacion,
+                    sintomas = p.sintomas,
+                    tipo_atencion = p.tipo_atencion,
+                    programacion = p.programacion,
+                    nro_descanso_medico = p.nro_descanso_medico,
+                    cambio_realizar = p.cambio_realizar,
+                    moneda_deducible = p.moneda_deducible,
+                    monto_deducible = p.monto_deducible,
+                    coaseguro = p.coaseguro,
+                    tipo_documento_pago = p.tipo_documento_pago,
+                    numero_documento_pago = p.numero_documento_pago,
+                    forma_pago = p.forma_pago,
+                    moneda_denominacion = p.moneda_denominacion,
+                    monto_denominacion = p.monto_denominacion,
+                    fecha_nacimiento = p.fecha_nacimiento,
+                    paciente = p.paciente,
+                    medico = p.medico,
+                    aseguradora = p.aseguradora,
+                    especialidad = p.especialidad,
+                    telefono = p.telefono,
+                    celular = p.celular,
+                    anexo = p.anexo,
+                    referencia = p.referencia,
+                    direccion = p.direccion,
+                    provincia = p.provincia,
+                    distrito = p.distrito
+                }).ToList();
+
+                if (!historiasClinicas.Any())
+                    return ServiceResponse.ReturnResultWith204();
+
+                return ServiceResponse.ReturnResultWith200(listHistoriasClinicas);
+            }
+            catch (Exception e)
+            {
+                return ServiceResponse.Return500(e);
+            }
+        }
+        //FIN SERVICIO MAD
     }
 }
