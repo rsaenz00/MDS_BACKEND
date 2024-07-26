@@ -26,7 +26,7 @@ namespace MDS.Services.Clinica.Implementation
 
                 List<ClinicaDto> listClinicas = new List<ClinicaDto>();
 
-                listClinicas = clinicas.Select(s => new ClinicaDto { id_clinica = s.CCLI_ID, clinica = s.CCLI_DESCRIPCION, ubigeo = s.CUBI_UBIGEO, direccion = s.SCLI_DIRECCION, telefono = s.SCLI_TELEFONO, anexo = s.SCLI_ANEXO, afiliado = s.FCLI_AFILIADO, estado = s.FCLI_ESTADO, departamento = s.SUBI_DEPARTAMENTO, provincia = s.SUBI_PROVINCIA, distrito = s.SUBI_DISTRITO }).ToList();
+                listClinicas = clinicas.Select(s => new ClinicaDto { id_clinica = s.CCLI_ID, clinica = s.CCLI_DESCRIPCION, ubigeo = s.CUBI_UBIGEO, direccion = s.SCLI_DIRECCION, telefono = s.SCLI_TELEFONO, anexo = s.SCLI_ANEXO, afiliado = s.FCLI_AFILIADO, plan_huerfano_ilimitado = s.FCLI_PLAN_HUERFANO_ILIMITADO, estado = s.FCLI_ESTADO, departamento = s.SUBI_DEPARTAMENTO, provincia = s.SUBI_PROVINCIA, distrito = s.SUBI_DISTRITO }).ToList();
 
                 if (!clinicas.Any())
                     return ServiceResponse.ReturnResultWith204();
@@ -56,7 +56,7 @@ namespace MDS.Services.Clinica.Implementation
 
                 List<ClinicaDto> listClinicas = new List<ClinicaDto>();
 
-                listClinicas = clinicas.Select(s => new ClinicaDto { id_clinica = s.CCLI_ID, clinica = s.CCLI_DESCRIPCION, direccion = s.SCLI_DIRECCION, telefono = s.SCLI_TELEFONO, anexo = s.SCLI_ANEXO, ubigeo = s.CUBI_UBIGEO, departamento = s.SUBI_DEPARTAMENTO, provincia = s.SUBI_PROVINCIA, distrito = s.SUBI_DISTRITO, afiliado = s.FCLI_AFILIADO }).ToList();
+                listClinicas = clinicas.Select(s => new ClinicaDto { id_clinica = s.CCLI_ID, clinica = s.CCLI_DESCRIPCION, direccion = s.SCLI_DIRECCION, telefono = s.SCLI_TELEFONO, anexo = s.SCLI_ANEXO, ubigeo = s.CUBI_UBIGEO, departamento = s.SUBI_DEPARTAMENTO, provincia = s.SUBI_PROVINCIA, distrito = s.SUBI_DISTRITO, afiliado = s.FCLI_AFILIADO, plan_huerfano_ilimitado = s.FCLI_PLAN_HUERFANO_ILIMITADO }).ToList();
 
                 /*if (!listClinicas.Any())
                     return ServiceResponse.Return404();*/

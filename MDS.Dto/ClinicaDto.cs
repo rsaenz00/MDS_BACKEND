@@ -12,6 +12,7 @@
         public string provincia { get; set; }
         public string distrito { get; set; }
         public string afiliado { get; set; }
+        public string plan_huerfano_ilimitado { get; set; }
         public Boolean estado { get; set; }
     }
     public class ClinicaMtoDto

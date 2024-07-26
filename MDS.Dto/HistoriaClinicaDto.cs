@@ -84,7 +84,7 @@
         public string observacion { get; set; }
         public string primera_atencion { get; set; }
         public string metodo_validacion { get; set; }
-        public string hoja_atencion { get; set; }
+        public int? hoja_atencion { get; set; }
         public string ubigeo { get; set; }
         public int skill { get; set; }
         public int motivo_skill { get; set; }

@@ -12,6 +12,7 @@
         public string SUBI_PROVINCIA { get; set; }
         public string SUBI_DISTRITO { get; set; }
         public string FCLI_AFILIADO { get; set; }
+        public string FCLI_PLAN_HUERFANO_ILIMITADO { get; set; }
         public Boolean FCLI_ESTADO { get; set; }
         //public int NCLI_USUARIO_CREACION { get; set; }
         //public DateTime DCLI_FECHA_CREACION { get; set; }
@@ -45,5 +46,6 @@
         public string SCLI_TELEFONO { get; set; }
         public string SCLI_ANEXO { get; set; }
         public string FCLI_AFILIADO { get; set; }
+        public string FCLI_PLAN_HUERFANO_ILIMITADO { get; set; }
     }
 }

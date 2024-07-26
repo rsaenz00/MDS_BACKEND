@@ -38,7 +38,7 @@ namespace MDS.Services.HistoriaClinica.Implementation
                 {
                     reporte = 1;
 
-                    HistoriasClinicasSctr = await _uow.ExecuteStoredProcByParam<DbContext.Entities.HistoriaClinicaBandejaSctr>("SPRMDS_LIST_HISTORIA_CLINICA", parameters);
+                    HistoriasClinicasSctr = await _uow.ExecuteStoredProcByParam<DbContext.Entities.HistoriaClinicaBandejaSctr>("SPRMDS_LIST_HISTORIA_CLINICA_SCTR", parameters);
 
                     listHistoriasClinicas = HistoriasClinicasSctr.Select(s => new HistoriaClinicaBandejaDto
                     {
@@ -64,7 +64,7 @@ namespace MDS.Services.HistoriaClinica.Implementation
                 {
                     reporte = 2;
 
-                    HistoriasClinicasOtrasLlamadas = await _uow.ExecuteStoredProcByParam<DbContext.Entities.HistoriaClinicaBandejaOtrasLlamadas>("SPRMDS_LIST_HISTORIA_CLINICA", parameters);
+                    HistoriasClinicasOtrasLlamadas = await _uow.ExecuteStoredProcByParam<DbContext.Entities.HistoriaClinicaBandejaOtrasLlamadas>("SPRMDS_LIST_HISTORIA_CLINICA_SCTR", parameters);
 
                     listHistoriasClinicas = HistoriasClinicasOtrasLlamadas.Select(s => new HistoriaClinicaBandejaDto
                     {
@@ -108,7 +108,7 @@ namespace MDS.Services.HistoriaClinica.Implementation
 
                 List<DbContext.Entities.HistoriaClinicaSctr> historiasClinicas = new List<DbContext.Entities.HistoriaClinicaSctr>();
 
-                historiasClinicas = await _uow.ExecuteStoredProcByParam<DbContext.Entities.HistoriaClinicaSctr>("SPRMDS_LIST_HISTORIA_CLINICA_BY_CODIGO", parameters);
+                historiasClinicas = await _uow.ExecuteStoredProcByParam<DbContext.Entities.HistoriaClinicaSctr>("SPRMDS_LIST_HISTORIA_CLINICA_BY_CODIGO_SCTR", parameters);
 
                 List<HistoriaClinicaDto> listHistoriasClinicas = new List<HistoriaClinicaDto>();
 
@@ -165,7 +165,7 @@ namespace MDS.Services.HistoriaClinica.Implementation
         }
 
         //By Henrry Torres
-        public async Task<ServiceResponse> GetHistoriasClinicasSctrFiltro(string fechaInicio, string fechaFin, string? busqueda = null, string? condicion = null)
+        public async Task<ServiceResponse> GetHistoriasClinicasSctrFiltro(string fechaInicio, string fechaFin, string? busqueda = null, string? condicion = null, int reporte = 0)
         {
             try
             {
@@ -175,33 +175,63 @@ namespace MDS.Services.HistoriaClinica.Implementation
                     new SqlParameter("@isFechaFin", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = fechaFin },
                     new SqlParameter("@isTextoBusqueda", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = busqueda },
                     new SqlParameter("@isCondicion", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = condicion },
+                    new SqlParameter("@isReporte", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = reporte },
                 };
 
                 List<DbContext.Entities.HistoriaClinicaBandejaSctr> HistoriasClinicasSctr = new List<DbContext.Entities.HistoriaClinicaBandejaSctr>();
+                List<DbContext.Entities.HistoriaClinicaBandejaOtrasLlamadas> HistoriasClinicasOtrasLlamadas = new List<DbContext.Entities.HistoriaClinicaBandejaOtrasLlamadas>();
 
                 List<HistoriaClinicaBandejaDto> listHistoriasClinicas = new List<HistoriaClinicaBandejaDto>();
 
-                HistoriasClinicasSctr = await _uow.ExecuteStoredProcByParam<DbContext.Entities.HistoriaClinicaBandejaSctr>("SPRMDS_LIST_HISTORIA_CLINICA_FILTRO", parameters);
-
-                listHistoriasClinicas = HistoriasClinicasSctr.Select(s => new HistoriaClinicaBandejaDto
+                if (reporte == 1)
                 {
-                    cod_historia_clinica = s.cod_historia_clinica,
-                    tipo_historia_clinica = s.tipo_historia_clinica,
-                    estado = s.estado,
-                    fecha_creacion = s.fecha_creacion,
-                    hora_creacion = s.hora_creacion,
-                    documento_identidad = s.documento_identidad,
-                    numero = s.numero,
-                    paciente = s.paciente,
-                    fecha_nacimiento = s.fecha_nacimiento,
-                    clinica = s.clinica,
-                    empresa = s.empresa,
-                    empresa_ruc = s.empresa_ruc,
-                    usuario_creacion = s.usuario_creacion,
-                    motivo = s.motivo,
-                    plan = s.plan,
-                    skill = s.skill
-                }).ToList();
+                    HistoriasClinicasSctr = await _uow.ExecuteStoredProcByParam<DbContext.Entities.HistoriaClinicaBandejaSctr>("SPRMDS_LIST_HISTORIA_CLINICA_FILTRO_SCTR", parameters);
+
+                    listHistoriasClinicas = HistoriasClinicasSctr.Select(s => new HistoriaClinicaBandejaDto
+                    {
+                        cod_historia_clinica = s.cod_historia_clinica,
+                        tipo_historia_clinica = s.tipo_historia_clinica,
+                        estado = s.estado,
+                        fecha_creacion = s.fecha_creacion,
+                        hora_creacion = s.hora_creacion,
+                        documento_identidad = s.documento_identidad,
+                        numero = s.numero,
+                        paciente = s.paciente,
+                        fecha_nacimiento = s.fecha_nacimiento,
+                        clinica = s.clinica,
+                        empresa = s.empresa,
+                        empresa_ruc = s.empresa_ruc,
+                        usuario_creacion = s.usuario_creacion,
+                        motivo = s.motivo,
+                        plan = s.plan,
+                        skill = s.skill
+                    }).ToList();
+                }
+                else
+                {
+                    HistoriasClinicasOtrasLlamadas = await _uow.ExecuteStoredProcByParam<DbContext.Entities.HistoriaClinicaBandejaOtrasLlamadas>("SPRMDS_LIST_HISTORIA_CLINICA_FILTRO_SCTR", parameters);
+
+                    listHistoriasClinicas = HistoriasClinicasOtrasLlamadas.Select(s => new HistoriaClinicaBandejaDto
+                    {
+                        cod_historia_clinica = s.cod_historia_clinica,
+                        estado = s.estado,
+                        fecha_creacion = s.fecha_creacion,
+                        hora_creacion = s.hora_creacion,
+                        motivo = s.motivo,
+                        procedencia = s.procedencia,
+                        clinica = s.clinica,
+                        departamento = s.departamento,
+                        provincia = s.provincia,
+                        distrito = s.distrito,
+                        persona_reporta = s.persona_reporta,
+                        motivo_de_llamada = s.motivo_de_llamada,
+                        usuario_creacion = s.usuario_creacion,
+                        skill = s.skill
+                    }).ToList();
+                }
+
+                if (reporte == 0)
+                    return ServiceResponse.ReturnResultWith204();
 
                 return ServiceResponse.ReturnResultWith200(listHistoriasClinicas);
             }
@@ -231,7 +261,7 @@ namespace MDS.Services.HistoriaClinica.Implementation
                     new SqlParameter("@isObservacion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.observacion },
                     new SqlParameter("@isPrimeraAtencion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.primera_atencion },
                     new SqlParameter("@isMetodoValidacion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.metodo_validacion },
-                    new SqlParameter("@isHojaAtencion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.hoja_atencion },
+                    new SqlParameter("@isHojaAtencion", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.hoja_atencion },
                     new SqlParameter("@isUbigeo", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.ubigeo },
                     new SqlParameter("@isSkill", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.skill },
                     new SqlParameter("@isMotivoSkill", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.motivo_skill },
@@ -249,7 +279,7 @@ namespace MDS.Services.HistoriaClinica.Implementation
                     new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
                 };
 
-                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_ADD_HISTORIA_CLINICA", parameters);
+                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_ADD_HISTORIA_CLINICA_SCTR", parameters);
 
                 dto.cod_historia_clinica = Convert.ToInt64(response);
 
@@ -284,7 +314,7 @@ namespace MDS.Services.HistoriaClinica.Implementation
                     new SqlParameter("@isObservacion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.observacion },
                     new SqlParameter("@isPrimeraAtencion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.primera_atencion },
                     new SqlParameter("@isMetodoValidacion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.metodo_validacion },
-                    new SqlParameter("@isHojaAtencion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.hoja_atencion },
+                    new SqlParameter("@isHojaAtencion", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.hoja_atencion },
                     new SqlParameter("@isUbigeo", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.ubigeo },
                     new SqlParameter("@isSkill", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.skill },
                     new SqlParameter("@isMotivoSkill", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.motivo_skill },
@@ -302,7 +332,7 @@ namespace MDS.Services.HistoriaClinica.Implementation
                     new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
                 };
 
-                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_UPDATE_HISTORIA_CLINICA", parameters);
+                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_UPDATE_HISTORIA_CLINICA_SCTR", parameters);
 
                 dto.cod_historia_clinica = Convert.ToInt64(response);
 

@@ -14,7 +14,7 @@ namespace MDS.Services.HistoriaClinica
         Task<ServiceResponse> GetHistoriaClinicaSctrByCodigo(string cod_historia_clinica);
 
         //By Henrry Torres
-        Task<ServiceResponse> GetHistoriasClinicasSctrFiltro(string fechaInicio, string fechaFin, string busqueda, string condicion);
+        Task<ServiceResponse> GetHistoriasClinicasSctrFiltro(string fechaInicio, string fechaFin, string busqueda, string condicion, int reporte);
 
         //By Henrry Torres
         Task<ServiceResponse> AddHistoriaClinicaSctr(HistoriaClinicaMtoDto dto);

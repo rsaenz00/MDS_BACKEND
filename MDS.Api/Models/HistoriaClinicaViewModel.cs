@@ -26,7 +26,7 @@ namespace MDS.Api.Models
         //[Required]
         public string? metodo_validacion { get; set; }
         //[Required]
-        public string? hoja_atencion { get; set; }
+        public int? hoja_atencion { get; set; }
         //[Required]
         public string? ubigeo { get; set; }
         //[Required]
@@ -72,7 +72,7 @@ namespace MDS.Api.Models
         //[Required]
         public string? metodo_validacion { get; set; }
         //[Required]
-        public string? hoja_atencion { get; set; }
+        public int? hoja_atencion { get; set; }
         //[Required]
         public string? ubigeo { get; set; }
         //[Required]
@@ -95,7 +95,7 @@ namespace MDS.Api.Models
     public class DeleteHistoriaClinicaViewModel
     {
         [Required]
-        public long id_historia_clinica { get; set; }
+        public long cod_historia_clinica { get; set; }
         public int usuario_eliminacion{ get; set; }
     }
 }

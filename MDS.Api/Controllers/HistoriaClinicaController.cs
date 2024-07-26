@@ -41,9 +41,9 @@ namespace MDS.Api.Controllers
 
         //By Henrry Torres
         [HttpGet, Route("GetHistoriasClinicasSctrFiltro")]
-        public async Task<IActionResult> GetHistoriasClinicasSctrFiltro(string fechaInicio, string fechaFin, string? busqueda, string? condicion)
+        public async Task<IActionResult> GetHistoriasClinicasSctrFiltro(string fechaInicio, string fechaFin, string? busqueda, string? condicion, int reporte)
         {
-            var response = await _historiaClinicaService.GetHistoriasClinicasSctrFiltro(fechaInicio, fechaFin, busqueda, condicion);
+            var response = await _historiaClinicaService.GetHistoriasClinicasSctrFiltro(fechaInicio, fechaFin, busqueda, condicion, reporte);
 
             return ReturnFormattedResponse(response);
         }
@@ -146,7 +146,7 @@ namespace MDS.Api.Controllers
 
             HistoriaClinicaMtoDto dto = new HistoriaClinicaMtoDto
             {
-                cod_historia_clinica = model.id_historia_clinica,
+                cod_historia_clinica = model.cod_historia_clinica,
                 usuario_eliminacion = model.usuario_eliminacion
             };
 
