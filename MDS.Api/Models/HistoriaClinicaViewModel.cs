@@ -42,6 +42,7 @@ namespace MDS.Api.Models
         public string? persona_reporta_seguro { get; set; }
         public string? persona_reporta_asegurado { get; set; }
         public int usuario_creacion { get; set; }
+        public int pase_atencion { get; set; }
         public int? id_clinica_primera_atencion { get; set; }
         public int estado { get; set; }
     }
@@ -89,6 +90,7 @@ namespace MDS.Api.Models
         public string? persona_reporta_asegurado { get; set; }
         public int usuario_modificacion { get; set; }
         public int? id_clinica_primera_atencion { get; set; }
+        public int? pase_atencion { get; set; }
         public int estado { get; set; }
     }
 

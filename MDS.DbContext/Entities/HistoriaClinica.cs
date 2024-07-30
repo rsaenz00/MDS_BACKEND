@@ -92,6 +92,13 @@ namespace MDS.DbContext.Entities
         public string paciente { get; set; }
         public string fecha_nacimiento { get; set; }
         public string clinica { get; set; }
+        public string departamento { get; set; }
+        public string provincia { get; set; }
+        public string distrito { get; set; }
+        public string hoja_atencion { get; set; }
+        public string medio_validacion { get; set; }
+        public string pase_atencion { get; set; }
+        public string observacion { get; set; }
         public string empresa { get; set; }
         public string empresa_ruc { get; set; }
         public string usuario_creacion { get; set; }

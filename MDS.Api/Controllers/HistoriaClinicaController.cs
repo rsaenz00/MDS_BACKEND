@@ -47,7 +47,7 @@ namespace MDS.Api.Controllers
 
             return ReturnFormattedResponse(response);
         }
-
+        
         //By Henrry Torres
         [HttpPost, Route("AddHistoriaClinicaSctr")]
         public async Task<IActionResult> AddHistoriaClinicaSctr(CreateHistoriaClinicaViewModel model)
@@ -84,6 +84,7 @@ namespace MDS.Api.Controllers
                 persona_reporta_seguro = model.persona_reporta_seguro,
                 usuario_creacion = model.usuario_creacion,
                 id_clinica_primera_atencion = model.id_clinica_primera_atencion,
+                pase_atencion = model.pase_atencion,
                 estado = model.estado
             };
 
@@ -129,6 +130,7 @@ namespace MDS.Api.Controllers
                 persona_reporta_seguro = model.persona_reporta_seguro,
                 usuario_creacion = model.usuario_modificacion,
                 id_clinica_primera_atencion = model.id_clinica_primera_atencion,
+                pase_atencion = model.pase_atencion,
                 estado = model.estado
             };
 

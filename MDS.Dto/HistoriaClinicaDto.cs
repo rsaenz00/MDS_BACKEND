@@ -98,6 +98,7 @@
         public string persona_reporta_asegurado { get; set; }
         public int? id_clinica_primera_atencion { get; set; }
         public int estado { get; set; }
+        public int? pase_atencion { get; set; }
         public int usuario_creacion { get; set; }
         public int usuario_eliminacion { get; set; }
         //public DateTime DATE_FECHA_CREACION { get; set; }
@@ -127,6 +128,10 @@
         public string? departamento { get; set; }
         public string? provincia { get; set; }
         public string? distrito { get; set; }
+        public string? hoja_atencion { get; set; }
+        public string? medio_validacion { get; set; }
+        public string? pase_atencion { get; set; }
+        public string? observacion { get; set; }
         public string? persona_reporta { get; set; }
         public string? motivo_de_llamada { get; set; }
     }

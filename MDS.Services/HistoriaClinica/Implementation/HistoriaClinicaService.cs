@@ -52,6 +52,13 @@ namespace MDS.Services.HistoriaClinica.Implementation
                         paciente = s.paciente,
                         fecha_nacimiento = s.fecha_nacimiento,
                         clinica = s.clinica,
+                        departamento = s.departamento,
+                        provincia = s.provincia,
+                        distrito = s.distrito,
+                        hoja_atencion = s.hoja_atencion,
+                        medio_validacion = s.medio_validacion,
+                        pase_atencion = s.pase_atencion,
+                        observacion = s.observacion,
                         empresa = s.empresa,
                         empresa_ruc = s.empresa_ruc,
                         usuario_creacion = s.usuario_creacion,
@@ -199,6 +206,13 @@ namespace MDS.Services.HistoriaClinica.Implementation
                         paciente = s.paciente,
                         fecha_nacimiento = s.fecha_nacimiento,
                         clinica = s.clinica,
+                        departamento = s.departamento,
+                        provincia = s.provincia,
+                        distrito = s.distrito,
+                        hoja_atencion = s.hoja_atencion,
+                        medio_validacion = s.medio_validacion,
+                        pase_atencion = s.pase_atencion,
+                        observacion = s.observacion,
                         empresa = s.empresa,
                         empresa_ruc = s.empresa_ruc,
                         usuario_creacion = s.usuario_creacion,
@@ -240,7 +254,7 @@ namespace MDS.Services.HistoriaClinica.Implementation
                 return ServiceResponse.Return500(e);
             }
         }
-
+        
         //By Henrry Torres
         public async Task<ServiceResponse> AddHistoriaClinicaSctr(HistoriaClinicaMtoDto dto)
         {
@@ -273,6 +287,7 @@ namespace MDS.Services.HistoriaClinica.Implementation
                     new SqlParameter("@isPersonaReportaEmpresa", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.persona_reporta_empresa },
                     new SqlParameter("@isPersonaReportaSeguro", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.persona_reporta_seguro },
                     new SqlParameter("@isPersonaReportaAsegurado", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.persona_reporta_asegurado },
+                    new SqlParameter("@inPaseAtencion", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.pase_atencion },
                     new SqlParameter("@inCodigoUsuario", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.usuario_creacion },
                     new SqlParameter("@inCodigoClinicaPrimeraAtencion", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.id_clinica_primera_atencion },
                     new SqlParameter("@inEstado", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.estado },
@@ -326,6 +341,7 @@ namespace MDS.Services.HistoriaClinica.Implementation
                     new SqlParameter("@isPersonaReportaEmpresa", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.persona_reporta_empresa },
                     new SqlParameter("@isPersonaReportaSeguro", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.persona_reporta_seguro },
                     new SqlParameter("@isPersonaReportaAsegurado", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.persona_reporta_asegurado },
+                    new SqlParameter("@inPaseAtencion", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.pase_atencion },
                     new SqlParameter("@inCodigoUsuario", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.usuario_creacion },
                     new SqlParameter("@inCodigoClinicaPrimeraAtencion", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.id_clinica_primera_atencion },
                     new SqlParameter("@inEstado", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.estado },
