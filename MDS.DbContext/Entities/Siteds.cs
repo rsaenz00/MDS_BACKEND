@@ -2,6 +2,88 @@
 
 namespace MDS.DbContext.Entities
 {
+    public class Siteds
+    {
+        public long CSIT_ID { get; set; }
+        public long CHIS_ID { get; set; }
+        public string SSIT_DOCUMENTOAUTORIZACION { get; set; }
+        public string SSIT_CODIGOAFILIADO { get; set; }
+        public string SSIT_NUMEROPOLIZA { get; set; }
+        public string SSIT_NUMEROCONTRATO { get; set; }
+        public string SSIT_NUMEROCERTIFICADO { get; set; }
+        public string SSIT_CODPRODUCTO { get; set; }
+        public string SSIT_DESPRODUCTO { get; set; }
+        public string SSIT_APELLIDOPATERNOAFILIADO { get; set; }
+        public string SSIT_APELLIDOMATERNOAFILIADO { get; set; }
+        public string SSIT_NOMBRESAFILIADO { get; set; }
+        public string SSIT_CODGENERO { get; set; }
+        public string SSIT_DESGENERO { get; set; }
+        public string SSIT_CODFECHANACIMIENTO { get; set; }
+        public string SSIT_FECHANACIMIENTO { get; set; }
+        public string SSIT_CODPARENTESCO { get; set; }
+        public string SSIT_DESPARENTESCO { get; set; }
+        public string SSIT_CODTIPODOCUMENTOAFILIADO { get; set; }
+        public string SSIT_DESTIPODOCUMENTOAFILIADO { get; set; }
+        public string SSIT_NUMERODOCUMENTOAFILIADO { get; set; }
+        public int NSIT_EDAD { get; set; }
+        public string SSIT_CODFECHAINICIOVIGENCIA { get; set; }
+        public string SSIT_FECHAINICIOVIGENCIA { get; set; }
+        public string SSIT_CODFECHAFINVIGENCIA { get; set; }
+        public string SSIT_FECHAFINVIGENCIA { get; set; }
+        public string SSIT_CODESTADOCIVIL { get; set; }
+        public string SSIT_DESESTADOCIVIL { get; set; }
+        public int NSIT_CODTIPOPLAN { get; set; }
+        public string SSIT_DESTIPOPLAN { get; set; }
+        public int NSIT_NUMEROPLAN { get; set; }
+        public string SSIT_CODESTADO { get; set; }
+        public string SSIT_DESESTADO { get; set; }
+        public string SSIT_CODFECHAACTUALIZACIONFOTO { get; set; }
+        public string SSIT_FECHAACTUALIZACIONFOTO { get; set; }
+        public string SSIT_APELLIDOPATERNOTITULAR { get; set; }
+        public string SSIT_APELLIDOMATERNOTITULAR { get; set; }
+        public string SSIT_NOMBRESTITULAR { get; set; }
+        public string SSIT_CODIGOTITULAR { get; set; }
+        public string SSIT_CODTIPODOCUMENTOTITULAR { get; set; }
+        public string SSIT_DESTIPODOCUMENTOTITULAR { get; set; }
+        public string SSIT_NUMERODOCUMENTOTITULAR { get; set; }
+        public int NSIT_CODMONEDA { get; set; }
+        public string SSIT_DESMONEDA { get; set; }
+        public string SSIT_NOMBRECONTRATANTE { get; set; }
+        public string SSIT_CODTIPODOCUMENTOCONTRATANTE { get; set; }
+        public string SSIT_DESTIPODOCUMENTOCONTRATANTE { get; set; }
+        public string SSIT_CODTIPOAFILIACION { get; set; }
+        public string SSIT_DESTIPOAFILIACION { get; set; }
+        public string SSIT_CODFECHAAFILIACION { get; set; }
+        public string SSIT_FECHAAFILIACION { get; set; }      
+        public string SSIT_NUMERODOCUMENTOCONTRATANTE { get; set; }
+        public string SSIT_CODIGOTIPOCOBERTURA { get; set; }
+        public string SSIT_CODIGOSUBTIPOCOBERTURA { get; set; }
+        public string SSIT_CODIGOCOBERTURA { get; set; }
+        public string SSIT_BENEFICIOS { get; set; }
+        public string SSIT_CODINDICADORRESTRICCION { get; set; }
+        public string SSIT_RESTRICCIONES { get; set; }
+        public decimal NSIT_CODCOPAGOFIJO { get; set; }
+        public string SSIT_DESCOPAGOFIJO { get; set; }
+        public decimal NSIT_CODCOPAGOVARIABLE { get; set; }
+        public string SSIT_DESCOPAGOVARIABLE { get; set; }
+        public string SSIT_CODFECHAFINCARENCIA { get; set; }
+        public string SSIT_FECHAFINCARENCIA { get; set; }
+        public string SSIT_CONDICIONESESPECIALES { get; set; }
+        public string SSIT_OBSERVACIONES { get; set; }
+        public string SSIT_CODCALIFICACIONSERVICIO { get; set; }
+        public string SSIT_DESCALIFICACIONSERVICIO { get; set; }
+        public string SSIT_BENEFICIOMAXIMOINICIAL { get; set; }
+        public string SSIT_NUMEROCOBERTURA { get; set; }
+        public string SSIT_FECHA_CREACION_DOC_AUT { get; set; }
+        public DateTime DSIT_HORA_CREACION_DOC_AUT { get; set; }
+        public string SSIT_DESCRIPCION_PRODUCTO { get; set; }
+        public int NSIT_USUARIO_CREACION { get; set; }
+        public DateTime DSIT_FECHA_CREACION { get; set; }
+        public int NSIT_USUARIO_MODIFICACION { get; set; }
+        public DateTime DSIT_FECHA_MODIFICACION { get; set; }
+
+    }
+
     //ConsultaAsegNom
     public class Request_Asegurado
     {

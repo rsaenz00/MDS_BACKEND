@@ -2,9 +2,9 @@
 {
     public class AuditoriaLoginResource : ResourceParameter
     {
-        public AuditoriaLoginResource() : base("LoginTime")
-        {
-        }
+        //public AuditoriaLoginResource() : base("LoginTime")
+        //{
+        //}
 
         public string UserName { get; set; } = "";
     }

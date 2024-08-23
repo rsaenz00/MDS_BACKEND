@@ -58,7 +58,6 @@ namespace MDS.Api.Controllers.Test
             MantenimientoPacienteDto dto = new MantenimientoPacienteDto
             {
                 id_persona = model.id_persona,
-                id_servicio = model.CSER_IDSERVICIO,
                 finc= model.DPAC_FINC,
                 cod_par = model.SPAC_COD_PAR,
                 fcre = model.DPAC_FCRE,

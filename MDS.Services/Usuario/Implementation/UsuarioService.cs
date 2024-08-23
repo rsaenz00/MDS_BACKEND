@@ -157,7 +157,7 @@ namespace MDS.Services.Usuario.Implementation
 
                 if (usuario != null)
                 {
-                    if (usuario.SUSR_CONTRASENA != dto.contrasena)
+                    if (usuario.SUSR_CONTRASENA.Trim() != dto.contrasena)
                     {
                         auditoria.estado = ConstantsList.STATUS_ERROR;
                         auditoria.descripcion = ConstantsList.AUTH_ERROR_WRONG_PASSWORD;

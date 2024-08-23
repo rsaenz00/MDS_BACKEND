@@ -2,7 +2,7 @@
 {
     public class ClienteDto
     {
-        public long id_cliente { get; set; }        
+        public string id_cliente { get; set; }        
         public string? nombre { get; set; }
         public string? descripcion { get; set; }
         public string? direccion { get; set; }
@@ -13,7 +13,7 @@
 
     public class MantenimientoClienteDto
     {
-        public long? id_cliente { get; set; }
+        public string? id_cliente { get; set; }
         public bool? estado { get; set; }
         public string nombre { get; set; }
         public string? descripcion { get; set; }
@@ -55,5 +55,13 @@
         public DateTime? fecha_creacion { get; set; }
         public int? usuario_modificacion { get; set; }
         public DateTime? fecha_modificacion { get; set; }
+    }
+
+    public class ClientesSitedsDto
+    {
+        public string id { get; set; }
+        public string codigo_financiamiento { get; set; }
+        public string? nombre { get; set; }
+
     }
 }

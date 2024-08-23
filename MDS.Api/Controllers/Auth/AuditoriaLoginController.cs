@@ -51,7 +51,7 @@ namespace MDS.Api.Controllers.Auth
             var listBloga = pl.Select(s => new AuditoriaLoginDto 
             {
                 codigoAuditoria = s.CAUD_ID,
-                usuario = s.SAUD_NOMBRE_USUARIO, 
+                usuario = s.SUSR_NOMBRE, 
                 latitud = s.SAUD_LATITUD,
                 longitud = s.SAUD_LONGITUD,
                 estado = s.SAUD_ESTADO,

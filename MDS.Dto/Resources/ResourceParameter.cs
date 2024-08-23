@@ -2,10 +2,10 @@
 {
     public abstract class ResourceParameter
     {
-        public ResourceParameter(string orderBy)
-        {
-            this.OrderBy = orderBy;
-        }
+        //public ResourceParameter(string orderBy)
+        //{
+        //    this.OrderBy = orderBy;
+        //}
 
         const int maxPageSize = 100;
         public int Skip { get; set; } = 0;
@@ -24,10 +24,10 @@
             }
         }
 
-        public string SearchQuery { get; set; }
+        //public string SearchQuery { get; set; }
 
-        public string OrderBy { get; set; }
+        //public string OrderBy { get; set; }
 
-        public string Fields { get; set; }
+        //public string Fields { get; set; }
     }
 }

@@ -2,47 +2,6 @@
 
 namespace MDS.DbContext.Entities
 {
-    public class HistoriaClinicaSctr
-    {
-        public long cod_historia_clinica { get; set; }//MAD - SCTR
-        public string paciente { get; set; }//MAD - SCTR
-        public string fecha_creacion { get; set; }//MAD - SCTR
-        public string fecha_nacimiento { get; set; }//MAD - SCTR
-        public int edad { get; set; }//MAD - SCTR
-        public string hora_atencion { get; set; }//MAD - SCTR
-        public string celular { get; set; }//MAD - SCTR
-        public string pais { get; set; }//MAD - SCTR
-        public long id_cliente { get; set; }//MAD - SCTR
-        public string? sexo { get; set; }//SCTR
-        public string? documento_identidad { get; set; }//SCTR
-        public string? numero_documento_id { get; set; }//SCTR
-        public string? descripcion_ipress { get; set; }//SCTR
-        public string? ipress_telefono { get; set; }//SCTR
-        public string? ipress_anexo { get; set; }//SCTR
-        public string? empresa { get; set; }//SCTR
-        public string? empresa_ruc { get; set; }//SCTR
-        public string? horario_trabajo { get; set; }//SCTR
-        public string? puesto_cargo { get; set; }//SCTR
-        public string? relato { get; set; }//SCTR
-        public string? fecha_accidente { get; set; }//SCTR
-        public string? hora_accidente { get; set; }//SCTR
-        public string? tipo_historia_clinica { get; set; }//SCTR
-        public string? tipo_pase_atencion { get; set; }//SCTR
-        public string? motivo { get; set; }//SCTR
-        public string? observacion { get; set; }//SCTR
-        public string? ipress_primera_ate { get; set; }//SCTR
-        public int? id_clinica { get; set; }//SCTR
-        public string? persona_reporta { get; set; }//SCTR
-        public int? id_motivo { get; set; }//SCTR
-        public int? id_clinica_primera_atencion { get; set; }//SCTR
-        public int? numero_atencion { get; set; }//SCTR
-        public int? metodo_validacion { get; set; }//SCTR
-        public Boolean? hoja_atencion { get; set; }//SCTR
-        public int? id_plan { get; set; }//SCTR
-        public int? skill { get; set; }//SCTR
-        public int? motivo_skill { get; set; }//SCTR
-    }
-    
     public class HistoriaClinicaMad
     {
         public long cod_historia_clinica { get; set; }//MAD - SCTR
@@ -52,7 +11,7 @@ namespace MDS.DbContext.Entities
         public int edad { get; set; }//MAD - SCTR
         public string hora_atencion { get; set; }//MAD - SCTR
         public string celular { get; set; }//MAD - SCTR
-        public long id_cliente { get; set; }//MAD - SCTR
+        public string id_cliente { get; set; }//MAD - SCTR
         public string? id_paciente { get; set; }//MAD
         public string? id_medico { get; set; }//MAD
         public string? vip { get; set; }//MAD
@@ -78,6 +37,48 @@ namespace MDS.DbContext.Entities
         public string? direccion { get; set; }//MAD
         public string? provincia { get; set; }//MAD
         public string? distrito { get; set; }//MAD
+    }
+
+    /*INICIO SCTR*/
+    public class HistoriaClinicaSctr
+    {
+        public long cod_historia_clinica { get; set; }//MAD - SCTR
+        public string paciente { get; set; }//MAD - SCTR
+        public string fecha_creacion { get; set; }//MAD - SCTR
+        public string fecha_nacimiento { get; set; }//MAD - SCTR
+        public int edad { get; set; }//MAD - SCTR
+        public string hora_atencion { get; set; }//MAD - SCTR
+        public string celular { get; set; }//MAD - SCTR
+        public string pais { get; set; }//MAD - SCTR
+        public string id_cliente { get; set; }//MAD - SCTR
+        public string? sexo { get; set; }//SCTR
+        public string? documento_identidad { get; set; }//SCTR
+        public string? numero_documento_id { get; set; }//SCTR
+        public string? descripcion_ipress { get; set; }//SCTR
+        public string? ipress_telefono { get; set; }//SCTR
+        public string? ipress_anexo { get; set; }//SCTR
+        public string? empresa { get; set; }//SCTR
+        public string? empresa_ruc { get; set; }//SCTR
+        public string? horario_trabajo { get; set; }//SCTR
+        public string? puesto_cargo { get; set; }//SCTR
+        public string? relato { get; set; }//SCTR
+        public string? fecha_accidente { get; set; }//SCTR
+        public string? hora_accidente { get; set; }//SCTR
+        public string? tipo_historia_clinica { get; set; }//SCTR
+        public string? pase_atencion { get; set; }//SCTR
+        public string? motivo { get; set; }//SCTR
+        public string? observacion { get; set; }//SCTR
+        public string? ipress_primera_ate { get; set; }//SCTR
+        public int? id_clinica { get; set; }//SCTR
+        public string? persona_reporta { get; set; }//SCTR
+        public int? id_motivo { get; set; }//SCTR
+        public int? id_clinica_primera_atencion { get; set; }//SCTR
+        public int? numero_atencion { get; set; }//SCTR
+        public int? metodo_validacion { get; set; }//SCTR
+        public Boolean? hoja_atencion { get; set; }//SCTR
+        public int? id_plan { get; set; }//SCTR
+        public int? skill { get; set; }//SCTR
+        public int? motivo_skill { get; set; }//SCTR
     }
 
     public class HistoriaClinicaBandejaSctr
@@ -124,4 +125,121 @@ namespace MDS.DbContext.Entities
         public string persona_reporta { get; set; }
         public string motivo_de_llamada { get; set; }
     }
+    /*FIN SCTR*/
+
+    /*INICIO AMBULANCIA*/
+    public class HistoriaClinicaBandejaAmbulancia
+    {
+        public int cod_historia_clinica { get; set; }
+        public string empresa { get; set; }
+        public string paciente { get; set; }
+        public string centro_medico_derivado { get; set; }
+        public string especialidad { get; set; }
+        public string solicitud { get; set; }
+        public string motivo { get; set; }
+        public string tipo_referencia { get; set; }
+        public string usuario_creacion { get; set; }
+        public string fecha_creacion { get; set; }
+        public string hora_creacion { get; set; }
+        public string observacion { get; set; }
+
+        /*public string cod_atencion { get; set; }
+        public string codigo_siteds { get; set; }
+        public string cotizado { get; set; }
+        public string estado { get; set; }
+        public string ambulancia_resp { get; set; }
+        public string servicio { get; set; }
+        public string paciente { get; set; }
+        public string dni { get; set; }
+        public string distrito { get; set; }
+        public string provincia { get; set; }
+        public string departamento { get; set; }
+        public string direccion { get; set; }
+        public string cliente { get; set; }
+        public string proveedor { get; set; }
+        public string ambulancia { get; set; }
+        public string tiempo { get; set; }
+        public string fecha_estimada { get; set; }
+        public string hora_estimada { get; set; }
+        public string fecha_llegada { get; set; }
+        public string hora_llegada { get; set; }
+        public string fecha_fin_ate { get; set; }
+        public string hora_fin_ate { get; set; }
+        public string referencia { get; set; }
+        public string tlf_celular { get; set; }
+        public string usuario_creacion { get; set; }
+        public string descripcion_motivo { get; set; }
+        public string flg_fuera_cobertura { get; set; }
+        public string flg_citrix { get; set; }
+        public string estado_exp { get; set; }
+        public string codigo_prov { get; set; }*/
+    }
+
+    public class HistoriaClinicaAmbulancia
+    {
+        //TBLMDS_HISTORIA_CLINICA_CALLMEDICO
+        public int CPAR_ID_MOTIVO_CALLMEDICO { get; set; }
+        public int CPAR_ID_REFERENCIA_AMBULANCIA { get; set; }
+        public int CCEN_ID { get; set; }
+        public int CECM_ID { get; set; }
+        public int CPAR_ID_SOLICITUD { get; set; }
+        public int CHIS_ID { get; set; }
+
+        //TBLMDS_HISTORIA_CLINICA
+        public string SHIS_ESTADO { get; set; }
+        public string SHIS_CM_ESTADO { get; set; }
+        public string NHIS_COD_ESTADO { get; set; }
+        public string FHIS_FLG_CM_NUEVA { get; set; }
+        public string NHIS_CM_ORDEN { get; set; }
+        public string SHIS_REF_DIR { get; set; }
+        public string SHIS_CM_REF_DIR { get; set; }
+        public string FHIS_FLAG_PROGRAMADA { get; set; }
+        public string SHIS_F_PROG { get; set; }
+        public string SHIS_COD_TIPO_PROG { get; set; }
+        public string SHIS_COD_DR_SOLICITADO { get; set; }
+        public string SHIS_COD_DEP { get; set; }
+        public string FHIS_CM_DIRECTA { get; set; }
+        public string SHIS_FLG_DIRECTO { get; set; }
+        public string FHIS_CM_DATOS_COMPLETOS { get; set; }
+        public string NHIS_TAR_ATE { get; set; }
+        public string SHIS_TIPO_SERVAMB_DRMAS { get; set; }
+        public string SHIS_COD_AMB_TIPO_SERV { get; set; }
+        public string NHIS_COASEGURO { get; set; }
+        public string SHIS_FLAGMONE { get; set; }
+        public string NHIS_CAMBIO { get; set; }
+        public string SHIS_FOR_ATE { get; set; }
+        public string SHIS_CM_MONEDA_DEN { get; set; }
+        public string NHIS_CM_DEN_CAMBIO { get; set; }
+        public string SHIS_CM_DENOMINACION { get; set; }
+        public string SHIS_CONTACTO_PAC { get; set; }
+        public string SHIS_CONTACTO_ASEG { get; set; }
+        public string SHIS_TIPO_SERVICIO { get; set; }
+        public string NHIS_CLASIFICACION_PAC { get; set; }
+        public string SHIS_TIPO_DOC_PAGO { get; set; }
+        public string SHIS_DESCRP_ZONA { get; set; }
+        public string SHIS_COD_EMP { get; set; }
+        public string SHIS_USULLA_ATE { get; set; }
+        public string CPAC_ID { get; set; }
+        public string CPER_ID { get; set; }
+        public string CCLI_ID { get; set; }
+        public string SHIS_NOM_EMP { get; set; }
+        public string DHIS_OBS_CM { get; set; }
+        public string NHIS_CLASIFICACION_PAC_CALLMED { get; set; }
+        public string SHIS_COD_AUT_PRESTACION { get; set; }
+        public string SHIS_COD_ASEGURADO { get; set; }
+        public string SHIS_CM_ASEG_PRODUCTO { get; set; }
+        public string SHIS_POLIZA_ASEGURADO { get; set; }
+        public string SHIS_POLIZA_CERTIFICADO { get; set; }
+    }
+    /*FIN AMBULANCIA*/
+
+    /*INICIO MAD*/
+    public class ClienteAseguradora
+    {
+        //public string CCLT_ID { get; set; }
+        public string SIAF_FINANCIAMIENTO { get; set; }
+        public string? SCLT_NOMBRE { get; set; }
+
+    }
+    /*FIN MAD*/
 }

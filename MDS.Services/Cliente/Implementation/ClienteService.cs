@@ -127,7 +127,7 @@ namespace MDS.Services.Cliente.Implementation
 
                 int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_CREATE_CLIENTE", parameters);
 
-                dto.id_cliente = Convert.ToInt64(response);
+                dto.id_cliente = response.ToString();
 
                 return ServiceResponse.ReturnResultWith201(dto);
 
@@ -170,6 +170,31 @@ namespace MDS.Services.Cliente.Implementation
         }
 
         //By Henrry Torres
+        public async Task<ServiceResponse> GetClientesAmbulancia()
+        {
+            try
+            {
+                List<DbContext.Entities.Cliente> clientes = new List<DbContext.Entities.Cliente>();
+
+                clientes = await _uow.ExecuteStoredProcAll<DbContext.Entities.Cliente>("SPRMDS_LIST_CLIENTE_AMBULANCIA");
+
+                List<ClienteDto> listCliente = new List<ClienteDto>();
+
+                listCliente = clientes.Select(c => new ClienteDto { id_cliente = c.CCLT_ID, nombre = c.SCLT_NOMBRE, descripcion = c.SCLT_DESCRIPCION, direccion = c.SCLT_DIRECCION, ubigeo = c.CUBI_UBIGEO, ruc = c.SCLT_RUC, estado = c.FCLT_ESTADO }).ToList();
+
+                if (!clientes.Any())
+                    return ServiceResponse.ReturnResultWith204();
+
+                return ServiceResponse.ReturnResultWith200(listCliente);
+            }
+            catch (Exception e)
+            {
+                //_logger.Error(e);
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By Henrry Torres
         public async Task<ServiceResponse> AddClienteSctr(MantenimientoClienteDto dto)
         {
             try
@@ -185,7 +210,7 @@ namespace MDS.Services.Cliente.Implementation
                 //int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_CREATE_CLIENTE", parameters);
                 int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_CREATE_CLIENTE_SCTR", parameters);
 
-                dto.id_cliente = Convert.ToInt64(response);
+                dto.id_cliente = response.ToString();
 
                 return ServiceResponse.ReturnResultWith201(dto);
 
@@ -193,6 +218,36 @@ namespace MDS.Services.Cliente.Implementation
             catch (Exception e)
             {
                 //_logger.Error(e);
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By Henrry Torres
+        public async Task<ServiceResponse> GetClientesSiteds()
+        {
+            try
+            {
+                List<DbContext.Entities.ClientesSiteds> clientes = new List<DbContext.Entities.ClientesSiteds>();
+
+                clientes = await _uow.ExecuteStoredProcAll<DbContext.Entities.ClientesSiteds>("SPRMDS_LIST_CLIENTE_SITEDS");
+
+                List<ClientesSitedsDto> listCliente = new List<ClientesSitedsDto>();
+
+                listCliente = clientes.Select(c => new ClientesSitedsDto
+                {
+                    id = c.id,
+                    codigo_financiamiento = c.codigo_financiamiento,
+                    nombre = c.nombre
+                }).ToList();
+
+
+                if (!listCliente.Any())
+                    return ServiceResponse.Return404();
+
+                return ServiceResponse.ReturnResultWith200(listCliente);
+            }
+            catch (Exception e)
+            {
                 return ServiceResponse.Return500(e);
             }
         }

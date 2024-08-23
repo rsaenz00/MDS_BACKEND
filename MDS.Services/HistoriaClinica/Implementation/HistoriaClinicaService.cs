@@ -3,6 +3,8 @@ using MDS.Infrastructure.DbUtility;
 using System.Data;
 using MDS.Infrastructure.Helper;
 using Microsoft.Data.SqlClient;
+using MDS.Dto.Resources;
+using MDS.DbContext.Entities;
 
 namespace MDS.Services.HistoriaClinica.Implementation
 {
@@ -143,7 +145,7 @@ namespace MDS.Services.HistoriaClinica.Implementation
                     fecha_accidente = s.fecha_accidente,
                     hora_accidente = s.hora_accidente,
                     tipo_historia_clinica = s.tipo_historia_clinica,
-                    tipo_pase_atencion = s.tipo_pase_atencion,
+                    pase_atencion = s.pase_atencion,
                     motivo = s.motivo,
                     observacion = s.observacion,
                     ipress_primera_ate = s.ipress_primera_ate,
@@ -254,7 +256,7 @@ namespace MDS.Services.HistoriaClinica.Implementation
                 return ServiceResponse.Return500(e);
             }
         }
-        
+
         //By Henrry Torres
         public async Task<ServiceResponse> AddHistoriaClinicaSctr(HistoriaClinicaMtoDto dto)
         {
@@ -389,6 +391,230 @@ namespace MDS.Services.HistoriaClinica.Implementation
         }
         //FIN SERVICIO SCTR
 
+        //SERVICIO AMBULANCIA
+        //By Henrry Torres
+        public async Task<ServiceResponse> GetHistoriasClinicasAmbulanciaBandeja(AmbulanciaResource dto)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@isFechaInicio", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.fechaDesde },
+                    new SqlParameter("@isFechaFin", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.fechaHasta },
+                    new SqlParameter("@isCondicion", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.condicion },
+                    new SqlParameter("@isTextoBusqueda", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.busqueda },
+
+                    /*new SqlParameter("@isCodigoAtencion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.codigoAtencion },
+                    new SqlParameter("@isCodigoSited", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.codigoSited },
+                    new SqlParameter("@isCotizado", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.cotizado },
+                    new SqlParameter("@isEstado", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.estado },
+                    new SqlParameter("@isAmbulanciaRespuesta", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.ambulanciaRespuesta },
+                    new SqlParameter("@isServicio", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.servicio },
+                    new SqlParameter("@isPaciente", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.paciente },
+                    new SqlParameter("@isNumeroDocumento", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.numeroDocumento },
+                    new SqlParameter("@isDepartamento", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.departamento },
+                    new SqlParameter("@isProvincia", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.provincia },
+                    new SqlParameter("@isDistrito", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.distrito },
+                    new SqlParameter("@isDireccion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.direccion },
+                    new SqlParameter("@isReferencia", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.referencia },
+                    new SqlParameter("@isCliente", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.cliente },
+                    new SqlParameter("@isProveedor", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.proveedor },
+                    new SqlParameter("@isAmbulancia", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.ambulancia },
+                    new SqlParameter("@isTiempo", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.tiempo },
+                    new SqlParameter("@isFechaEstimada", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.fechaEstimada },
+                    new SqlParameter("@isHoraEstimada", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.horaEstimada },
+                    new SqlParameter("@isFechaLlegada", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.fechaLlegada },
+                    new SqlParameter("@isHoraLlegada", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.horaLlegada },
+                    new SqlParameter("@isFechaFinAtencion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.fechaFinAtencion },
+                    new SqlParameter("@isHoraFinAtencion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.horaFinAtencion },
+                    new SqlParameter("@isTelefonoCelular", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.telefonoCelular },
+                    new SqlParameter("@isUsuarioCreacion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.usuarioCreacion },
+                    new SqlParameter("@isFlagFueraCobertura", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.flagFueraCobertura },
+                    new SqlParameter("@isFlagCitrix", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.flagCitrix },
+                    new SqlParameter("@isCodigoProv", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.codigoProv },*/
+
+                    new SqlParameter("@inIndex", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.Skip },
+                    new SqlParameter("@inTamanoPagina", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.PageSize },
+                };
+
+                var listaAmbulancia = await _uow.ExecuteStoredProcPagination<DbContext.Entities.HistoriaClinicaBandejaAmbulancia>("SPRMDS_LIST_HISTORIA_CLINICA_AMBULANCIA", parameters, dto.Skip, dto.PageSize);
+
+                return ServiceResponse.ReturnResultWith200(listaAmbulancia);
+            }
+            catch (Exception e)
+            {
+                //_logger.Error(e);
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By Henrry Torres
+        public async Task<ServiceResponse> AddHistoriaClinicaAmbulanciaOrientacionMedica(HistoriaClinicaMtoDto dto)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    //TBLMDS_HISTORIA_CLINICA
+                    new SqlParameter("@inCodigoEmpresa", SqlDbType.BigInt) {Direction = ParameterDirection.Input, Value = dto.id_empresa },
+                    new SqlParameter("@inCodigoPersona", SqlDbType.BigInt) {Direction = ParameterDirection.Input, Value = dto.id_persona },
+                    new SqlParameter("@inEstado", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.estado },
+                    new SqlParameter("@SHIS_CM_ESTADO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_CM_ESTADO },
+                    new SqlParameter("@NHIS_COD_ESTADO", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.NHIS_COD_ESTADO },
+                    new SqlParameter("@NHIS_CM_ORDEN", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.NHIS_CM_ORDEN },
+                    new SqlParameter("@FHIS_FLG_CM_NUEVA", SqlDbType.Bit) {Direction = ParameterDirection.Input, Value = dto.FHIS_FLG_CM_NUEVA },
+                    new SqlParameter("@SHIS_REF_DIR", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_REF_DIR },
+                    new SqlParameter("@SHIS_CM_REF_DIR", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_CM_REF_DIR },
+                    new SqlParameter("@FHIS_FLAG_PROGRAMADA", SqlDbType.Bit) {Direction = ParameterDirection.Input, Value = dto.FHIS_FLAG_PROGRAMADA },
+                    new SqlParameter("@SHIS_F_PROG", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_F_PROG },
+                    new SqlParameter("@SHIS_COD_TIPO_PROG", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_COD_TIPO_PROG },
+                    new SqlParameter("@SHIS_COD_DR_SOLICITADO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_COD_DR_SOLICITADO },
+                    new SqlParameter("@FHIS_CM_DIRECTA", SqlDbType.Bit) {Direction = ParameterDirection.Input, Value = dto.FHIS_CM_DIRECTA },
+                    new SqlParameter("@SHIS_FLG_DIRECTO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_FLG_DIRECTO },
+                    new SqlParameter("@FHIS_CM_DATOS_COMPLETOS", SqlDbType.Bit) {Direction = ParameterDirection.Input, Value = dto.FHIS_CM_DATOS_COMPLETOS },
+                    new SqlParameter("@NHIS_TAR_ATE", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.NHIS_TAR_ATE },
+                    new SqlParameter("@SHIS_TIPO_SERVAMB_DRMAS", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_TIPO_SERVAMB_DRMAS },
+                    new SqlParameter("@SHIS_COD_AMB_TIPO_SERV", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_COD_AMB_TIPO_SERV },
+                    new SqlParameter("@NHIS_COASEGURO", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.NHIS_COASEGURO },
+                    new SqlParameter("@SHIS_FLAGMONE", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_FLAGMONE },
+                    new SqlParameter("@NHIS_CAMBIO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.NHIS_CAMBIO },
+                    new SqlParameter("@SHIS_FOR_ATE", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_FOR_ATE },
+                    new SqlParameter("@SHIS_CM_MONEDA_DEN", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_CM_MONEDA_DEN },
+                    new SqlParameter("@NHIS_CM_DEN_CAMBIO", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.NHIS_CM_DEN_CAMBIO },
+                    new SqlParameter("@SHIS_CM_DENOMINACION", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_CM_DENOMINACION },
+                    new SqlParameter("@SHIS_CONTACTO_PAC", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_CONTACTO_PAC },
+                    new SqlParameter("@SHIS_CONTACTO_ASEG", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_CONTACTO_ASEG },
+                    new SqlParameter("@SHIS_TIPO_SERVICIO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_TIPO_SERVICIO },
+                    new SqlParameter("@NHIS_CLASIFICACION_PAC", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.NHIS_CLASIFICACION_PAC },
+                    new SqlParameter("@SHIS_TIPO_DOC_PAGO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_TIPO_DOC_PAGO },
+                    new SqlParameter("@SHIS_DESCRP_ZONA", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_DESCRP_ZONA },
+                    new SqlParameter("@inCodigoUsuario", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.usuario_creacion },
+                    new SqlParameter("isObservacion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.observacion },
+                    new SqlParameter("@NHIS_CLASIFICACION_PAC_CALLMED", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.NHIS_CLASIFICACION_PAC_CALLMED },                    
+                    //SITEDS
+                    new SqlParameter("@SHIS_COD_AUT_PRESTACION", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_COD_AUT_PRESTACION },
+                    new SqlParameter("@SHIS_COD_ASEGURADO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_COD_ASEGURADO },
+                    new SqlParameter("@SHIS_CM_ASEG_PRODUCTO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_CM_ASEG_PRODUCTO },
+                    new SqlParameter("@SHIS_POLIZA_ASEGURADO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_POLIZA_ASEGURADO },
+                    new SqlParameter("@SHIS_POLIZA_CERTIFICADO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_POLIZA_CERTIFICADO },
+                    
+                    //TBLMDS_HISTORIA_CLINICA_CALLMEDICO
+                    new SqlParameter("@CPAR_ID_SOLICITUD", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.CPAR_ID_SOLICITUD },
+                    new SqlParameter("@inCodigoMotivo", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.CPAR_ID_MOTIVO_CALLMEDICO },
+                    new SqlParameter("@CPAR_ID_REFERENCIA_AMBULANCIA", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.CPAR_ID_REFERENCIA_AMBULANCIA },
+                    new SqlParameter("@CCEN_ID", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.CCEN_ID },
+                    new SqlParameter("@CECM_ID", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.CECM_ID },
+
+                    new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
+                };
+
+                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_ADD_HISTORIA_CLINICA_AMBULANCIA_ORIENTACION_MEDICA", parameters);
+
+                dto.cod_historia_clinica = Convert.ToInt64(response);
+
+                return ServiceResponse.ReturnResultWith201(dto);
+
+            }
+            catch (Exception e)
+            {
+                //_logger.Error(e);
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By Henrry Torres
+        public async Task<ServiceResponse> AddHistoriaClinicaAmbulancia(HistoriaClinicaMtoDto dto)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    //TBLMDS_HISTORIA_CLINICA
+                    new SqlParameter("@inCodigoEmpresa", SqlDbType.BigInt) {Direction = ParameterDirection.Input, Value = dto.id_empresa },
+                    new SqlParameter("@inCodigoPersona", SqlDbType.BigInt) {Direction = ParameterDirection.Input, Value = dto.id_persona },
+                    new SqlParameter("@inEstado", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.estado },
+                    new SqlParameter("@SHIS_NOM_EMP", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_NOM_EMP },
+                    new SqlParameter("@NHIS_EDAD_ATE", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.NHIS_EDAD_ATE },
+                    new SqlParameter("@SHIS_CEL_PAC", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_CEL_PAC },
+                    new SqlParameter("@SHIS_CM_REF_DIR", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_CM_REF_DIR },
+                    new SqlParameter("@NHIS_COD_TARIFA", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.NHIS_COD_TARIFA },
+                    new SqlParameter("@SHIS_F_PROG", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_F_PROG },
+                    new SqlParameter("@SHIS_COD_AMB_TIPO_SERV", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_COD_AMB_TIPO_SERV },
+                    new SqlParameter("@FHIS_FLAG_PROGRAMADA", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.FHIS_FLAG_PROGRAMADA },
+                    new SqlParameter("@SHIS_PERSONAL_CONTACTO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_PERSONAL_CONTACTO },
+                    new SqlParameter("@DHIS_HOR_ATE", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.DHIS_HOR_ATE },
+                    new SqlParameter("@SHIS_COD_EMP", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_COD_EMP },
+                    new SqlParameter("@SHIS_AMB_COD_DIS_ORIGEN", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_AMB_COD_DIS_ORIGEN },
+                    new SqlParameter("@SHIS_AMB_DES_DIS_ORIGEN", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_AMB_DES_DIS_ORIGEN },
+                    new SqlParameter("@SHIS_AMB_DIR_ORIGEN", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_AMB_DIR_ORIGEN },
+                    new SqlParameter("@SHIS_AMB_REF_DIR_ORIGEN", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_AMB_REF_DIR_ORIGEN },
+                    new SqlParameter("@DHIS_AMB_FECHA_INI", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.DHIS_AMB_FECHA_INI },
+                    new SqlParameter("@DHIS_AMB_HORA_INI", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.DHIS_AMB_HORA_INI },
+                    new SqlParameter("@DHIS_AMB_FECHA_FIN", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.DHIS_AMB_FECHA_FIN },
+                    new SqlParameter("@DHIS_AMB_HORA_FIN", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.DHIS_AMB_HORA_FIN },
+                    new SqlParameter("@SHIS_AMB_COD_DIS_DESTINO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_AMB_COD_DIS_DESTINO },
+                    new SqlParameter("@SHIS_AMB_DES_DIS_DESTINO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_AMB_DES_DIS_DESTINO },
+                    new SqlParameter("@SHIS_AMB_DIR_DESTINO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_AMB_DIR_DESTINO },
+                    new SqlParameter("@SHIS_AMB_REF_DIR_DESTINO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_AMB_REF_DIR_DESTINO },
+                    new SqlParameter("@SHIS_TIPO_SERVICIO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_TIPO_SERVICIO },
+                    new SqlParameter("@NHIS_COD_PRIORIDAD_CALLMED", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.NHIS_COD_PRIORIDAD_CALLMED },
+                    new SqlParameter("@NHIS_COD_MOTIVO_ATE_CALLMED", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.NHIS_COD_MOTIVO_ATE_CALLMED },
+                    new SqlParameter("@NHIS_TAR_ATE", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.NHIS_TAR_ATE },
+                    new SqlParameter("@NHIS_COASEGURO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.NHIS_COASEGURO },
+                    new SqlParameter("@SHIS_TIPO_DOC_PAGO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_TIPO_DOC_PAGO },
+                    new SqlParameter("@isObservacion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.observacion },
+                    new SqlParameter("@SHIS_CM_DENOMINACION", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_CM_DENOMINACION },
+                    new SqlParameter("@SHIS_FOR_ATE", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_FOR_ATE },
+                    new SqlParameter("@NHIS_ID_TIPO_TRASLADO_CALLMED", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.NHIS_ID_TIPO_TRASLADO_CALLMED },
+                    new SqlParameter("@SHIS_COD_AUT_PRESTACION", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_COD_AUT_PRESTACION },
+                    new SqlParameter("@SHIS_CONTRATANTE_CITRIX", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_CONTRATANTE_CITRIX },
+                    new SqlParameter("@SHIS_COD_ASEGURADO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_COD_ASEGURADO },
+                    new SqlParameter("@SHIS_CM_ASEG_PRODUCTO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_CM_ASEG_PRODUCTO },
+                    new SqlParameter("@SHIS_POLIZA_ASEGURADO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_POLIZA_ASEGURADO },
+                    new SqlParameter("@SHIS_POLIZA_CERTIFICADO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_POLIZA_CERTIFICADO },
+                    new SqlParameter("@FHIS_AMB_SERVICIO_PLAYA", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.FHIS_AMB_SERVICIO_PLAYA },
+                    new SqlParameter("@inEstado", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_ESTADO },
+                    new SqlParameter("@SHIS_CM_ESTADO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_CM_ESTADO },
+                    new SqlParameter("@NHIS_COD_ESTADO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.NHIS_COD_ESTADO },
+                    new SqlParameter("@NHIS_CM_ORDEN", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.NHIS_CM_ORDEN },
+                    new SqlParameter("@FHIS_FLG_CM_NUEVA", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.FHIS_FLG_CM_NUEVA },
+                    new SqlParameter("@SHIS_COD_TIPO_PROG", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_COD_TIPO_PROG },
+                    new SqlParameter("@SHIS_COD_DR_SOLICITADO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_COD_DR_SOLICITADO },
+                    new SqlParameter("@FHIS_CM_DIRECTA", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.FHIS_CM_DIRECTA },
+                    new SqlParameter("@SHIS_FLG_DIRECTO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_FLG_DIRECTO },
+                    new SqlParameter("@FHIS_CM_DATOS_COMPLETOS", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.FHIS_CM_DATOS_COMPLETOS },
+                    new SqlParameter("@SHIS_FLAGMONE", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_FLAGMONE },
+                    new SqlParameter("@NHIS_CAMBIO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.NHIS_CAMBIO },
+                    new SqlParameter("@SHIS_CM_MONEDA_DEN", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_CM_MONEDA_DEN },
+                    new SqlParameter("@NHIS_CM_DEN_CAMBIO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.NHIS_CM_DEN_CAMBIO },
+                    new SqlParameter("@SHIS_CONTACTO_PAC", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_CONTACTO_PAC },
+                    new SqlParameter("@SHIS_CONTACTO_ASEG", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_CONTACTO_ASEG },
+                    new SqlParameter("@NHIS_CLASIFICACION_PAC", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.NHIS_CLASIFICACION_PAC },
+                    new SqlParameter("@SHIS_DESCRP_ZONA", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_DESCRP_ZONA },
+                    new SqlParameter("@SHIS_USULLA_ATE", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_USULLA_ATE },
+                    new SqlParameter("@NHIS_CLASIFICACION_PAC_CALLMED", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.NHIS_CLASIFICACION_PAC_CALLMED },
+                    new SqlParameter("@DHIS_FEC_ATE", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.DHIS_FEC_ATE },
+                    new SqlParameter("@SHIS_TIPO_SERVAMB_DRMAS", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.SHIS_TIPO_SERVAMB_DRMAS },
+                    new SqlParameter("@inCodigoUsuario", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.usuario_creacion },
+
+                    new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
+                };
+
+                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_ADD_HISTORIA_CLINICA_AMBULANCIA", parameters);
+
+                dto.cod_historia_clinica = Convert.ToInt64(response);
+
+                return ServiceResponse.ReturnResultWith201(dto);
+
+            }
+            catch (Exception e)
+            {
+                //_logger.Error(e);
+                return ServiceResponse.Return500(e);
+            }
+        }
+        //FIN SERVICIO AMBULANCIA
+
         //SERVICIO MAD
         //By Henrry Torres
         public async Task<ServiceResponse> GetHistoriaClinicaMadByCodigo(int historiaClinicaId)
@@ -449,6 +675,146 @@ namespace MDS.Services.HistoriaClinica.Implementation
             }
             catch (Exception e)
             {
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By Willian Vilca
+        //CONSULTA POR ASEGURADORA = CAJA TEXTO
+        public async Task<ServiceResponse> GetHistoriaClinica_Mad_Aseguradora(string vAseguradora)
+        {
+            try
+            {
+
+                SqlParameter[] parameters =
+                {
+            new SqlParameter("@isAseguradora", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vAseguradora },
+        };
+
+                List<DbContext.Entities.ClienteAseguradora> clientes = new List<DbContext.Entities.ClienteAseguradora>();
+
+                clientes = await _uow.ExecuteStoredProcByParam<DbContext.Entities.ClienteAseguradora>("SPRMDS_LIST_HISTORIACLINICA_MAD_ASEGURADORA", parameters);
+
+                List<ClienteAseguradoraDto> listCliente = new List<ClienteAseguradoraDto>();
+
+                listCliente = clientes.Select(c => new ClienteAseguradoraDto
+                {
+                    //id_cliente = c.CCLT_ID,
+                    id_cliente = c.SIAF_FINANCIAMIENTO,
+                    nombre = c.SCLT_NOMBRE
+                }).ToList();
+
+
+                if (!listCliente.Any())
+                    return ServiceResponse.Return404();
+
+                return ServiceResponse.ReturnResultWith200(listCliente);
+            }
+            catch (Exception e)
+            {
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By Willian Vilca
+        public async Task<ServiceResponse> AddHistoriaClinicaSiteds(SitedsMtoDto dto)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+
+                            new SqlParameter("@CHIS_ID"                             ,SqlDbType.Int) {Direction = ParameterDirection.Input,Value = dto.id_historia },
+                            new SqlParameter("@SSIT_DOCUMENTOAUTORIZACION"          ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.documentoautorizacion },
+                            new SqlParameter("@SSIT_CODIGOAFILIADO"                 ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codigoafiliado },
+                            new SqlParameter("@SSIT_NUMEROPOLIZA"                   ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.numeropoliza },
+                            new SqlParameter("@SSIT_NUMEROCONTRATO"                 ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.numerocontrato },
+                            new SqlParameter("@SSIT_NUMEROCERTIFICADO"              ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.numerocertificado },
+                            new SqlParameter("@SSIT_CODPRODUCTO"                    ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codproducto },
+                            new SqlParameter("@SSIT_DESPRODUCTO"                    ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.desproducto },
+                            new SqlParameter("@SSIT_APELLIDOPATERNOAFILIADO"        ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.apellidopaternoafiliado },
+                            new SqlParameter("@SSIT_APELLIDOMATERNOAFILIADO"        ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.apellidomaternoafiliado },
+                            new SqlParameter("@SSIT_NOMBRESAFILIADO"                ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.nombresafiliado },
+                            new SqlParameter("@SSIT_CODGENERO"                      ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codgenero },
+                            new SqlParameter("@SSIT_DESGENERO"                      ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.desgenero },
+                            new SqlParameter("@SSIT_CODFECHANACIMIENTO"             ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codfechanacimiento },
+                            new SqlParameter("@SSIT_FECHANACIMIENTO"                ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.fechanacimiento },
+                            new SqlParameter("@SSIT_CODPARENTESCO"                  ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codparentesco },
+                            new SqlParameter("@SSIT_DESPARENTESCO"                  ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.desparentesco },
+                            new SqlParameter("@SSIT_CODTIPODOCUMENTOAFILIADO"       ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codtipodocumentoafiliado },
+                            new SqlParameter("@SSIT_DESTIPODOCUMENTOAFILIADO"       ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.destipodocumentoafiliado },
+                            new SqlParameter("@SSIT_NUMERODOCUMENTOAFILIADO"        ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.numerodocumentoafiliado },
+                            new SqlParameter("@NSIT_EDAD"                           ,SqlDbType.Int) {Direction = ParameterDirection.Input,Value =     dto.edad },
+                            new SqlParameter("@SSIT_CODFECHAINICIOVIGENCIA"         ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codfechainiciovigencia },
+                            new SqlParameter("@SSIT_FECHAINICIOVIGENCIA"            ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.fechainiciovigencia },
+                            new SqlParameter("@SSIT_CODFECHAFINVIGENCIA"            ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codfechafinvigencia },
+                            new SqlParameter("@SSIT_FECHAFINVIGENCIA"               ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.fechafinvigencia },
+                            new SqlParameter("@SSIT_CODESTADOCIVIL"                 ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codestadocivil },
+                            new SqlParameter("@SSIT_DESESTADOCIVIL"                 ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.desestadocivil },
+                            new SqlParameter("@NSIT_CODTIPOPLAN"                    ,SqlDbType.Int) {Direction = ParameterDirection.Input,Value = dto.codtipoplan },
+                            new SqlParameter("@SSIT_DESTIPOPLAN"                    ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.destipoplan },
+                            new SqlParameter("@NSIT_NUMEROPLAN"                     ,SqlDbType.Int) {Direction = ParameterDirection.Input,Value = dto.numeroplan },
+                            new SqlParameter("@SSIT_CODESTADO"                      ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codestado },
+                            new SqlParameter("@SSIT_DESESTADO"                      ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.desestado },
+                            new SqlParameter("@SSIT_CODFECHAACTUALIZACIONFOTO"      ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codfechaactualizacionfoto },
+                            new SqlParameter("@SSIT_FECHAACTUALIZACIONFOTO"         ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.fechaactualizacionfoto },
+                            new SqlParameter("@SSIT_APELLIDOPATERNOTITULAR"         ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.apellidopaternotitular },
+                            new SqlParameter("@SSIT_APELLIDOMATERNOTITULAR"         ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.apellidomaternotitular },
+                            new SqlParameter("@SSIT_NOMBRESTITULAR"                 ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.nombrestitular },
+                            new SqlParameter("@SSIT_CODIGOTITULAR"                  ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codigotitular },
+                            new SqlParameter("@SSIT_CODTIPODOCUMENTOTITULAR"        ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codtipodocumentotitular },
+                            new SqlParameter("@SSIT_DESTIPODOCUMENTOTITULAR"        ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.destipodocumentotitular },
+                            new SqlParameter("@SSIT_NUMERODOCUMENTOTITULAR"         ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.numerodocumentotitular },
+                            new SqlParameter("@NSIT_CODMONEDA"                      ,SqlDbType.Int) {Direction = ParameterDirection.Input,Value =     dto.codmoneda },
+                            new SqlParameter("@SSIT_DESMONEDA"                      ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.desmoneda },
+                            new SqlParameter("@SSIT_NOMBRECONTRATANTE"              ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.nombrecontratante },
+                            new SqlParameter("@SSIT_CODTIPODOCUMENTOCONTRATANTE"    ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codtipodocumentocontratante },
+                            new SqlParameter("@SSIT_DESTIPODOCUMENTOCONTRATANTE"    ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.destipodocumentocontratante },
+                            new SqlParameter("@SSIT_CODTIPOAFILIACION"              ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codtipoafiliacion },
+                            new SqlParameter("@SSIT_DESTIPOAFILIACION"              ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.destipoafiliacion },
+                            new SqlParameter("@SSIT_CODFECHAAFILIACION"             ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codfechaafiliacion },
+                            new SqlParameter("@SSIT_FECHAAFILIACION"                ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.fechaafiliacion },
+                            new SqlParameter("@SSIT_NUMERODOCUMENTOCONTRATANTE"     ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.numerodocumentocontratante },
+                            new SqlParameter("@SSIT_CODIGOTIPOCOBERTURA"            ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codigotipocobertura },
+                            new SqlParameter("@SSIT_CODIGOSUBTIPOCOBERTURA"         ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codigosubtipocobertura },
+                            new SqlParameter("@SSIT_CODIGOCOBERTURA"                ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codigocobertura },
+                            new SqlParameter("@SSIT_BENEFICIOS"                     ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.beneficios },
+                            new SqlParameter("@SSIT_CODINDICADORRESTRICCION"        ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codindicadorrestriccion },
+                            new SqlParameter("@SSIT_RESTRICCIONES"                  ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.restricciones },
+                            new SqlParameter("@NSIT_CODCOPAGOFIJO"                  ,SqlDbType.Decimal) {Direction = ParameterDirection.Input,Value = dto.codcopagofijo },
+                            new SqlParameter("@SSIT_DESCOPAGOFIJO"                  ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.descopagofijo },
+                            new SqlParameter("@NSIT_CODCOPAGOVARIABLE"              ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codcopagovariable },
+                            new SqlParameter("@SSIT_DESCOPAGOVARIABLE"              ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.descopagovariable },
+                            new SqlParameter("@SSIT_CODFECHAFINCARENCIA"            ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codfechafincarencia },
+                            new SqlParameter("@SSIT_FECHAFINCARENCIA"               ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.fechafincarencia },
+                            new SqlParameter("@SSIT_CONDICIONESESPECIALES"          ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.condicionesespeciales },
+                            new SqlParameter("@SSIT_OBSERVACIONES"                  ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.observaciones },
+                            new SqlParameter("@SSIT_CODCALIFICACIONSERVICIO"        ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codcalificacionservicio },
+                            new SqlParameter("@SSIT_DESCALIFICACIONSERVICIO"        ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.descalificacionservicio },
+                            new SqlParameter("@SSIT_BENEFICIOMAXIMOINICIAL"         ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.beneficiomaximoinicial },
+                            new SqlParameter("@SSIT_NUMEROCOBERTURA"                ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.numerocobertura },
+                            new SqlParameter("@SSIT_FECHA_CREACION_DOC_AUT"         ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.fecha_creacion_doc_aut },
+                            new SqlParameter("@DSIT_HORA_CREACION_DOC_AUT"          ,SqlDbType.DateTime) {Direction = ParameterDirection.Input,Value = dto.hora_creacion_doc_aut },
+                            new SqlParameter("@SSIT_DESCRIPCION_PRODUCTO"           ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.descripcion_producto },
+                            new SqlParameter("@NSIT_USUARIO_CREACION"               ,SqlDbType.Int) {Direction = ParameterDirection.Input,Value = dto.usuario_creacion },
+                            new SqlParameter("@DSIT_FECHA_CREACION"                 ,SqlDbType.DateTime) {Direction = ParameterDirection.Input,Value = dto.fecha_creacion },
+                            new SqlParameter("@NSIT_USUARIO_MODIFICACION"           ,SqlDbType.Int) {Direction = ParameterDirection.Input,Value = dto.usuario_modificacion },
+                            new SqlParameter("@DSIT_FECHA_MODIFICACION"             ,SqlDbType.DateTime) {Direction = ParameterDirection.Input,Value = dto.fecha_modificacion },
+
+                            new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
+
+                };
+
+                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_ADD_SITEDS", parameters);
+
+                dto.id_siteds = Convert.ToInt64(response);
+
+                return ServiceResponse.ReturnResultWith201(dto);
+
+            }
+            catch (Exception e)
+            {
+                //_logger.Error(e);
                 return ServiceResponse.Return500(e);
             }
         }

@@ -7,8 +7,6 @@ namespace MDS.Api.Models
         //[Required]
         public int id_persona { get; set; }
         //[Required]
-        public int CSER_IDSERVICIO { get; set; }
-        //[Required]
         public DateTime DPAC_FINC { get; set; }
         //[Required]
         public string SPAC_COD_PAR { get; set; }

@@ -8,12 +8,15 @@
         public string nombres { get; set; }
         public string apellido_paterno { get; set; }
         public string apellido_materno { get; set; }
-        public int sexo { get; set; }
+        public Boolean sexo { get; set; }
         //public string fecha_nacimiento { get; set; }
         public DateTime fecha_nacimiento { get; set; }
         public string movil { get; set; }
+        public string? telefono { get; set; }
+        public string? correo_electronico { get; set; }
         public long? id_persona { get; set; }
-        public int? id_servicio { get; set; }
+        public int? edad { get; set; }
+        //public int? id_servicio { get; set; }
         public bool? estado { get; set; }
     }
 
@@ -21,7 +24,7 @@
     {
         public long Id_paciente { get; set; }
         public long id_persona { get; set; }
-        public int id_servicio { get; set; }
+        //public int id_servicio { get; set; }
         public DateTime finc { get; set; }
         public string cod_par { get; set; }
         public DateTime fcre { get; set; }

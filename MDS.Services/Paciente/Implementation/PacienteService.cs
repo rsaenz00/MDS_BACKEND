@@ -28,7 +28,7 @@ namespace MDS.Services.Paciente.Implementation
 
                 List<PacienteDto> listPaciente = new List<PacienteDto>();
 
-                listPaciente = pacientes.Select(p => new PacienteDto { id_paciente = p.CPAC_ID, id_persona = p.CPER_ID, id_servicio = p.CSER_IDSERVICIO, estado = p.FPAC_ESTADO }).ToList();
+                listPaciente = pacientes.Select(p => new PacienteDto { id_paciente = p.CPAC_ID, id_persona = p.CPER_ID, estado = p.FPAC_ESTADO }).ToList();
 
                 if (!pacientes.Any())
                     return ServiceResponse.ReturnResultWith204();
@@ -53,18 +53,18 @@ namespace MDS.Services.Paciente.Implementation
                     new SqlParameter("@isCondicion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = condicion },
                 };
 
-                List<DbContext.Entities.PacienteFiltro> clinicas = new List<DbContext.Entities.PacienteFiltro>();
+                List<DbContext.Entities.PacienteFiltro> pacientes = new List<DbContext.Entities.PacienteFiltro>();
 
-                clinicas = await _uow.ExecuteStoredProcByParam<DbContext.Entities.PacienteFiltro>("SPRMDS_LIST_PACIENTE_FILTRO", parameters);
+                pacientes = await _uow.ExecuteStoredProcByParam<DbContext.Entities.PacienteFiltro>("SPRMDS_LIST_PACIENTE_FILTRO", parameters);
 
-                List<PacienteDto> listClinicas = new List<PacienteDto>();
+                List<PacienteDto> listPacientes = new List<PacienteDto>();
 
-                listClinicas = clinicas.Select(s => new PacienteDto { id_paciente = s.CPAC_ID, numero_documento = s.SPER_NUMERO_DOCUMENTO, tipo_documento = s.STDO_DESCRIPCION, nombres = s.SPER_NOMBRES, apellido_paterno = s.SPER_APELLIDO_PATERNO, apellido_materno = s.SPER_APELLIDO_MATERNO, sexo = s.NPER_GENERO, fecha_nacimiento = s.DPER_FECHA_NACIMIENTO, movil = s.SPER_TELEFONO_CELULAR }).ToList();
+                listPacientes = pacientes.Select(s => new PacienteDto { id_paciente = s.CPAC_ID, numero_documento = s.SPER_NUMERO_DOCUMENTO, tipo_documento = s.STDO_DESCRIPCION, nombres = s.SPER_NOMBRES, apellido_paterno = s.SPER_APELLIDO_PATERNO, apellido_materno = s.SPER_APELLIDO_MATERNO, sexo = s.NPER_GENERO, fecha_nacimiento = s.DPER_FECHA_NACIMIENTO, movil = s.SPER_TELEFONO_CELULAR, telefono = s.SPER_TELEFONO_CASA, correo_electronico = s.SPER_EMAIL, edad = s.NPER_EDAD }).ToList();
 
                 /*if (!listClinicas.Any())
                     return ServiceResponse.Return404();*/
 
-                return ServiceResponse.ReturnResultWith200(listClinicas);
+                return ServiceResponse.ReturnResultWith200(listPacientes);
             }
             catch (Exception e)
             {
@@ -89,7 +89,7 @@ namespace MDS.Services.Paciente.Implementation
 
                 List<PacienteDto> listPaciente = new List<PacienteDto>();
 
-                listPaciente = pacientes.Select(p => new PacienteDto { id_paciente = p.CPAC_ID, id_persona = p.CPER_ID, id_servicio = p.CSER_IDSERVICIO, estado = p.FPAC_ESTADO }).ToList();
+                listPaciente = pacientes.Select(p => new PacienteDto { id_paciente = p.CPAC_ID, id_persona = p.CPER_ID, estado = p.FPAC_ESTADO }).ToList();
 
                 if (!listPaciente.Any())
                     return ServiceResponse.Return404();
@@ -111,7 +111,6 @@ namespace MDS.Services.Paciente.Implementation
                 SqlParameter[] parameters =
                 {
                     new SqlParameter("@CPER_ID", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.id_persona },
-                    new SqlParameter("@CSER_IDSERVICIO", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.id_servicio },
                     new SqlParameter("@DPAC_FINC", SqlDbType.DateTime) {Direction = ParameterDirection.Input, Value = dto.finc },
                     new SqlParameter("@SPAC_COD_PAR", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.cod_par },
                     new SqlParameter("@DPAC_FCRE", SqlDbType.DateTime) {Direction = ParameterDirection.Input, Value = dto.fcre },

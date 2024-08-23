@@ -107,6 +107,15 @@ namespace MDS.Api.Controllers
         }
 
         //By Henrry Torres
+        [HttpGet, Route("GetClientesAmbulancia")]
+        public async Task<IActionResult> GetClientesAmbulancia()
+        {
+            var response = await _clienteService.GetClientesAmbulancia();
+
+            return ReturnFormattedResponse(response);
+        }
+
+        //By Henrry Torres
         [HttpPost, Route("AddClienteSctr")]
         public async Task<IActionResult> AddClienteSctr(CreateClienteViewModel model)
         {
@@ -121,6 +130,15 @@ namespace MDS.Api.Controllers
             };
 
             var response = await _clienteService.AddClienteSctr(dto);
+
+            return ReturnFormattedResponse(response);
+        }
+
+        //By Henrry Torres
+        [HttpGet, Route("GetClientesSiteds")]
+        public async Task<IActionResult> GetClientesSiteds()
+        {
+            var response = await _clienteService.GetClientesSiteds();
 
             return ReturnFormattedResponse(response);
         }

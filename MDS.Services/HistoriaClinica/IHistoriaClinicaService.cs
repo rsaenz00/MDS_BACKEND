@@ -1,4 +1,5 @@
 ﻿using MDS.Dto;
+using MDS.Dto.Resources;
 using MDS.Infrastructure.Helper;
 using MDS.Infrastructure.Services;
 
@@ -26,9 +27,27 @@ namespace MDS.Services.HistoriaClinica
         Task<ServiceResponse> DeleteHistoriaClinicaSctr(HistoriaClinicaMtoDto dto);
         //FIN SERVICIO SCTR
 
+        //SERVICIO AMBULANCIA
+        //By Henrry Torres
+        Task<ServiceResponse> GetHistoriasClinicasAmbulanciaBandeja(AmbulanciaResource dto);
+
+        //By Henrry Torres
+        Task<ServiceResponse> AddHistoriaClinicaAmbulanciaOrientacionMedica(HistoriaClinicaMtoDto dto);
+
+        //By Henrry Torres
+        Task<ServiceResponse> AddHistoriaClinicaAmbulancia(HistoriaClinicaMtoDto dto);
+        //FIN SERVICIO AMBULANCIA
+
         //SERVICIO MAD
         //By Henrry Torres
         Task<ServiceResponse> GetHistoriaClinicaMadByCodigo(int historiaClinicaId);
+
+        //By Willian Vilca
+        Task<ServiceResponse> GetHistoriaClinica_Mad_Aseguradora(string vAseguradora);
+
+        //By Willian Vilca
+        Task<ServiceResponse> AddHistoriaClinicaSiteds(SitedsMtoDto dto);
+
         //FIN SERVICIO MAD
     }
 }

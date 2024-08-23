@@ -19,7 +19,13 @@ namespace MDS.Services.Cliente
         Task<ServiceResponse> GetClienteByRuc(string ruc);
 
         //By Henrry Torres
+        Task<ServiceResponse> GetClientesAmbulancia();
+
+        //By Henrry Torres
         Task<ServiceResponse> AddClienteSctr(MantenimientoClienteDto dto);
+
+        //By Henrry Torres
+        Task<ServiceResponse> GetClientesSiteds();
     }
 }
 

@@ -59,7 +59,7 @@ namespace MDS.Services.Motivo.Implementation
                 listMotivos = motivos.Select(s => new MotivoComboDto { id_motivo = s.CMOT_ID, descripcion = s.SMOT_DESCRIPCION }).ToList();
 
                 if (!listMotivos.Any())
-                    return ServiceResponse.Return404();
+                    return ServiceResponse.ReturnResultWith204();
 
                 return ServiceResponse.ReturnResultWith200(listMotivos);
             }

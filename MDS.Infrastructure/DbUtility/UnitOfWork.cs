@@ -445,12 +445,14 @@ namespace MDS.Infrastructure.DbUtility
         public async Task<TablaPaginacionList> ExecuteStoredProcPagination<T>(string storedProcName, SqlParameter[] procParams, int skip, int pageSize) where T : class
         {
             DbConnection conn = Context.Database.GetDbConnection();
-            int response = 0;
+            //int response = 0;
+            int respuestaTotal = 0;
 
             try
             {
                 if (conn.State != ConnectionState.Open)
                     await conn.OpenAsync();
+
                 await using (DbCommand command = conn.CreateCommand())
                 {
                     if (IsInTransaction())
@@ -462,13 +464,15 @@ namespace MDS.Infrastructure.DbUtility
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddRange(procParams);
 
-                    var menu = new List<object>();
+                    //var menu = new List<object>();
+                    var listaResultados = new List<object>();
 
                     using (DbDataReader reader = await command.ExecuteReaderAsync())
                     {
                         while (await reader.ReadAsync()) 
                         {
-                            response = (int)reader["TOTAL"];
+                            //response = (int)reader["TOTAL"];
+                            respuestaTotal = (int)reader["TOTAL"];
                         }
 
                         reader.NextResult();
@@ -488,18 +492,26 @@ namespace MDS.Infrastructure.DbUtility
                                     reader.GetValue(colMapping[prop.Name.ToLower()].ColumnOrdinal.Value);
                                 prop.SetValue(obj, val == DBNull.Value ? null : val);
                             }
-                            menu.Add(obj);
+                            //menu.Add(obj);
+                            listaResultados.Add(obj);   
                         }                    
-                        reader.Dispose();
+                            reader.Dispose();   
                     }
-                    var tablaPaginacionList = new TablaPaginacionList();
+                    /*var tablaPaginacionList = new TablaPaginacionList();
                     tablaPaginacionList.TotalCount = response;
                     tablaPaginacionList.PageSize = pageSize;
                     tablaPaginacionList.Skip = skip;
                     tablaPaginacionList.TotalPages = (int)Math.Ceiling(response / (double)pageSize);
-                    tablaPaginacionList.Result = menu;
+                    tablaPaginacionList.Result = menu;*/
 
-                    //var tablaPaginacionList = new TablaPaginacionList(menu,response, skip, pageSize);
+                    TablaPaginacionList tablaPaginacionList = new TablaPaginacionList()
+                    {
+                        TotalCount = respuestaTotal,
+                        PageSize = pageSize,
+                        Skip = skip,
+                        TotalPages = (int)Math.Ceiling(respuestaTotal/(double)pageSize),
+                        Result = listaResultados
+                    };
 
                     return tablaPaginacionList;
                 }

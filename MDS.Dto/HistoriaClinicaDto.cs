@@ -10,7 +10,7 @@
         public string hora_atencion { get; set; }//MAD - SCTR
         public string celular { get; set; }//MAD - SCTR
         public string pais { get; set; }//MAD - SCTR
-        public long id_cliente { get; set; }//MAD - SCTR
+        public string id_cliente { get; set; }//MAD - SCTR
         public string? id_paciente { get; set; }//MAD
         public string? id_medico { get; set; }//MAD
         public string? vip { get; set; }//MAD
@@ -50,7 +50,7 @@
         public string? fecha_accidente { get; set; }//SCTR
         public string? hora_accidente { get; set; }//SCTR
         public string? tipo_historia_clinica { get; set; }//SCTR
-        public string? tipo_pase_atencion { get; set; }//SCTR
+        public string? pase_atencion { get; set; }//SCTR
         public string? motivo { get; set; }//SCTR
         public string? observacion { get; set; }//SCTR
         public string? ipress_primera_ate { get; set; }//SCTR
@@ -104,6 +104,82 @@
         //public DateTime DATE_FECHA_CREACION { get; set; }
         //public int usuario_modificacion { get; set; }
         //public DateTime DATE_FECHA_MODIFICACION { get; set; }
+
+        //TBLMDS_HISTORIA_CLINICA_CALLMEDICO
+        public int? CPAR_ID_MOTIVO_CALLMEDICO { get; set; }
+        public int? CPAR_ID_REFERENCIA_AMBULANCIA { get; set; }
+        public int? CCEN_ID { get; set; }
+        public int? CECM_ID { get; set; }
+        public int? CPAR_ID_SOLICITUD { get; set; }
+
+        //TBLMDS_HISTORIA_CLINICA
+        public string? SHIS_ESTADO { get; set; }
+        public string? SHIS_CM_ESTADO { get; set; }
+        public int? NHIS_COD_ESTADO { get; set; }
+        public Boolean? FHIS_FLG_CM_NUEVA { get; set; }
+        public int? NHIS_CM_ORDEN { get; set; }
+        public string? SHIS_REF_DIR { get; set; }
+        public string? SHIS_NOM_EMP { get; set; }
+        public string? NHIS_EDAD_ATE { get; set; }
+        public string? SHIS_CEL_PAC { get; set; }
+        public string? SHIS_CM_REF_DIR { get; set; }
+        public Boolean? FHIS_FLAG_PROGRAMADA { get; set; }
+        public string? NHIS_COD_TARIFA { get; set; }
+        public string? SHIS_F_PROG { get; set; }
+        public string? SHIS_COD_TIPO_PROG { get; set; }
+        public string? SHIS_COD_DR_SOLICITADO { get; set; }
+        public string? SHIS_COD_DEP { get; set; }
+        public Boolean? FHIS_CM_DIRECTA { get; set; }
+        public string? SHIS_FLG_DIRECTO { get; set; }
+        public Boolean? FHIS_CM_DATOS_COMPLETOS { get; set; }
+        public int? NHIS_TAR_ATE { get; set; }
+        public string? DHIS_FEC_ATE { get; set; }
+        public string? SHIS_TIPO_SERVAMB_DRMAS { get; set; }
+        public string? SHIS_COD_AMB_TIPO_SERV { get; set; }
+        public int? NHIS_COASEGURO { get; set; }
+        public string? SHIS_FLAGMONE { get; set; }
+        public int? NHIS_CAMBIO { get; set; }
+        public string? SHIS_FOR_ATE { get; set; }
+        public string? SHIS_CM_MONEDA_DEN { get; set; }
+        public int? NHIS_CM_DEN_CAMBIO { get; set; }
+        public string? SHIS_CM_DENOMINACION { get; set; }
+        public string? SHIS_CONTACTO_PAC { get; set; }
+        public string? SHIS_CONTACTO_ASEG { get; set; }
+        public string? SHIS_TIPO_SERVICIO { get; set; }
+        public int? NHIS_COD_PRIORIDAD_CALLMED { get; set; }
+        public int? NHIS_COD_MOTIVO_ATE_CALLMED { get; set; }
+        public int? NHIS_CLASIFICACION_PAC { get; set; }
+        public string? SHIS_TIPO_DOC_PAGO { get; set; }
+        public string? SHIS_DESCRP_ZONA { get; set; }
+        public string? SHIS_PERSONAL_CONTACTO { get; set; }
+        public string? DHIS_HOR_ATE { get; set; }
+        public string? SHIS_COD_EMP { get; set; }
+        public string? SHIS_AMB_COD_DIS_ORIGEN { get; set; }
+        public string? SHIS_AMB_DES_DIS_ORIGEN { get; set; }
+        public string? SHIS_AMB_DIR_ORIGEN { get; set; }
+        public string? SHIS_AMB_REF_DIR_ORIGEN { get; set; }
+        public string? DHIS_AMB_FECHA_INI { get; set; }
+        public string? DHIS_AMB_HORA_INI { get; set; }
+        public string? DHIS_AMB_FECHA_FIN { get; set; }
+        public string? DHIS_AMB_HORA_FIN { get; set; }
+        public string? SHIS_AMB_COD_DIS_DESTINO { get; set; }
+        public string? SHIS_AMB_DES_DIS_DESTINO { get; set; }
+        public string? SHIS_AMB_DIR_DESTINO { get; set; }
+        public string? SHIS_AMB_REF_DIR_DESTINO { get; set; }
+        public string? SHIS_USULLA_ATE { get; set; }
+        public int? CPAC_ID { get; set; }
+        public int? CPER_ID { get; set; }
+        public int? CCLI_ID { get; set; }
+        public string? DHIS_OBS_CM { get; set; }
+        public int? NHIS_CLASIFICACION_PAC_CALLMED { get; set; }
+        public string? NHIS_ID_TIPO_TRASLADO_CALLMED { get; set; }
+        public string? SHIS_COD_AUT_PRESTACION { get; set; }
+        public string? SHIS_CONTRATANTE_CITRIX { get; set; }
+        public string? SHIS_COD_ASEGURADO { get; set; }
+        public string? SHIS_CM_ASEG_PRODUCTO { get; set; }
+        public string? SHIS_POLIZA_ASEGURADO { get; set; }
+        public string? SHIS_POLIZA_CERTIFICADO { get; set; }
+        public string? FHIS_AMB_SERVICIO_PLAYA { get; set; }
     }
 
     public class HistoriaClinicaBandejaDto
@@ -135,4 +211,13 @@
         public string? persona_reporta { get; set; }
         public string? motivo_de_llamada { get; set; }
     }
+
+    /*INICIO MAD*/
+    public class ClienteAseguradoraDto
+    {
+        public string id_cliente { get; set; }
+        public string? nombre { get; set; }
+
+    }
+    /*FIN MAD*/
 }

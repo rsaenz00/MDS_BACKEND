@@ -4,7 +4,7 @@ namespace MDS.DbContext.Entities
 {
     public class Cliente
     {        
-        public long CCLT_ID { get; set; }
+        public string CCLT_ID { get; set; }
         public string? SCLT_NOMBRE { get; set; }
         public string? SCLT_DESCRIPCION { get; set; }
         public string? SCLT_DIRECCION { get; set; }
@@ -17,7 +17,7 @@ namespace MDS.DbContext.Entities
     public class MantenimientoCliente
     {
         public bool FCLT_ESTADO { get; set; }
-        public long CCLT_ID { get; set; }
+        public string CCLT_ID { get; set; }
         public string? SCLT_NOMBRE { get; set; }
         public string? SCLT_DESCRIPCION { get; set; }
         public string? SCLT_DIRECCION { get; set; }
@@ -58,5 +58,14 @@ namespace MDS.DbContext.Entities
         public DateTime DCLT_FECHA_CREACION { get; set; }
         public int NCLT_USUARIO_MODIFICACION { get; set; }
         public DateTime DCLT_FECHA_MODIFICACION { get; set; }
+    }
+
+    public class ClientesSiteds
+    {
+        //public string CCLT_ID { get; set; }
+        public string id { get; set; }
+        public string codigo_financiamiento { get; set; }
+        public string? nombre { get; set; }
+
     }
 }
