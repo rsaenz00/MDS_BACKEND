@@ -53,11 +53,12 @@ namespace MDS.Services.Seguimiento.Implementation
                 {
                     new SqlParameter("@isCodigoHistoriaClinica", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.cod_historia_clinica },
                     new SqlParameter("@isObservacion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.observacion },
+                    new SqlParameter("@isCodigoServicio", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.cod_servicio },
                     new SqlParameter("@inCodigoUsuario", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.usuario },
                     new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
                 };
 
-                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_ADD_SEGUIMIENTO_SCTR", parameters);
+                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_ADD_SEGUIMIENTO", parameters);
 
                 dto.cod_historia_clinica = response.ToString();
 
