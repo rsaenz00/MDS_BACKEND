@@ -399,10 +399,15 @@ namespace MDS.Services.HistoriaClinica.Implementation
             {
                 SqlParameter[] parameters =
                 {
+                    //new SqlParameter("@isCondicion", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.condicion },
+                    new SqlParameter("@isTextoBusqueda", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.busqueda },
                     new SqlParameter("@isFechaInicio", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.fechaDesde },
                     new SqlParameter("@isFechaFin", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.fechaHasta },
-                    new SqlParameter("@isCondicion", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.condicion },
-                    new SqlParameter("@isTextoBusqueda", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.busqueda },
+                    new SqlParameter("@isUrgEmeTras", SqlDbType.Bit) {Direction = ParameterDirection.Input, Value = dto.flagUrgEmeTras },
+                    new SqlParameter("@isEventos", SqlDbType.Bit) {Direction = ParameterDirection.Input, Value = dto.flagEventos },
+                    new SqlParameter("@isOmedica", SqlDbType.Bit) {Direction = ParameterDirection.Input, Value = dto.flagOmedica },
+                    new SqlParameter("@isCanceladas", SqlDbType.Bit) {Direction = ParameterDirection.Input, Value = dto.flagCanceladas },
+                    new SqlParameter("@isFinalizadas", SqlDbType.Bit) {Direction = ParameterDirection.Input, Value = dto.flagFinalizadas },
 
                     /*new SqlParameter("@isCodigoAtencion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.codigoAtencion },
                     new SqlParameter("@isCodigoSited", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.codigoSited },

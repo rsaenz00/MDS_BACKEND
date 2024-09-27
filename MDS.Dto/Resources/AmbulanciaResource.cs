@@ -4,6 +4,11 @@
     {
         public string fechaDesde { get; set; } = "";
         public string fechaHasta {get; set; } = "";
+        public Boolean flagUrgEmeTras { get; set; }
+        public Boolean flagEventos { get; set; }
+        public Boolean flagOmedica { get; set; }
+        public Boolean flagCanceladas { get; set; }
+        public Boolean flagFinalizadas { get; set; }
         public string codigoAtencion { get; set; } = "";
         public string codigoSited { get; set; } = "";
         public string cotizado { get; set; } = "";

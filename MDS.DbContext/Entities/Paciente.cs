@@ -54,7 +54,7 @@
         public string SPER_NOMBRES { get; set; }
         public string SPER_APELLIDO_PATERNO { get; set; }
         public string SPER_APELLIDO_MATERNO { get; set; }
-        public Boolean NPER_GENERO { get; set; }
+        public int NPER_GENERO { get; set; }
         //public string DPER_FECHA_NACIMIENTO { get; set; }
         public DateTime DPER_FECHA_NACIMIENTO { get; set; }
         public string SPER_TELEFONO_CELULAR { get; set; }

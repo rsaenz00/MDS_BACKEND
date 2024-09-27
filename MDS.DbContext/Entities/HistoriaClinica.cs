@@ -131,48 +131,64 @@ namespace MDS.DbContext.Entities
     public class HistoriaClinicaBandejaAmbulancia
     {
         public int cod_historia_clinica { get; set; }
+        public string cod_siteds { get; set; }
+        public string cotizado { get; set; }
+        public string estado { get; set; }
+        public string estado_sm { get; set; }
+        public string tipo_servicio { get; set; }
+        public string cod_amb_tipo_serv { get; set; }
+        public string servicio { get; set; }
+        public int? id_paciente { get; set; }
+        public int? id_persona { get; set; }
+        public Boolean? servicio_playa { get; set; }
+        public string? deducible { get; set; }
+        public string? coaseguro { get; set; }
+        public int? cod_prioridad { get; set; }
+        public int? cod_motivo { get; set; }
+        public string? cod_asegurado { get; set; }
+        public string poliza_asegurado { get; set; }
+        public string poliza_certificado { get; set; }
+        public string numero_documento_id { get; set; }
+        public string correo_electronico { get; set; }
+        public string fecha_nacimiento { get; set; }
+        public string sexo { get; set; }
+        public string documento_identidad { get; set; }
+        public string id_cliente { get; set; }
         public string empresa { get; set; }
-        public string paciente { get; set; }
+        public int? cod_proveedor { get; set; }
+        public string proveedor { get; set; }
         public string centro_medico_derivado { get; set; }
         public string especialidad { get; set; }
-        public string solicitud { get; set; }
+        public string paciente { get; set; }
+        public string prioridad { get; set; }
+        public string direccion { get; set; }
+        public string direccion_destino { get; set; }
+        public int? id_clinica_origen { get; set; }
+        public int? id_clinica_destino { get; set; }
+        public string alergia_medica { get; set; }
+        public string antecedente { get; set; }
+        //public string solicitud { get; set; }
+        public string regla_oro { get; set; }
+        public string ubicacion_dentro_clinica_origen { get; set; }
+        public string ubicacion_dentro_clinica_destino { get; set; }
+        public string fecha_evento_adverso { get; set; }
+        public Boolean? contratante_citrix { get; set; }
+        public Boolean? fuera_cobertura { get; set; }
+        public string nro_placa_vehicular_poliza { get; set; }
+        public string nro_poliza { get; set; }
+        public string nro_siniestro_poliza { get; set; }
+        public Boolean? flg_ambulancia_respiratoria { get; set; }
+        public string ambulancia_respiratoria { get; set; }
+        public int? id_tipo_ambulancia { get; set; }
+        public int? id_solicitud { get; set; }
+        public int? id_solicitante { get; set; }
         public string motivo { get; set; }
-        public string tipo_referencia { get; set; }
+        public string motivo_atencion { get; set; }
+        public string clasificacion { get; set; }
         public string usuario_creacion { get; set; }
         public string fecha_creacion { get; set; }
         public string hora_creacion { get; set; }
         public string observacion { get; set; }
-
-        /*public string cod_atencion { get; set; }
-        public string codigo_siteds { get; set; }
-        public string cotizado { get; set; }
-        public string estado { get; set; }
-        public string ambulancia_resp { get; set; }
-        public string servicio { get; set; }
-        public string paciente { get; set; }
-        public string dni { get; set; }
-        public string distrito { get; set; }
-        public string provincia { get; set; }
-        public string departamento { get; set; }
-        public string direccion { get; set; }
-        public string cliente { get; set; }
-        public string proveedor { get; set; }
-        public string ambulancia { get; set; }
-        public string tiempo { get; set; }
-        public string fecha_estimada { get; set; }
-        public string hora_estimada { get; set; }
-        public string fecha_llegada { get; set; }
-        public string hora_llegada { get; set; }
-        public string fecha_fin_ate { get; set; }
-        public string hora_fin_ate { get; set; }
-        public string referencia { get; set; }
-        public string tlf_celular { get; set; }
-        public string usuario_creacion { get; set; }
-        public string descripcion_motivo { get; set; }
-        public string flg_fuera_cobertura { get; set; }
-        public string flg_citrix { get; set; }
-        public string estado_exp { get; set; }
-        public string codigo_prov { get; set; }*/
     }
 
     public class HistoriaClinicaAmbulancia

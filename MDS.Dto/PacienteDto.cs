@@ -4,11 +4,12 @@
     {
         public long id_paciente { get; set; }
         public string numero_documento { get; set; }
+        public int id_tipo_documento { get; set; }
         public string tipo_documento { get; set; }
         public string nombres { get; set; }
         public string apellido_paterno { get; set; }
         public string apellido_materno { get; set; }
-        public Boolean sexo { get; set; }
+        public int sexo { get; set; }
         //public string fecha_nacimiento { get; set; }
         public DateTime fecha_nacimiento { get; set; }
         public string movil { get; set; }
