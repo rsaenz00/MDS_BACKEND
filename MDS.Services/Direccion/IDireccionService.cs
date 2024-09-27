@@ -6,6 +6,9 @@ namespace MDS.Services.Direccion
 {
     public interface IDireccionService : IService
     {
+        //By William Vilca
+        Task<ServiceResponse> GetListaDirecciones();
+
         //By Henrry Torres
         Task<ServiceResponse> GetDirecciones(long CPER_ID);
 
@@ -22,4 +25,3 @@ namespace MDS.Services.Direccion
         Task<ServiceResponse> DeleteDireccion(DireccionDto dto);
     }
 }
-

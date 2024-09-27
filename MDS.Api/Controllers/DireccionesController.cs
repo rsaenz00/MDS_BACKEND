@@ -20,6 +20,15 @@ namespace MDS.Api.Controllers.Test
             _direccionService = direccionService;
         }
 
+        //By William Vilca
+        [HttpGet, Route("GetListaDirecciones")]
+        public async Task<IActionResult> GetListaDirecciones()
+        {
+            var response = await _direccionService.GetListaDirecciones();
+
+            return ReturnFormattedResponse(response);
+        }
+
         //By Henrry Torres
         [HttpGet, Route("GetDirecciones")]
         public async Task<IActionResult> GetDireccion(long CPER_ID)
@@ -47,20 +56,18 @@ namespace MDS.Api.Controllers.Test
 
             DireccionDto dto = new DireccionDto
             {
-                id_persona = model.CPER_ID,
-                tipo_direccion = model.NDIR_TIPO_DIRECCION,
-                descripcion = model.SDIR_DESCRIPCION,
-                cod_departamento = model.SDIR_COD_DPTO,
-                cod_provincia = model.SDIR_COD_PROV,
-                cod_distrito = model.SDIR_COD_DIST,
-                anexo = model.SDIR_ANEXO,
-                celular = model.SDIR_TLF_CELULAR,
-                telefono_fijo = model.SDIR_TLF_FIJO,
-                nro_mz_lote = model.SDIR_NRO_LOTE,
-                urbanizacion = model.SDIR_URBANIZACION,
-                referencia = model.SDIR_REFERENCIA,
-                dpto_interior = model.SDIR_INTERIOR,
-                usuario_creacion = model.NDIR_USUARIO_CREACION
+                id_persona = model.id_persona,
+                id_ubigeo = model.id_ubigeo,
+                id_tipo_direccion = model.id_tipo_direccion,
+                descripcion = model.descripcion,
+                anexo = model.anexo,
+                celular = model.celular,
+                telefono_fijo = model.telefono_fijo,
+                nro_mz_lote = model.nro_mz_lote,
+                urbanizacion = model.urbanizacion,
+                referencia = model.referencia,
+                dpto_interior = model.dpto_interior,
+                usuario_creacion = model.usuario_creacion
             };
 
             var response = await _direccionService.AddDireccion(dto);
@@ -77,21 +84,19 @@ namespace MDS.Api.Controllers.Test
 
             DireccionDto dto = new DireccionDto
             {
-                id_persona = model.CPER_ID,
-                id_direccion = model.CDIR_ID,
-                tipo_direccion = model.NDIR_TIPO_DIRECCION,
-                descripcion = model.SDIR_DESCRIPCION,
-                cod_departamento = model.SDIR_COD_DPTO,
-                cod_provincia = model.SDIR_COD_PROV,
-                cod_distrito = model.SDIR_COD_DIST,
-                anexo = model.SDIR_ANEXO,
-                celular = model.SDIR_TLF_CELULAR,
-                telefono_fijo = model.SDIR_TLF_FIJO,
-                nro_mz_lote = model.SDIR_NRO_LOTE,
-                urbanizacion = model.SDIR_URBANIZACION,
-                referencia = model.SDIR_REFERENCIA,
-                dpto_interior = model.SDIR_INTERIOR,
-                usuario_modificacion = model.NDIR_USUARIO_MODIFICACION
+                id_direccion = model.id_direccion,
+                id_persona = model.id_persona,
+                id_ubigeo = model.id_ubigeo,
+                id_tipo_direccion = model.id_tipo_direccion,
+                descripcion = model.descripcion,
+                anexo = model.anexo,
+                celular = model.celular,
+                telefono_fijo = model.telefono_fijo,
+                nro_mz_lote = model.nro_mz_lote,
+                urbanizacion = model.urbanizacion,
+                referencia = model.referencia,
+                dpto_interior = model.dpto_interior,
+                usuario_modificacion = model.usuario_modificacion
             };
 
             var response = await _direccionService.UpdateDireccion(dto);

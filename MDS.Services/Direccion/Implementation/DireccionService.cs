@@ -16,6 +16,36 @@ namespace MDS.Services.Blog.Implementation
             _uow = uow;
         }
 
+        //By William Vilca
+        public async Task<ServiceResponse> GetListaDirecciones()
+        {
+            try
+            {
+
+                List<DbContext.Entities.ListaDireccion> direcciones = new List<DbContext.Entities.ListaDireccion>();
+
+                direcciones = await _uow.ExecuteStoredProcAll<DbContext.Entities.ListaDireccion>("SPRMDS_LIST_DIRECCIONES");
+
+                List<ListaDireccionDto> listDireccion = new List<ListaDireccionDto>();
+
+                listDireccion = direcciones.Select(d => new ListaDireccionDto
+                {
+                    paciente = d.PACIENTE,
+                    tipo = d.TIPO,
+                    direccion = d.DIRECCION,
+                }).ToList();
+
+                if (!listDireccion.Any())
+                    return ServiceResponse.Return404();
+
+                return ServiceResponse.ReturnResultWith200(listDireccion);
+            }
+            catch (Exception e)
+            {
+                return ServiceResponse.Return500(e);
+            }
+        }
+
         //By Henrry Torres
         public async Task<ServiceResponse> GetDirecciones(long CPER_ID)
         {
@@ -32,10 +62,10 @@ namespace MDS.Services.Blog.Implementation
 
                 List<DireccionDto> listDireccion = new List<DireccionDto>();
 
-                listDireccion = direcciones.Select(s => new DireccionDto { id_direccion = s.CDIR_ID, id_persona = s.CPER_ID, tipo_direccion = s.NDIR_TIPO_DIRECCION, descripcion = s.SDIR_DESCRIPCION, cod_departamento = s.SDIR_COD_DPTO, cod_provincia = s.SDIR_COD_PROV, cod_distrito = s.SDIR_COD_DIST, anexo = s.SDIR_ANEXO, celular = s.SDIR_TLF_CELULAR, telefono_fijo = s.SDIR_TLF_FIJO, nro_mz_lote = s.SDIR_NRO_LOTE, urbanizacion = s.SDIR_URBANIZACION, referencia = s.SDIR_REFERENCIA, dpto_interior = s.SDIR_INTERIOR }).ToList();
+                listDireccion = direcciones.Select(s => new DireccionDto { id_direccion = s.CDIR_ID, id_ubigeo = s.CUBI_ID, id_persona = s.CPER_ID, id_tipo_direccion = s.NDIR_TIPO_DIRECCION, descripcion = s.SDIR_DESCRIPCION, anexo = s.SDIR_ANEXO, celular = s.SDIR_TLF_CELULAR, telefono_fijo = s.SDIR_TLF_FIJO, nro_mz_lote = s.SDIR_NRO_LOTE, urbanizacion = s.SDIR_URBANIZACION, referencia = s.SDIR_REFERENCIA, dpto_interior = s.SDIR_INTERIOR, tipo_direccion = s.tipo_direccion, cod_departamento = s.SUBI_COD_DPTO, cod_provincia = s.SUBI_COD_PROV, cod_distrito = s.SUBI_COD_DIST, departamento = s.SUBI_DEPARTAMENTO, provincia = s.SUBI_PROVINCIA, distrito = s.SUBI_DISTRITO }).ToList();
 
-                if (!listDireccion.Any())
-                    return ServiceResponse.Return404();
+                /*if (!listDireccion.Any())
+                    return ServiceResponse.Return404();¨*/
 
                 return ServiceResponse.ReturnResultWith200(listDireccion);
             }
@@ -55,15 +85,10 @@ namespace MDS.Services.Blog.Implementation
                     new SqlParameter("@inCodigoPersona", SqlDbType.BigInt) {Direction = ParameterDirection.Input, Value = CPER_ID },
                     new SqlParameter("@inCodigoDireccion", SqlDbType.BigInt) {Direction = ParameterDirection.Input, Value = CDIR_ID },
                 };
-
                 List<DbContext.Entities.Direccion> direcciones = new List<DbContext.Entities.Direccion>();
-
                 direcciones = await _uow.ExecuteStoredProcByParam<DbContext.Entities.Direccion>("SPRMDS_LIST_DIRECCION", parameters);
-
                 List<DireccionDto> listDireccion = new List<DireccionDto>();
-
-                listDireccion = direcciones.Select(s => new DireccionDto { id_direccion = s.CDIR_ID, id_persona = s.CPER_ID, tipo_direccion = s.NDIR_TIPO_DIRECCION, descripcion = s.SDIR_DESCRIPCION, cod_departamento = s.SDIR_COD_DPTO, cod_provincia = s.SDIR_COD_PROV, cod_distrito = s.SDIR_COD_DIST, anexo = s.SDIR_ANEXO, celular = s.SDIR_TLF_CELULAR, telefono_fijo = s.SDIR_TLF_FIJO, nro_mz_lote = s.SDIR_NRO_LOTE, urbanizacion = s.SDIR_URBANIZACION, referencia = s.SDIR_REFERENCIA, dpto_interior = s.SDIR_INTERIOR }).ToList();
-
+                listDireccion = direcciones.Select(s => new DireccionDto { id_persona = s.CPER_ID, id_tipo_direccion = s.NDIR_TIPO_DIRECCION, descripcion = s.SDIR_DESCRIPCION, anexo = s.SDIR_ANEXO, celular = s.SDIR_TLF_CELULAR, telefono_fijo = s.SDIR_TLF_FIJO, nro_mz_lote = s.SDIR_NRO_LOTE, urbanizacion = s.SDIR_URBANIZACION, referencia = s.SDIR_REFERENCIA, dpto_interior = s.SDIR_INTERIOR, tipo_direccion = s.tipo_direccion }).ToList();
                 if (!listDireccion.Any())
                     return ServiceResponse.Return404();
 
@@ -75,6 +100,7 @@ namespace MDS.Services.Blog.Implementation
             }
         }
 
+
         //By Henrry Torres
         public async Task<ServiceResponse> AddDireccion(DireccionDto dto)
         {
@@ -82,13 +108,10 @@ namespace MDS.Services.Blog.Implementation
             {
                 SqlParameter[] parameters =
                 {
-                    new SqlParameter("@inCodigoDireccion", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.id_direccion },
-                    new SqlParameter("@inCodigoPersona", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.id_persona },
-                    new SqlParameter("@inTipodireccion", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.tipo_direccion },
+                    new SqlParameter("@inCodigoPersona", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.id_persona },
+                    new SqlParameter("@inCodigoUbigeo", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.id_ubigeo },
+                    new SqlParameter("@inTipodireccion", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.id_tipo_direccion },
                     new SqlParameter("@isDescripcion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.descripcion },
-                    new SqlParameter("@isCodigoDepartamento", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.cod_departamento },
-                    new SqlParameter("@isCodigoProvincia", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.cod_provincia },
-                    new SqlParameter("@isCodigoDistrito", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.cod_distrito },
                     new SqlParameter("@isAnexo", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.anexo },
                     new SqlParameter("@isTelefonoCelular", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.celular },
                     new SqlParameter("@isTelefonoFijo", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.telefono_fijo },
@@ -96,7 +119,7 @@ namespace MDS.Services.Blog.Implementation
                     new SqlParameter("@isUrbanizacion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.urbanizacion },
                     new SqlParameter("@isReferencia", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.referencia },
                     new SqlParameter("@isInterior", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.dpto_interior },
-                    new SqlParameter("@inCodigoUsuario", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.usuario_creacion },
+                    new SqlParameter("@inCodigoUsuario", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.usuario_creacion},
                     new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
                 };
 
@@ -122,11 +145,9 @@ namespace MDS.Services.Blog.Implementation
                 {
                     new SqlParameter("@inCodigoDireccion", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.id_direccion },
                     new SqlParameter("@inCodigoPersona", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.id_persona },
-                    new SqlParameter("@inTipodireccion", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.tipo_direccion },
+                    new SqlParameter("@inCodigoUbigeo", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.id_ubigeo },
+                    new SqlParameter("@inTipodireccion", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.id_tipo_direccion },
                     new SqlParameter("@isDescripcion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.descripcion },
-                    new SqlParameter("@isCodigoDepartamento", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.cod_departamento },
-                    new SqlParameter("@isCodigoProvincia", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.cod_provincia },
-                    new SqlParameter("@isCodigoDistrito", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.cod_distrito },
                     new SqlParameter("@isAnexo", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.anexo },
                     new SqlParameter("@isTelefonoCelular", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.celular },
                     new SqlParameter("@isTelefonoFijo", SqlDbType.Char) {Direction = ParameterDirection.Input, Value = dto.telefono_fijo },
@@ -134,7 +155,7 @@ namespace MDS.Services.Blog.Implementation
                     new SqlParameter("@isUrbanizacion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.urbanizacion },
                     new SqlParameter("@isReferencia", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.referencia },
                     new SqlParameter("@isInterior", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.dpto_interior },
-                    new SqlParameter("@inCodigoUsuario", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.usuario_modificacion },
+                    new SqlParameter("@inCodigoUsuario", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.usuario_modificacion},
                     new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
                 };
 
