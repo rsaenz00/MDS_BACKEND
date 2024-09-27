@@ -39,9 +39,9 @@ namespace MDS.Services.Ambulancia
         Task<ServiceResponse> GetProductoAmbulancia(string busqueda, int codCliente);
 
         //By Henrry Torres
-        Task<ServiceResponse> GetSedeTrasladoAmbulancia();
+        Task<ServiceResponse> GetProveedorAmbulancia();
 
         //By Henrry Torres
-        Task<ServiceResponse> GetProveedorAmbulancia();
+        Task<ServiceResponse> GetTipoComprobante();
     }
 }

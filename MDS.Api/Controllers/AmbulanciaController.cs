@@ -111,16 +111,7 @@ namespace MDS.Api.Controllers.GestionPacientes
         [HttpGet, Route("GetProductoAmbulancia")]
         public async Task<IActionResult> GetProductoAmbulancia(string busqueda, int codCliente)
         {
-            var response = await _ambulanciaService.GetProductoAmbulancia(busqueda,codCliente);
-
-            return ReturnFormattedResponse(response);
-        }
-
-        //By Henrry Torres
-        [HttpGet, Route("GetSedeTrasladoAmbulancia")]
-        public async Task<IActionResult> GetSedeTrasladoAmbulancia()
-        {
-            var response = await _ambulanciaService.GetSedeTrasladoAmbulancia();
+            var response = await _ambulanciaService.GetProductoAmbulancia(busqueda, codCliente);
 
             return ReturnFormattedResponse(response);
         }
@@ -130,6 +121,15 @@ namespace MDS.Api.Controllers.GestionPacientes
         public async Task<IActionResult> GetProveedorAmbulancia()
         {
             var response = await _ambulanciaService.GetProveedorAmbulancia();
+
+            return ReturnFormattedResponse(response);
+        }
+
+        //By Henrry Torres
+        [HttpGet, Route("GetTipoComprobante")]
+        public async Task<IActionResult> GetTipoComprobante()
+        {
+            var response = await _ambulanciaService.GetTipoComprobante();
 
             return ReturnFormattedResponse(response);
         }

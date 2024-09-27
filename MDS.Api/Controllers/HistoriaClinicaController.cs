@@ -330,6 +330,130 @@ namespace MDS.Api.Controllers
 
             return ReturnFormattedResponse(response);
         }
+
+        //By Henrry Torres
+        [HttpPost, Route("AddHistoriaClinicaAmbulanciaEvento")]
+        public async Task<IActionResult> AddHistoriaClinicaAmbulanciaEvento(CreateHistoriaClinicaViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelStateExtensions.GetErrorMessage(ModelState));
+
+            HistoriaClinicaMtoDto dto = new HistoriaClinicaMtoDto
+            {
+                id_empresa = model.id_empresa,
+                SHIS_NOM_EMP = model.SHIS_NOM_EMP,
+                id_persona = model.id_persona,
+                NHIS_EDAD_ATE = model.NHIS_EDAD_ATE,
+                SHIS_CEL_PAC = model.SHIS_CEL_PAC,
+                SHIS_CM_REF_DIR = model.SHIS_CM_REF_DIR,
+                NHIS_COD_TARIFA = model.NHIS_COD_TARIFA,
+                SHIS_F_PROG = model.SHIS_F_PROG,
+                SHIS_COD_AMB_TIPO_SERV = model.SHIS_COD_AMB_TIPO_SERV,
+                FHIS_FLAG_PROGRAMADA = model.FHIS_FLAG_PROGRAMADA,//10
+                DHIS_HOR_ATE = model.DHIS_HOR_ATE,
+                SHIS_COD_EMP = model.SHIS_COD_EMP,
+                SHIS_AMB_COD_DIS_ORIGEN = model.SHIS_AMB_COD_DIS_ORIGEN,
+                SHIS_AMB_DES_DIS_ORIGEN = model.SHIS_AMB_DES_DIS_ORIGEN,
+                SHIS_AMB_DIR_ORIGEN = model.SHIS_AMB_DIR_ORIGEN,
+                SHIS_AMB_REF_DIR_ORIGEN = model.SHIS_AMB_REF_DIR_ORIGEN,
+                DHIS_AMB_FECHA_INI = model.DHIS_AMB_FECHA_INI,
+                DHIS_AMB_HORA_INI = model.DHIS_AMB_HORA_INI,
+                DHIS_AMB_FECHA_FIN = model.DHIS_AMB_FECHA_FIN,
+                DHIS_AMB_HORA_FIN = model.DHIS_AMB_HORA_FIN,//20
+                SHIS_AMB_COD_DIS_DESTINO = model.SHIS_AMB_COD_DIS_DESTINO,
+                SHIS_AMB_DES_DIS_DESTINO = model.SHIS_AMB_DES_DIS_DESTINO,
+                SHIS_AMB_DIR_DESTINO = model.SHIS_AMB_DIR_DESTINO,
+                SHIS_AMB_REF_DIR_DESTINO = model.SHIS_AMB_REF_DIR_DESTINO,
+                SHIS_TIPO_SERVICIO = model.SHIS_TIPO_SERVICIO,
+                NHIS_COD_PRIORIDAD_CALLMED = model.NHIS_COD_PRIORIDAD_CALLMED,
+                NHIS_COD_MOTIVO_ATE_CALLMED = model.NHIS_COD_MOTIVO_ATE_CALLMED,
+                NHIS_TAR_ATE = model.NHIS_TAR_ATE,
+                NHIS_COASEGURO = model.NHIS_COASEGURO,
+                SHIS_TIPO_DOC_PAGO = model.SHIS_TIPO_DOC_PAGO,//30
+                observacion = model.observacion,
+                SHIS_CM_DENOMINACION = model.SHIS_CM_DENOMINACION,
+                SHIS_FOR_ATE = model.SHIS_FOR_ATE,
+                NHIS_ID_TIPO_TRASLADO_CALLMED = model.NHIS_ID_TIPO_TRASLADO_CALLMED,
+                SHIS_COD_AUT_PRESTACION = model.SHIS_COD_AUT_PRESTACION,
+                SHIS_CONTRATANTE_CITRIX = model.SHIS_CONTRATANTE_CITRIX,
+                SHIS_COD_ASEGURADO = model.SHIS_COD_ASEGURADO,
+                SHIS_CM_ASEG_PRODUCTO = model.SHIS_CM_ASEG_PRODUCTO,
+                SHIS_POLIZA_ASEGURADO = model.SHIS_POLIZA_ASEGURADO,
+                SHIS_POLIZA_CERTIFICADO = model.SHIS_POLIZA_CERTIFICADO,//40
+                FHIS_AMB_SERVICIO_PLAYA = model.FHIS_AMB_SERVICIO_PLAYA,
+                estado = model.estado,
+                SHIS_CM_ESTADO = model.SHIS_CM_ESTADO,
+                NHIS_COD_ESTADO = model.NHIS_COD_ESTADO,
+                NHIS_CM_ORDEN = model.NHIS_CM_ORDEN,
+                FHIS_FLG_CM_NUEVA = model.FHIS_FLG_CM_NUEVA,
+                SHIS_COD_TIPO_PROG = model.SHIS_COD_TIPO_PROG,
+                SHIS_COD_DR_SOLICITADO = model.SHIS_COD_DR_SOLICITADO,
+                FHIS_CM_DIRECTA = model.FHIS_CM_DIRECTA,
+                SHIS_FLG_DIRECTO = model.SHIS_FLG_DIRECTO,//50
+                FHIS_CM_DATOS_COMPLETOS = model.FHIS_CM_DATOS_COMPLETOS,
+                SHIS_FLAGMONE = model.SHIS_FLAGMONE,
+                NHIS_CAMBIO = model.NHIS_CAMBIO,
+                SHIS_CM_MONEDA_DEN = model.SHIS_CM_MONEDA_DEN,
+                NHIS_CM_DEN_CAMBIO = model.NHIS_CM_DEN_CAMBIO,
+                SHIS_CONTACTO_PAC = model.SHIS_CONTACTO_PAC,
+                SHIS_CONTACTO_ASEG = model.SHIS_CONTACTO_ASEG,
+                NHIS_CLASIFICACION_PAC = model.NHIS_CLASIFICACION_PAC,
+                SHIS_DESCRP_ZONA = model.SHIS_DESCRP_ZONA,
+                SHIS_USULLA_ATE = model.SHIS_USULLA_ATE,//60
+                NHIS_CLASIFICACION_PAC_CALLMED = model.NHIS_CLASIFICACION_PAC_CALLMED,
+                DHIS_FEC_ATE = model.DHIS_FEC_ATE,
+                SHIS_TIPO_SERVAMB_DRMAS = model.SHIS_TIPO_SERVAMB_DRMAS,
+                FHIS_FUERA_COBERTURA = model.FHIS_FUERA_COBERTURA,
+                SHIS_DIRECCION_ORIGEN = model.SHIS_DIRECCION_ORIGEN,
+                SHIS_DIRECCION_DESTINO = model.SHIS_DIRECCION_DESTINO,
+                CCLI_ID_ORIGEN = model.CCLI_ID_ORIGEN,
+                CCLI_ID_DESTINO = model.CCLI_ID_DESTINO,
+                SHIS_ALERGIA_MEDICA = model.SHIS_ALERGIA_MEDICA,
+                SHIS_ATENCEDENTE = model.SHIS_ATENCEDENTE,//70
+                CTAM_ID = model.CTAM_ID,
+                SHIS_RUC_EVENTO = model.SHIS_RUC_EVENTO,
+                SHIS_RAZON_SOCIAL_EVENTO = model.SHIS_RAZON_SOCIAL_EVENTO,
+                SHIS_DIRECCION_FISCAL_EVENTO = model.SHIS_DIRECCION_FISCAL_EVENTO,
+                CPOL_ID = model.CPOL_ID,
+                SHIS_NRO_PLACA = model.SHIS_NRO_PLACA,
+                SHIS_NRO_POLIZA = model.SHIS_NRO_POLIZA,
+                SHIS_SINIESTRO = model.SHIS_SINIESTRO,
+                SHIS_AHUTORIZA_CORTESIA = model.SHIS_AHUTORIZA_CORTESIA,
+                SHIS_REGLA_ORO = model.SHIS_REGLA_ORO,//80
+                FHIS_AMB_RESPIRATORIA = model.FHIS_AMB_RESPIRATORIA,
+                CPAR_ID_SOLICITANTE = model.CPAR_ID_SOLICITANTE,
+                SHIS_UBIC_DENTRO_CLINICA_ORIGEN = model.SHIS_UBIC_DENTRO_CLINICA_ORIGEN,
+                SHIS_UBIC_DENTRO_CLINICA_DESTINO = model.SHIS_UBIC_DENTRO_CLINICA_DESTINO,
+                NPRV_ID = model.NPRV_ID,
+                DHIS_FECHA_EVENTO_ADVERSO = model.DHIS_FECHA_EVENTO_ADVERSO,
+                CPAR_ID_SOLICITUD = model.CPAR_ID_SOLICITUD,
+                FHIS_CITRIX = model.FHIS_CITRIX,
+                usuario_creacion = model.usuario_creacion
+            };
+
+            var response = await _historiaClinicaService.AddHistoriaClinicaAmbulanciaEvento(dto);
+
+            return ReturnFormattedResponse(response);
+        }
+
+        //By Henrry Torres
+        [HttpDelete, Route("DeleteHistoriaClinicaAmbulancia")]
+        public async Task<IActionResult> DeleteHistoriaClinicaAmbulancia(DeleteHistoriaClinicaViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelStateExtensions.GetErrorMessage(ModelState));
+
+            HistoriaClinicaMtoDto dto = new HistoriaClinicaMtoDto
+            {
+                cod_historia_clinica = model.cod_historia_clinica,
+                id_motivo = model.id_motivo,
+                usuario_eliminacion = model.usuario_eliminacion
+            };
+
+            var response = await _historiaClinicaService.DeleteHistoriaClinicaAmbulancia(dto);
+
+            return ReturnFormattedResponse(response);
+        }
         //FIN SERVICIO AMBULANCIA
 
         //SERVICIO MAD

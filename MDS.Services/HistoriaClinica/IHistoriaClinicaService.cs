@@ -36,6 +36,12 @@ namespace MDS.Services.HistoriaClinica
 
         //By Henrry Torres
         Task<ServiceResponse> AddHistoriaClinicaAmbulancia(HistoriaClinicaMtoDto dto);
+
+        //By Henrry Torres
+        Task<ServiceResponse> AddHistoriaClinicaAmbulanciaEvento(HistoriaClinicaMtoDto dto);
+
+        //By Henrry Torres
+        Task<ServiceResponse> DeleteHistoriaClinicaAmbulancia(HistoriaClinicaMtoDto dto);
         //FIN SERVICIO AMBULANCIA
 
         //SERVICIO MAD

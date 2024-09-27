@@ -309,17 +309,17 @@ namespace MDS.Services.Ambulancia.Implementation
         }
 
         //By Henrry Torres
-        public async Task<ServiceResponse> GetSedeTrasladoAmbulancia()
+        public async Task<ServiceResponse> GetProveedorAmbulancia()
         {
             try
             {
-                List<DbContext.Entities.SedeTrasladoAmbulancia> datos = new List<DbContext.Entities.SedeTrasladoAmbulancia>();
+                List<DbContext.Entities.ProveedorAmbulancia> datos = new List<DbContext.Entities.ProveedorAmbulancia>();
 
-                datos = await _uow.ExecuteStoredProcAll<DbContext.Entities.SedeTrasladoAmbulancia>("SPRMDS_LIST_SEDE_TRASLADO_AMBULANCIA");
+                datos = await _uow.ExecuteStoredProcAll<DbContext.Entities.ProveedorAmbulancia>("SPRMDS_LIST_PROVEEDOR_AMBULANCIA");
 
-                List<SedeTrasladoAmbulanciaDto> list = new List<SedeTrasladoAmbulanciaDto>();
+                List<ProveedorAmbulanciaDto> list = new List<ProveedorAmbulanciaDto>();
 
-                list = datos.Select(s => new SedeTrasladoAmbulanciaDto { id = s.id, nombre = s.nombre }).ToList();
+                list = datos.Select(s => new ProveedorAmbulanciaDto { id = s.id, nombre = s.nombre }).ToList();
 
                 if (!list.Any())
                     return ServiceResponse.ReturnResultWith204();
@@ -333,17 +333,17 @@ namespace MDS.Services.Ambulancia.Implementation
         }
 
         //By Henrry Torres
-        public async Task<ServiceResponse> GetProveedorAmbulancia()
+        public async Task<ServiceResponse> GetTipoComprobante()
         {
             try
             {
-                List<DbContext.Entities.ProveedorAmbulancia> datos = new List<DbContext.Entities.ProveedorAmbulancia>();
+                List<DbContext.Entities.TipoComprobante> datos = new List<DbContext.Entities.TipoComprobante>();
 
-                datos = await _uow.ExecuteStoredProcAll<DbContext.Entities.ProveedorAmbulancia>("SPRMDS_LIST_PROVEEDOR_AMBULANCIA");
+                datos = await _uow.ExecuteStoredProcAll<DbContext.Entities.TipoComprobante>("SPRMDS_LIST_TIPO_COMPROBANTE");
 
-                List<ProveedorAmbulanciaDto> list = new List<ProveedorAmbulanciaDto>();
+                List<TipoComprobanteDto> list = new List<TipoComprobanteDto>();
 
-                list = datos.Select(s => new ProveedorAmbulanciaDto { id = s.id, nombre = s.nombre }).ToList();
+                list = datos.Select(s => new TipoComprobanteDto { id = s.id, nombre = s.nombre }).ToList();
 
                 if (!list.Any())
                     return ServiceResponse.ReturnResultWith204();

@@ -103,4 +103,10 @@ namespace MDS.Dto
         public int id { get; set; }
         public string nombre { get; set; }
     }
+
+    public class TipoComprobanteDto
+    {
+        public int id { get; set; }
+        public string nombre { get; set; }
+    }
 }

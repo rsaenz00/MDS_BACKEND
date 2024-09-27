@@ -59,12 +59,12 @@ namespace MDS.Api.Models
         public Boolean? FHIS_FLG_CM_NUEVA { get; set; }
         public int? NHIS_CM_ORDEN { get; set; }
         public string? SHIS_REF_DIR { get; set; }
-        public string? NHIS_EDAD_ATE { get; set; }
+        public int? NHIS_EDAD_ATE { get; set; }
         public string? SHIS_CEL_PAC { get; set; }
         public string? SHIS_NOM_EMP { get; set; }
         public string? SHIS_CM_REF_DIR { get; set; }
         public Boolean? FHIS_FLAG_PROGRAMADA { get; set; }
-        public string? NHIS_COD_TARIFA { get; set; }
+        public int? NHIS_COD_TARIFA { get; set; }
         public string? SHIS_F_PROG { get; set; }
         public string? SHIS_COD_TIPO_PROG { get; set; }
         public string? SHIS_COD_DR_SOLICITADO { get; set; }
@@ -111,14 +111,38 @@ namespace MDS.Api.Models
         public int? CCLI_ID { get; set; }
         public string? DHIS_OBS_CM { get; set; }
         public int? NHIS_CLASIFICACION_PAC_CALLMED { get; set; }
-        public string? NHIS_ID_TIPO_TRASLADO_CALLMED { get; set; }
+        public int? NHIS_ID_TIPO_TRASLADO_CALLMED { get; set; }
         public string? SHIS_COD_AUT_PRESTACION { get; set; }
         public string? SHIS_CONTRATANTE_CITRIX { get; set; }
         public string? SHIS_COD_ASEGURADO { get; set; }
         public string? SHIS_CM_ASEG_PRODUCTO { get; set; }
         public string? SHIS_POLIZA_ASEGURADO { get; set; }
         public string? SHIS_POLIZA_CERTIFICADO { get; set; }
-        public string? FHIS_AMB_SERVICIO_PLAYA { get; set; }
+        public Boolean? FHIS_AMB_SERVICIO_PLAYA { get; set; }
+        public Boolean? FHIS_FUERA_COBERTURA { get; set; }
+        public string? SHIS_DIRECCION_ORIGEN { get; set; }
+        public string? SHIS_DIRECCION_DESTINO { get; set; }
+        public int? CCLI_ID_ORIGEN { get; set; }
+        public int? CCLI_ID_DESTINO { get; set; }
+        public string? SHIS_ALERGIA_MEDICA { get; set; }
+        public string? SHIS_ATENCEDENTE { get; set; }
+        public int? CTAM_ID { get; set; }
+        public string? SHIS_RUC_EVENTO { get; set; }
+        public string? SHIS_RAZON_SOCIAL_EVENTO { get; set; }
+        public string? SHIS_DIRECCION_FISCAL_EVENTO { get; set; }
+        public int? CPOL_ID { get; set; }
+        public string? SHIS_NRO_PLACA { get; set; }
+        public string? SHIS_NRO_POLIZA { get; set; }
+        public string? SHIS_SINIESTRO { get; set; }
+        public string? SHIS_AHUTORIZA_CORTESIA { get; set; }
+        public string? SHIS_REGLA_ORO { get; set; }
+        public Boolean? FHIS_AMB_RESPIRATORIA { get; set; }
+        public int? CPAR_ID_SOLICITANTE { get; set; }
+        public string? SHIS_UBIC_DENTRO_CLINICA_ORIGEN { get; set; }
+        public string? SHIS_UBIC_DENTRO_CLINICA_DESTINO { get; set; }
+        public int? NPRV_ID { get; set; }
+        public string? DHIS_FECHA_EVENTO_ADVERSO { get; set; }
+        public Boolean? FHIS_CITRIX { get; set; }
     }
 
     public class UpdateHistoriaClinicaViewModel
@@ -172,6 +196,7 @@ namespace MDS.Api.Models
     {
         [Required]
         public long cod_historia_clinica { get; set; }
-        public int usuario_eliminacion{ get; set; }
+        public long? id_motivo { get; set; }
+        public int usuario_eliminacion { get; set; }
     }
 }
