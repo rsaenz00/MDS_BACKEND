@@ -59,7 +59,7 @@ namespace MDS.Services.Paciente.Implementation
 
                 List<PacienteDto> listPacientes = new List<PacienteDto>();
 
-                listPacientes = pacientes.Select(s => new PacienteDto { id_paciente = s.CPAC_ID, numero_documento = s.SPER_NUMERO_DOCUMENTO, tipo_documento = s.STDO_DESCRIPCION, nombres = s.SPER_NOMBRES, apellido_paterno = s.SPER_APELLIDO_PATERNO, apellido_materno = s.SPER_APELLIDO_MATERNO, sexo = s.NPER_GENERO, fecha_nacimiento = s.DPER_FECHA_NACIMIENTO, movil = s.SPER_TELEFONO_CELULAR, telefono = s.SPER_TELEFONO_CASA, correo_electronico = s.SPER_EMAIL, edad = s.NPER_EDAD }).ToList();
+                listPacientes = pacientes.Select(s => new PacienteDto { id_paciente = s.CPAC_ID, numero_documento = s.SPER_NUMERO_DOCUMENTO, tipo_documento = s.STDO_DESCRIPCION, id_tipo_documento = s.CTDO_ID, nombres = s.SPER_NOMBRES, apellido_paterno = s.SPER_APELLIDO_PATERNO, apellido_materno = s.SPER_APELLIDO_MATERNO, sexo = s.NPER_GENERO, fecha_nacimiento = s.DPER_FECHA_NACIMIENTO, movil = s.SPER_TELEFONO_CELULAR, telefono = s.SPER_TELEFONO_CASA, correo_electronico = s.SPER_EMAIL, edad = s.NPER_EDAD }).ToList();
 
                 /*if (!listClinicas.Any())
                     return ServiceResponse.Return404();*/
