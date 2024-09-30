@@ -30,6 +30,14 @@ namespace MDS.Api.Controllers.Test
 
             return ReturnFormattedResponse(response);
         }
+        //By William Vilca
+        [HttpGet, Route("GetPersonaCodigo")]
+        public async Task<IActionResult> GetPersonaCodigo()
+        {
+            var response = await _personaService.GetPersonaCodigo();
+
+            return ReturnFormattedResponse(response);
+        }
 
         //By William Vilca
         [HttpGet, Route("GetPersona")]
@@ -39,41 +47,12 @@ namespace MDS.Api.Controllers.Test
 
             return ReturnFormattedResponse(response);
         }
-
+        
         //By William Vilca
-        [HttpPost, Route("AddPersona")]
-        public async Task<IActionResult> AddPersona(CreatePersonaViewModel model)
+        [HttpGet, Route("GetPersona_x_Dni")]
+        public async Task<IActionResult> GetPersona_x_Dni(string vDni)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelStateExtensions.GetErrorMessage(ModelState));
-
-            MantenimientoPersonaDto dto = new MantenimientoPersonaDto
-            {
-                id_pais = model.CPAI_IDPAIS,
-                id_ubigeo = model.CUBI_IDUBIGEO,
-                nombre = model.nombres,
-                paterno = model.apellido_paterno,
-                materno = model.apellido_materno,
-                numero_documento = model.numero_documento,
-                fecha_naciemiento = model.fecha_nacimiento,
-                genero = model.sexo,
-                departamento = model.SPER_DEPARTAMENTO,
-                provincia = model.SPER_PROVINCIA,
-                distrito = model.SPER_DISTRITO,
-                direccion = model.SPER_DIRECCION,
-                email1 = model.SPER_EMAIL1,
-                email2 = model.SPER_EMAIL2,
-                telefono_casa = model.SPER_TELEFONO_CASA,
-                telefono_celular = model.celular,
-                telefono_corporativo = model.SPER_TELEFONO_CORPORATIVO,
-                //estado = model.FPER_ESTADO,
-                usuario_creacion = model.usuario_creacion,
-                fecha_creacion = model.DPER_FECHA_CREACION,
-                usuario_modificacion = model.NPER_USUARIO_MODIFICACION,
-                fecha_modificacion = model.DPER_FECHA_MODIFICACION
-            };
-
-            var response = await _personaService.AddPersona(dto);
+            var response = await _personaService.GetPersona_x_Dni(vDni);
 
             return ReturnFormattedResponse(response);
         }
@@ -100,6 +79,59 @@ namespace MDS.Api.Controllers.Test
 
             var response = await _personaService.AddPersonaSctr(dto);
 
+            return ReturnFormattedResponse(response);
+        }
+        
+        //By William Vilca
+        [HttpPost, Route("AddPersonaMad")]
+        public async Task<IActionResult> AddPersonaMad(CreatePersonaMadViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelStateExtensions.GetErrorMessage(ModelState));
+            MantenimientoPersonaMadDto dto = new MantenimientoPersonaMadDto
+            {
+                id_documento = model.id_documento,
+                id_pais = model.id_pais,
+                numero_documento = model.numero_documento,
+                nombres = model.nombres,
+                apellido_paterno = model.apellido_paterno,
+                apellido_materno = model.apellido_materno,
+                //fecha_nacimiento = model.fecha_nacimiento,
+                genero = model.genero,
+                //descripcion = model.descripcion,
+                telefono_celular = model.telefono_celular,
+                estado = model.estado,
+                usuario_creacion = model.usuario_creacion,   
+                //fecha_creacion = model.fecha_creacion,
+            };
+            var response = await _personaService.AddPersonaMad(dto);
+            return ReturnFormattedResponse(response);
+        }
+
+        //By William Vilca
+        [HttpPost, Route("ActualizarPersonaMad")]
+        public async Task<IActionResult> ActualizarPersonaMad(ActualizarPersonaMadViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelStateExtensions.GetErrorMessage(ModelState));
+            MantenimientoPersonaMadActualizarDto dto = new MantenimientoPersonaMadActualizarDto
+            {
+                id_persona = model.id_persona,
+                id_documento = model.id_documento,
+                id_pais = model.id_pais,
+                numero_documento = model.numero_documento,
+                nombres = model.nombres,
+                apellido_paterno = model.apellido_paterno,
+                apellido_materno = model.apellido_materno,
+                fecha_nacimiento = model.fecha_nacimiento,
+                email = model.email,
+                genero = model.genero,
+                telefono_celular = model.telefono_celular,
+                estado = model.estado,
+                usuario_modificacion = model.usuario_modificacion,
+                fecha_modificacion = model.fecha_modificacion,
+            };
+            var response = await _personaService.ActualizarPersonaMad(dto);
             return ReturnFormattedResponse(response);
         }
 

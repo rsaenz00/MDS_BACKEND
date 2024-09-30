@@ -2,6 +2,41 @@
 
 namespace MDS.DbContext.Entities
 {
+
+    public class ClienteSiteds
+    {
+        public string CCLT_ID { get; set; }
+
+        public string SIAF_FINANCIAMIENTO { get; set; }
+
+        public string SCLT_NOMBRE { get; set; }
+    }
+
+    public class ClienteSitedsAsegurado
+    {
+        public string CCLT_ID { get; set; }
+
+        public string SIAF_FINANCIAMIENTO { get; set; }
+
+    }
+    public class ClienteSitedsAseguradora
+    {
+        public string CCLT_ID { get; set; }
+
+        public string SIAF_FINANCIAMIENTO { get; set; }
+
+    }
+
+    public class Clientes
+    {
+        public string CCLT_ID { get; set; }
+
+        public string? SCLT_NOMBRE { get; set; }
+
+        public string SSCE_DESCRIPCION { get; set; }
+
+    }
+
     public class Cliente
     {        
         public string CCLT_ID { get; set; }

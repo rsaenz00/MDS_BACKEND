@@ -1,5 +1,12 @@
 ﻿namespace MDS.DbContext.Entities
 {
+ 
+    public class PacienteDni
+    {
+        public string DNI { get; set; }
+        public string PACIENTE { get; set; }
+    }
+    
     public class Paciente
     {
         public long CPAC_ID { get; set; }

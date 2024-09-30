@@ -15,6 +15,29 @@
         public string plan_huerfano_ilimitado { get; set; }
         public Boolean estado { get; set; }
     }
+
+
+    public class HistoriaClinica_x_DniDto 
+    {
+        public long codigo { get; set; }
+
+        public string nombres { get; set; }
+
+        public string paterno { get; set; }
+
+        public string materno { get; set; }
+
+        public string dni { get; set; }
+
+        public string email { get; set; }
+
+        public string paciente { get; set; }
+    }
+
+
+
+
+
     public class ClinicaMtoDto
     {
         public long id_clinica { get; set; }

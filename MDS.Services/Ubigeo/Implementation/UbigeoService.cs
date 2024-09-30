@@ -122,5 +122,39 @@ namespace MDS.Services.Blog.Implementation
             }
         }
 
+        //By William Vilca
+        public async Task<ServiceResponse> GetUbigeo_By_Codigo(string vCodigoUbigeo)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@CODIGO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vCodigoUbigeo },
+                };
+
+                List<DbContext.Entities.UbigeoDatos> ubigeos = new List<DbContext.Entities.UbigeoDatos>();
+
+                ubigeos = await _uow.ExecuteStoredProcByParam<DbContext.Entities.UbigeoDatos>("SPRMDS_LIST_UBIGEO_BY_CODIGO", parameters);
+
+                List<UbigeoDatosDto> listUbigeos = new List<UbigeoDatosDto>();
+
+                listUbigeos = ubigeos.Select(u => new UbigeoDatosDto 
+                { 
+                    departamento = u.SUBI_DEPARTAMENTO,
+                    provincia = u.SUBI_PROVINCIA,
+                    distrito = u.SUBI_DISTRITO,
+                }).ToList();
+
+                if (!listUbigeos.Any())
+                    return ServiceResponse.Return404();
+
+                return ServiceResponse.ReturnResultWith200(listUbigeos);
+            }
+            catch (Exception e)
+            {
+                return ServiceResponse.Return500(e);
+            }
+        }
+
     }
 }

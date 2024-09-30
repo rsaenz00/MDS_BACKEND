@@ -41,7 +41,33 @@ namespace MDS.Services.Persona.Implementation
                 return ServiceResponse.Return500(e);
             }
         }
+        //By William Vilca
+        public async Task<ServiceResponse> GetPersonaCodigo()
+        {
+            try
+            {
+                List<DbContext.Entities.PersonaCodigo> personas = new List<DbContext.Entities.PersonaCodigo>();
 
+                personas = await _uow.ExecuteStoredProcAll<DbContext.Entities.PersonaCodigo>("SPRMDS_LIST_PERSONA_CODIGO");
+
+                List<PersonaCodigoDto> listPersona = new List<PersonaCodigoDto>();
+
+                listPersona = personas.Select(p => new PersonaCodigoDto 
+                { 
+                    id_persona = p.CPER_ID
+                }).ToList();
+
+                if (!personas.Any())
+                    return ServiceResponse.ReturnResultWith204();
+
+                return ServiceResponse.ReturnResultWith200(listPersona);
+            }
+            catch (Exception e)
+            {
+                //_logger.Error(e);
+                return ServiceResponse.Return500(e);
+            }
+        }
         //By William Vilca
         public async Task<ServiceResponse> GetPersona(long personaId)
         {
@@ -74,47 +100,27 @@ namespace MDS.Services.Persona.Implementation
         }
 
         //By William Vilca
-        public async Task<ServiceResponse> AddPersona(MantenimientoPersonaDto dto)
+        public async Task<ServiceResponse> GetPersona_x_Dni(string vDni)
         {
             try
             {
                 SqlParameter[] parameters =
                 {
-                    new SqlParameter("@CPER_IDTIPOPERSONA", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.id_tipopersona },
-                    new SqlParameter("@CPAI_IDPAIS", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.id_pais },
-                    new SqlParameter("@CUBI_IDUBIGEO", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.id_ubigeo },
-                    new SqlParameter("@SPER_NOMBRES", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.nombre },
-                    new SqlParameter("@SPER_APELLIDO_PATERNO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.paterno },
-                    new SqlParameter("@SPER_APELLIDO_MATERNO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.materno },
-                    new SqlParameter("@SPER_DNI", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.numero_documento },
-                    new SqlParameter("@DPER_FECHA_NACIMIENTO", SqlDbType.DateTime) {Direction = ParameterDirection.Input, Value = dto.fecha_naciemiento },
-                    new SqlParameter("@NPER_GENERO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.genero },
-                    new SqlParameter("@SPER_DEPARTAMENTO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.departamento },
-                    new SqlParameter("@SPER_PROVINCIA", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.provincia },
-                    new SqlParameter("@SPER_DISTRITO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.distrito },
-                    new SqlParameter("@SPER_DIRECCION", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.direccion },
-                    new SqlParameter("@SPER_EMAIL1", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.email1 },
-                    new SqlParameter("@SPER_EMAIL2", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.email2 },
-                    new SqlParameter("@SPER_TELEFONO_CASA", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.telefono_casa },
-                    new SqlParameter("@SPER_TELEFONO_CELULAR", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.telefono_celular },
-                    new SqlParameter("@SPER_TELEFONO_CORPORATIVO", SqlDbType.Bit) {Direction = ParameterDirection.Input, Value = dto.telefono_corporativo },
-                    new SqlParameter("@NPER_USUARIO_CREACION", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.usuario_creacion },
-                    new SqlParameter("@DPER_FECHA_CREACION", SqlDbType.DateTime) {Direction = ParameterDirection.Input, Value = dto.fecha_creacion },
-                    new SqlParameter("@NPER_USUARIO_MODIFICACION", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.usuario_modificacion },
-                    new SqlParameter("@DPER_FECHA_MODIFICACION", SqlDbType.DateTime) {Direction = ParameterDirection.Input, Value = dto.fecha_modificacion },
+                    new SqlParameter("@DNI", SqlDbType.BigInt) {Direction = ParameterDirection.Input, Value = vDni},
                     new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
                 };
 
-                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_CREATE_PERSONA", parameters);
+                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_LIST_PERSONA_BY_DNI", parameters);
 
-                dto.Id_persona = Convert.ToInt64(response);
+                int vRpta = 0;
 
-                return ServiceResponse.ReturnResultWith201(dto);
+                vRpta = response;
+
+                return ServiceResponse.ReturnResultWith201(vRpta);
 
             }
             catch (Exception e)
             {
-                //_logger.Error(e);
                 return ServiceResponse.Return500(e);
             }
         }
@@ -148,6 +154,70 @@ namespace MDS.Services.Persona.Implementation
             catch (Exception e)
             {
                 //_logger.Error(e);
+                return ServiceResponse.Return500(e);
+            }
+        }
+        //By William Vilca
+        public async Task<ServiceResponse> AddPersonaMad(MantenimientoPersonaMadDto dto)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@CTDO_ID", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.id_documento },
+                    new SqlParameter("@CPAI_ID", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.id_pais },
+                    new SqlParameter("@SPER_NUMERO_DOCUMENTO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.numero_documento },
+                    new SqlParameter("@SPER_NOMBRES", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.nombres },
+                    new SqlParameter("@SPER_APELLIDO_PATERNO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.apellido_paterno },
+                    new SqlParameter("@SPER_APELLIDO_MATERNO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.apellido_materno },
+                    //new SqlParameter("@DPER_FECHA_NACIMIENTO", SqlDbType.DateTime) {Direction = ParameterDirection.Input, Value = dto.fecha_nacimiento },
+                    new SqlParameter("@NPER_GENERO", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.genero },
+                    //new SqlParameter("@SDIR_DESCRIPCION", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.descripcion },
+                    new SqlParameter("@SPER_TELEFONO_CELULAR", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.telefono_celular },
+                    new SqlParameter("@FPER_ESTADO", SqlDbType.Bit) {Direction = ParameterDirection.Input, Value = dto.estado },
+                    new SqlParameter("@NPER_USUARIO_CREACION", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.usuario_creacion },
+                    //new SqlParameter("@DPER_FECHA_CREACION", SqlDbType.DateTime) {Direction = ParameterDirection.Input, Value = dto.fecha_creacion },
+                    new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
+                };
+                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_CREATE_PERSONA_MAD", parameters);
+                dto.id_persona = Convert.ToInt64(response);
+                return ServiceResponse.ReturnResultWith201(dto);
+            }
+            catch (Exception e)
+            {
+                return ServiceResponse.Return500(e);
+            }
+        }
+        
+        //By William Vilca
+        public async Task<ServiceResponse> ActualizarPersonaMad(MantenimientoPersonaMadActualizarDto dto)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@CPER_ID", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.id_persona },
+                    new SqlParameter("@CTDO_ID", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.id_documento },
+                    new SqlParameter("@CPAI_ID", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.id_pais },
+                    new SqlParameter("@SPER_NUMERO_DOCUMENTO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.numero_documento },
+                    new SqlParameter("@SPER_NOMBRES", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.nombres },
+                    new SqlParameter("@SPER_APELLIDO_PATERNO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.apellido_paterno },
+                    new SqlParameter("@SPER_APELLIDO_MATERNO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.apellido_materno },
+                    new SqlParameter("@DPER_FECHA_NACIMIENTO", SqlDbType.DateTime) {Direction = ParameterDirection.Input, Value = dto.fecha_nacimiento },
+                    new SqlParameter("@SPER_EMAIL", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.email },
+                    new SqlParameter("@NPER_GENERO", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.genero },
+                    new SqlParameter("@SPER_TELEFONO_CELULAR", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.telefono_celular },
+                    new SqlParameter("@FPER_ESTADO", SqlDbType.Bit) {Direction = ParameterDirection.Input, Value = dto.estado },
+                    new SqlParameter("@NPER_USUARIO_MODIFICACION", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.usuario_modificacion },
+                    new SqlParameter("@DPER_FECHA_MODIFICACION", SqlDbType.DateTime) {Direction = ParameterDirection.Input, Value = dto.fecha_modificacion },
+                    new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
+                };
+                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_UPDATE_PERSONA_MAD", parameters);
+                dto.id_persona = Convert.ToInt64(response);
+                return ServiceResponse.ReturnResultWith201(dto);
+            }
+            catch (Exception e)
+            {
                 return ServiceResponse.Return500(e);
             }
         }

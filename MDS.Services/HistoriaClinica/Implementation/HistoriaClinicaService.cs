@@ -17,7 +17,1256 @@ namespace MDS.Services.HistoriaClinica.Implementation
             _uow = uow;
         }
 
-        //SERVICIO SCTR
+
+        //////////////////          SERVICIO MAD          //////////////////
+
+        //By Henrry Torres
+        public async Task<ServiceResponse> GetHistoriaClinicaMadByCodigo(int historiaClinicaId)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@isCodigoHistoriaClinica", SqlDbType.BigInt) {Direction = ParameterDirection.Input, Value = historiaClinicaId },
+                };
+
+                List<DbContext.Entities.HistoriaClinicaMad> historiasClinicas = new List<DbContext.Entities.HistoriaClinicaMad>();
+
+                historiasClinicas = await _uow.ExecuteStoredProcByParam<DbContext.Entities.HistoriaClinicaMad>("SPRMDS_LIST_HISTORIA_CLINICA_BY_CODIGO_MAD", parameters);
+
+                List<HistoriaClinicaDto> listHistoriasClinicas = new List<HistoriaClinicaDto>();
+
+                listHistoriasClinicas = historiasClinicas.Select(p => new HistoriaClinicaDto
+                {
+                    cod_historia_clinica = p.cod_historia_clinica,
+                    id_paciente = p.id_paciente,
+                    id_medico = p.id_medico,
+                    id_cliente = p.id_cliente,
+                    vip = p.vip,
+                    hora_atencion = p.hora_atencion,
+                    fecha_creacion = p.fecha_creacion,
+                    sintomas = p.sintomas,
+                    tipo_atencion = p.tipo_atencion,
+                    programacion = p.programacion,
+                    nro_descanso_medico = p.nro_descanso_medico,
+                    cambio_realizar = p.cambio_realizar,
+                    moneda_deducible = p.moneda_deducible,
+                    monto_deducible = p.monto_deducible,
+                    coaseguro = p.coaseguro,
+                    tipo_documento_pago = p.tipo_documento_pago,
+                    numero_documento_pago = p.numero_documento_pago,
+                    forma_pago = p.forma_pago,
+                    moneda_denominacion = p.moneda_denominacion,
+                    monto_denominacion = p.monto_denominacion,
+                    fecha_nacimiento = p.fecha_nacimiento,
+                    paciente = p.paciente,
+                    medico = p.medico,
+                    aseguradora = p.aseguradora,
+                    especialidad = p.especialidad,
+                    telefono = p.telefono,
+                    celular = p.celular,
+                    anexo = p.anexo,
+                    referencia = p.referencia,
+                    direccion = p.direccion,
+                    provincia = p.provincia,
+                    distrito = p.distrito
+                }).ToList();
+
+                if (!historiasClinicas.Any())
+                    return ServiceResponse.ReturnResultWith204();
+
+                return ServiceResponse.ReturnResultWith200(listHistoriasClinicas);
+            }
+            catch (Exception e)
+            {
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By Willian Vilca
+        //CONSULTA POR ASEGURADORA = CAJA TEXTO
+        public async Task<ServiceResponse> GetHistoriaClinica_Mad_Aseguradora(string vAseguradora)
+        {
+            try
+            {
+
+                SqlParameter[] parameters =
+                {
+            new SqlParameter("@isAseguradora", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vAseguradora },
+        };
+
+                List<DbContext.Entities.ClienteAseguradora> clientes = new List<DbContext.Entities.ClienteAseguradora>();
+
+                clientes = await _uow.ExecuteStoredProcByParam<DbContext.Entities.ClienteAseguradora>("SPRMDS_LIST_HISTORIACLINICA_MAD_ASEGURADORA", parameters);
+
+                List<ClienteAseguradoraDto> listCliente = new List<ClienteAseguradoraDto>();
+
+                listCliente = clientes.Select(c => new ClienteAseguradoraDto
+                {
+                    //id_cliente = c.CCLT_ID,
+                    id_cliente = c.SIAF_FINANCIAMIENTO,
+                    nombre = c.SCLT_NOMBRE
+                }).ToList();
+
+
+                if (!listCliente.Any())
+                    return ServiceResponse.Return404();
+
+                return ServiceResponse.ReturnResultWith200(listCliente);
+            }
+            catch (Exception e)
+            {
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By William Vilca
+        public async Task<ServiceResponse> AddHistoriaClinicaMedioComunicacionMad(HistoriaClinicaMedioComunicacionMtoMadDto dto)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@HISTORIA_ID",SqlDbType.Int){Direction = ParameterDirection.Input, Value = dto.id_comunicacion },
+                    new SqlParameter("@NUMERO",SqlDbType.Int){Direction = ParameterDirection.Input, Value = dto.numero },
+                    new SqlParameter("@USUARIO_CREACION",SqlDbType.Int){Direction = ParameterDirection.Input, Value = dto.usuario_creacion },
+                    new SqlParameter("@FECHA_CREACION",SqlDbType.VarChar){Direction = ParameterDirection.Input, Value = dto.fecha_creacion },
+                    new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
+                };
+
+                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_ADD_HISTORIACLINICAMEDIOCOMUNICACION_MAD", parameters);
+
+                dto.id_historiaclinica = Convert.ToInt64(response);
+
+                return ServiceResponse.ReturnResultWith201(dto);
+
+            }
+            catch (Exception e)
+            {
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By William Vilca
+        public async Task<ServiceResponse> AddHistoriaClinicaMad(HistoriaClinicaMtoMadDto dto)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@CMED_ID",SqlDbType.Int){Direction = ParameterDirection.Input, Value = dto.cmed_id },
+                    new SqlParameter("@CPAC_ID",SqlDbType.Int){Direction = ParameterDirection.Input, Value = dto.cpac_id },
+                    new SqlParameter("@CESP_ID",SqlDbType.Int){Direction = ParameterDirection.Input, Value = dto.cesp_id },
+                    new SqlParameter("@CEST_ID",SqlDbType.Int){Direction = ParameterDirection.Input, Value = dto.cest_id },
+                    new SqlParameter("@CPER_ID",SqlDbType.Int){Direction = ParameterDirection.Input, Value = dto.cper_id },
+                    new SqlParameter("@CSER_ID",SqlDbType.Int){Direction = ParameterDirection.Input, Value = dto.cser_id },
+                    new SqlParameter("@CPAI_ID",SqlDbType.Int){Direction = ParameterDirection.Input, Value = dto.cpai_id },
+                    new SqlParameter("@CUBI_ID",SqlDbType.Char){Direction = ParameterDirection.Input, Value = dto.cubi_id },
+                    new SqlParameter("@CMEP_ID",SqlDbType.Int){Direction = ParameterDirection.Input, Value = dto.cmep_id },
+                    new SqlParameter("@CTDO_ID",SqlDbType.Int){Direction = ParameterDirection.Input, Value = dto.ctdo_id },
+                    new SqlParameter("@CCLT_ID",SqlDbType.Int){Direction = ParameterDirection.Input, Value = dto.cclt_id },
+                    new SqlParameter("@CDSN_ID",SqlDbType.Int){Direction = ParameterDirection.Input, Value = dto.cdsn_id },
+                    new SqlParameter("@ESTADO",SqlDbType.VarChar){Direction = ParameterDirection.Input, Value = dto.estado },
+                    new SqlParameter("@PROG",SqlDbType.VarChar){Direction = ParameterDirection.Input, Value = dto.prog },
+                    new SqlParameter("@CODAUTORIZACION", SqlDbType.VarChar){Direction = ParameterDirection.Input, Value = dto.codautorizacion },
+                    new SqlParameter("@FECLLA",SqlDbType.DateTime){Direction = ParameterDirection.Input, Value = dto.feclla },
+                    new SqlParameter("@HORLLA",SqlDbType.DateTime){Direction = ParameterDirection.Input, Value = dto.horlla },
+                    new SqlParameter("@TIEMPO", SqlDbType.Int){Direction = ParameterDirection.Input, Value = dto.tiempo },
+                    new SqlParameter("@FECATE",SqlDbType.DateTime){Direction = ParameterDirection.Input, Value = dto.fecate },
+                    new SqlParameter("@HORATE",SqlDbType.DateTime){Direction = ParameterDirection.Input, Value = dto.horate },
+                    new SqlParameter("@HRLLEDR",SqlDbType.DateTime){Direction = ParameterDirection.Input, Value = dto.hrlledr },
+                    new SqlParameter("@HOROPLLA",SqlDbType.DateTime){Direction = ParameterDirection.Input, Value = dto.horoplla },
+                    new SqlParameter("@FPAGO",SqlDbType.VarChar){Direction = ParameterDirection.Input, Value = dto.fpago },
+                    new SqlParameter("@VIP",SqlDbType.VarChar){Direction = ParameterDirection.Input, Value = dto.vip },
+                    new SqlParameter("@GRUPO",SqlDbType.VarChar){Direction = ParameterDirection.Input, Value = dto.grupo },
+                    new SqlParameter("@CONT",SqlDbType.Int){Direction = ParameterDirection.Input, Value = dto.cont },
+                    new SqlParameter("@PERFIL",SqlDbType.VarChar){Direction = ParameterDirection.Input, Value = dto.perfil },
+                    new SqlParameter("@EMPRESA",SqlDbType.VarChar){Direction = ParameterDirection.Input, Value = dto.empresa },
+                    new SqlParameter("@USUARIOCREACION",SqlDbType.Int){Direction = ParameterDirection.Input, Value = dto.usuariocreacion },
+                    //new SqlParameter("@FECHACREACION",SqlDbType.DateTime){Direction = ParameterDirection.Input, Value = dto.fechacreacion },
+                    new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
+                };
+
+                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_ADD_HISTORIACLINICA_MAD", parameters);
+
+                dto.id_historiaclinica = Convert.ToInt64(response);
+
+                return ServiceResponse.ReturnResultWith201(dto);
+
+            }
+            catch (Exception e)
+            {
+                //_logger.Error(e);
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By William Vilca
+        public async Task<ServiceResponse> GetHistoriaClinica_Mad_Cliente_Codigo(string vNumero)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@isNUMERO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vNumero },
+                };
+                List<DbContext.Entities.HistoriaClinicaCliente> clientes = new List<DbContext.Entities.HistoriaClinicaCliente>();
+                clientes = await _uow.ExecuteStoredProcByParam<DbContext.Entities.HistoriaClinicaCliente>("SPRMDS_LIST_HISTORIACLINICA_MAD_CLIENTE_BY_CODIGO", parameters);
+                List<HistoriaClinicaClienteDto> listClientes = new List<HistoriaClinicaClienteDto>();
+                listClientes = clientes.Select(c => new HistoriaClinicaClienteDto
+                {
+                    codigo = c.CODIGO,
+                    numero = c.NUMERO,
+                }).ToList();
+                if (!listClientes.Any())
+                    return ServiceResponse.Return404();
+                return ServiceResponse.ReturnResultWith200(listClientes);
+            }
+            catch (Exception e)
+            {
+                //_logger.Error(e);
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By William Vilca
+        public async Task<ServiceResponse> GetHistoriaClinica_Mad_Siteds_Codigo(string vCodigo)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@isCODIGO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vCodigo },
+                };
+                List<DbContext.Entities.SitedsCodigo> siteds = new List<DbContext.Entities.SitedsCodigo>();
+                siteds = await _uow.ExecuteStoredProcByParam<DbContext.Entities.SitedsCodigo>("SPRMDS_LIST_HISTORIACLINICA_MAD_CLIENTE_SITEDS_BY_CODIGO", parameters);
+                List<SitedsCodigoDto> listSiteds = new List<SitedsCodigoDto>();
+                listSiteds = siteds.Select(s => new SitedsCodigoDto
+                {
+                    id_cliente = s.ID_CLIENTE,
+                    numero = s.NUMERO,
+                    nombre = s.NOMBRE,
+                }).ToList();
+                if (!listSiteds.Any())
+                    return ServiceResponse.Return404();
+                return ServiceResponse.ReturnResultWith200(listSiteds);
+            }
+            catch (Exception e)
+            {
+                //_logger.Error(e);
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By William Vilca
+        public async Task<ServiceResponse> GetSiteds_Numero(string vNumero)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@isNUMERO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vNumero },
+                };
+                List<DbContext.Entities.SitedsLista> siteds = new List<DbContext.Entities.SitedsLista>();
+                siteds = await _uow.ExecuteStoredProcByParam<DbContext.Entities.SitedsLista>("SPRMDS_LIST_SITEDS_NUMERO", parameters);
+                List<SitedsListaDto> listSiteds = new List<SitedsListaDto>();
+                listSiteds = siteds.Select(s => new SitedsListaDto
+                {
+                    numero = s.NUMERO,
+                    paterno = s.PATERNO,
+                    materno = s.MATERNO,
+                    nombres = s.NOMBRES,
+                    edad = s.EDAD,
+                    fechanacimiento = s.FECHANACIMIENTO,
+                    tipodocumento = s.TIPODOCUMENTO,
+                    numerodocumento = s.NUMERODOCUMENTO,
+                    genero = s.GENERO,
+                    producto = s.PRODUCTO,
+                    numeroautorizacion = s.NUMEROAUTORIZACION,
+                    numerocontrato = s.NUMEROCONTRATO,
+                    codigoafiliado = s.CODIGOAFILIADO,
+                    numeropoliza = s.NUMEROPOLIZA,
+                    moneda = s.MONEDA,
+                    copagofijo = s.COPAGOFIJO,
+                    copagovariable = s.COPAGOVARIABLE,
+                }).ToList();
+                if (!listSiteds.Any())
+                    return ServiceResponse.Return404();
+                return ServiceResponse.ReturnResultWith200(listSiteds);
+            }
+            catch (Exception e)
+            {
+                //_logger.Error(e);
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By William Vilca
+        //SERVICIO MAD - BANDEJA
+        public async Task<ServiceResponse> GetHistoriasClinicasMadFiltro(string? vCampoBusqueda = null, string? vValorBusqueda = null, string? vFechaInicio = null, string? vFechaFinal = null)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@CampoBusqueda", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vCampoBusqueda },
+                    new SqlParameter("@ValorBusqueda", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vValorBusqueda },
+                    new SqlParameter("@FechaInicio", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vFechaInicio },
+                    new SqlParameter("@FechaFinal", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vFechaFinal },
+                };
+                List<DbContext.Entities.HistoriaClinicas> HistoriasClinicasMad = new List<DbContext.Entities.HistoriaClinicas>();
+                List<ListadoHistoriaClinicaDto> listHistoriasClinicas = new List<ListadoHistoriaClinicaDto>();
+                HistoriasClinicasMad = await _uow.ExecuteStoredProcByParam<DbContext.Entities.HistoriaClinicas>("SPRMDS_LIST_HISTORIACLINICA_FILTRO_MAD", parameters);
+                listHistoriasClinicas = HistoriasClinicasMad.Select(h => new ListadoHistoriaClinicaDto
+                {
+                    chis_id = h.CHIS_ID,
+                    e = h.E,
+                    prog = h.PROG,
+                    codate = h.CODATE,
+                    clasif = h.CLASIF,
+                    e_tablet = h.E_TABLET,
+                    codautorizacion = h.CODAUTORIZACION,
+                    feclla = h.FECLLA,
+                    hrlla = h.HRLLA,
+                    tiempo = h.TIEMPO,
+                    fecate = h.FECATE,
+                    hrxdefecto = h.HRXDEFECTO,
+                    hrestimada = h.HRESTIMADA,
+                    hrllegada = h.HRLLEGADA,
+                    provincia = h.PROVINCIA,
+                    distrito = h.DISTRITO,
+                    paciente = h.PACIENTE,
+                    fpago = h.FPAGO,
+                    vip = h.VIP,
+                    grupo = h.GRUPO,
+                    periodo = h.PERIODO,
+                    cont = h.CONT,
+                    perfil = h.PERFIL,
+                    espec = h.ESPEC,
+                    doctor = h.DOCTOR,
+                    grupos = h.GRUPOS,
+                    empresa = h.EMPRESA,
+                    usuario = h.USUARIO,
+                    cod_doc = h.COD_DOC
+                }).ToList();
+                return ServiceResponse.ReturnResultWith200(listHistoriasClinicas);
+            }
+            catch (Exception e)
+            {
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By William Vilca
+        public async Task<ServiceResponse> GetHistoriasClinicasMadFiltro_Rango_By_Fechas(string? vFechaInicio = null, string? vFechaFinal = null)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@FechaInicio", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vFechaInicio },
+                    new SqlParameter("@FechaFinal", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vFechaFinal },
+                };
+                List<DbContext.Entities.HistoriaClinicas> HistoriasClinicasMad = new List<DbContext.Entities.HistoriaClinicas>();
+                List<ListadoHistoriaClinicaDto> listHistoriasClinicas = new List<ListadoHistoriaClinicaDto>();
+                HistoriasClinicasMad = await _uow.ExecuteStoredProcByParam<DbContext.Entities.HistoriaClinicas>("SPRMDS_LIST_HISTORIACLINICA_FILTRO_MAD_RANGO_BY_FECHA", parameters);
+                listHistoriasClinicas = HistoriasClinicasMad.Select(h => new ListadoHistoriaClinicaDto
+                {
+                    chis_id = h.CHIS_ID,
+                    e = h.E,
+                    prog = h.PROG,
+                    codate = h.CODATE,
+                    clasif = h.CLASIF,
+                    e_tablet = h.E_TABLET,
+                    codautorizacion = h.CODAUTORIZACION,
+                    feclla = h.FECLLA,
+                    hrlla = h.HRLLA,
+                    tiempo = h.TIEMPO,
+                    fecate = h.FECATE,
+                    hrxdefecto = h.HRXDEFECTO,
+                    hrestimada = h.HRESTIMADA,
+                    hrllegada = h.HRLLEGADA,
+                    provincia = h.PROVINCIA,
+                    distrito = h.DISTRITO,
+                    paciente = h.PACIENTE,
+                    fpago = h.FPAGO,
+                    vip = h.VIP,
+                    grupo = h.GRUPO,
+                    periodo = h.PERIODO,
+                    cont = h.CONT,
+                    perfil = h.PERFIL,
+                    espec = h.ESPEC,
+                    doctor = h.DOCTOR,
+                    grupos = h.GRUPOS,
+                    empresa = h.EMPRESA,
+                    usuario = h.USUARIO,
+                    cod_doc = h.COD_DOC
+                }).ToList();
+                return ServiceResponse.ReturnResultWith200(listHistoriasClinicas);
+            }
+            catch (Exception e)
+            {
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By William Vilca
+        public async Task<ServiceResponse> GetHistoriasClinicasMadFiltro_Campos(string? vCampoBusqueda = null, string? vValorBusqueda = null)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@CampoBusqueda", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vCampoBusqueda },
+                    new SqlParameter("@ValorBusqueda", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vValorBusqueda },
+                };
+                List<DbContext.Entities.HistoriaClinicas> HistoriasClinicasMad = new List<DbContext.Entities.HistoriaClinicas>();
+                List<ListadoHistoriaClinicaDto> listHistoriasClinicas = new List<ListadoHistoriaClinicaDto>();
+                HistoriasClinicasMad = await _uow.ExecuteStoredProcByParam<DbContext.Entities.HistoriaClinicas>("SPRMDS_LIST_HISTORIACLINICA_FILTRO_MAD_CAMPOS", parameters);
+                listHistoriasClinicas = HistoriasClinicasMad.Select(h => new ListadoHistoriaClinicaDto
+                {
+                    chis_id = h.CHIS_ID,
+                    e = h.E,
+                    prog = h.PROG,
+                    codate = h.CODATE,
+                    clasif = h.CLASIF,
+                    e_tablet = h.E_TABLET,
+                    codautorizacion = h.CODAUTORIZACION,
+                    feclla = h.FECLLA,
+                    hrlla = h.HRLLA,
+                    tiempo = h.TIEMPO,
+                    fecate = h.FECATE,
+                    hrxdefecto = h.HRXDEFECTO,
+                    hrestimada = h.HRESTIMADA,
+                    hrllegada = h.HRLLEGADA,
+                    provincia = h.PROVINCIA,
+                    distrito = h.DISTRITO,
+                    paciente = h.PACIENTE,
+                    fpago = h.FPAGO,
+                    vip = h.VIP,
+                    grupo = h.GRUPO,
+                    periodo = h.PERIODO,
+                    cont = h.CONT,
+                    perfil = h.PERFIL,
+                    espec = h.ESPEC,
+                    doctor = h.DOCTOR,
+                    grupos = h.GRUPOS,
+                    empresa = h.EMPRESA,
+                    usuario = h.USUARIO,
+                    cod_doc = h.COD_DOC
+                }).ToList();
+                return ServiceResponse.ReturnResultWith200(listHistoriasClinicas);
+            }
+            catch (Exception e)
+            {
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By William Vilca
+        //CONSULTA DNI X PACIENTE
+        public async Task<ServiceResponse> GetHistoriaClinica_Mad_Paciente_Dni(string vNumero)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@isNumeroDni", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vNumero },
+                };
+                List<DbContext.Entities.HistoriaClinicaPaciente_x_Numero> pacientes = new List<DbContext.Entities.HistoriaClinicaPaciente_x_Numero>();
+                pacientes = await _uow.ExecuteStoredProcByParam<DbContext.Entities.HistoriaClinicaPaciente_x_Numero>("SPRMDS_LIST_HISTORIACLINICA_MAD_BY_PACIENTE", parameters);
+                List<HistoriaClinicaPaciente_x_NumeroDto> listPaciente = new List<HistoriaClinicaPaciente_x_NumeroDto>();
+                listPaciente = pacientes.Select(p => new HistoriaClinicaPaciente_x_NumeroDto
+                {
+                    codigo = p.CODIGO,
+                    paterno = p.PATERNO,
+                    materno = p.MATERNO,
+                    nombres = p.NOMBRES,
+                    tipodocumento = p.TIPODOCUMENTO,
+                    dni = p.DNI,
+                    fechanacimiento = p.FECHANACIMIENTO,
+                    edad = p.EDAD,
+                    genero = p.GENERO,
+                    email = p.EMAIL,
+                    celular = p.CELULAR,
+                    departamento = p.DEPARTAMENTO,
+                    provincia = p.PROVINCIA,
+                    distrito = p.DISTRITO,
+                    direccion = p.DIRECCION,
+                    lote = p.LOTE,
+                    interior = p.INTERIOR,
+                    urbanizacion = p.URBANIZACION,
+                    referencia = p.REFERENCIA,
+                }).ToList();
+
+
+                if (!listPaciente.Any())
+                    return ServiceResponse.Return404();
+
+                return ServiceResponse.ReturnResultWith200(listPaciente);
+            }
+            catch (Exception e)
+            {
+                //_logger.Error(e);
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By William Vilca
+        //LISTADO CLIENTES PARA SITEDS
+        public async Task<ServiceResponse> GetHistoriaClinica_Mad_Clientes_Siteds()
+        {
+            try
+            {
+
+
+                List<DbContext.Entities.ClienteSiteds> clientes = new List<DbContext.Entities.ClienteSiteds>();
+
+                clientes = await _uow.ExecuteStoredProcAll<DbContext.Entities.ClienteSiteds>("SPRMDS_LIST_HISTORIACLINICA_MAD_CLIENTE_SITEDS");
+
+                List<ClienteSitedsDto> listCliente = new List<ClienteSitedsDto>();
+
+                listCliente = clientes.Select(c => new ClienteSitedsDto
+                {
+                    id_cliente = c.CCLT_ID,
+                    codigo_financiamiento = c.SIAF_FINANCIAMIENTO,
+                    nombre = c.SCLT_NOMBRE,
+                }).ToList();
+
+
+                if (!listCliente.Any())
+                    return ServiceResponse.Return404();
+
+                return ServiceResponse.ReturnResultWith200(listCliente);
+            }
+            catch (Exception e)
+            {
+                return ServiceResponse.Return500(e);
+            }
+        }
+        
+        //By William Vilca
+        //CONSULTA POR CLIENTES = CLIENTES PARA SITEDS
+        public async Task<ServiceResponse> GetHistoriaClinica_Mad_Clientes_Siteds_By_Nombre(string vCliente)
+        {
+            try
+            {
+
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@isCLIENTE", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vCliente },
+                };
+
+                List<DbContext.Entities.ClienteSitedsAseguradora> clientes = new List<DbContext.Entities.ClienteSitedsAseguradora>();
+
+                clientes = await _uow.ExecuteStoredProcByParam<DbContext.Entities.ClienteSitedsAseguradora>("SPRMDS_LIST_HISTORIACLINICA_MAD_CLIENTE_SITEDS_BY_NOMBRE", parameters);
+
+                List<ClienteSitedsAseguradoDto> listCliente = new List<ClienteSitedsAseguradoDto>();
+
+                listCliente = clientes.Select(c => new ClienteSitedsAseguradoDto
+                {
+                    id_cliente = c.CCLT_ID,
+                    id_financiamiento = c.SIAF_FINANCIAMIENTO,
+                }).ToList();
+
+
+                if (!listCliente.Any())
+                    return ServiceResponse.Return404();
+
+                return ServiceResponse.ReturnResultWith200(listCliente);
+            }
+            catch (Exception e)
+            {
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By William Vilca
+        //CONSULTA POR ASEGURADORA = CAJA TEXTO
+        public async Task<ServiceResponse> GetHistoriaClinica_Mad_Paciente_Distrito(string vDistrito)
+        {
+            try
+            {
+
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@isDistrito", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vDistrito },
+                };
+
+                List<DbContext.Entities.HistoriaClinicaUbigeo> ubigeos = new List<DbContext.Entities.HistoriaClinicaUbigeo>();
+
+                ubigeos = await _uow.ExecuteStoredProcByParam<DbContext.Entities.HistoriaClinicaUbigeo>("SPRMDS_LIST_HISTORIACLINICA_MAD_UBIGEO", parameters);
+
+                List<HistoriaClinicaUbigeoDto> listUbigeo = new List<HistoriaClinicaUbigeoDto>();
+
+                listUbigeo = ubigeos.Select(u => new HistoriaClinicaUbigeoDto
+                {
+                    codigo = u.CODIGO,
+                    departamento = u.DEPARTAMENTO,
+                    provincia = u.PROVINCIA,
+                    distrito = u.DISTRITO
+                }).ToList();
+
+
+                if (!listUbigeo.Any())
+                    return ServiceResponse.Return404();
+
+                return ServiceResponse.ReturnResultWith200(listUbigeo);
+            }
+            catch (Exception e)
+            {
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By William Vilca
+        //CONSULTA POR ASEGURADORA = (COMBOBOX)
+        public async Task<ServiceResponse> GetHistoriaClinica_Mad_Aseguradora_Categoria(string vAseguradora)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@isAseguradora", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vAseguradora },
+                };
+
+                List<DbContext.Entities.Clientes> clientes = new List<DbContext.Entities.Clientes>();
+
+                clientes = await _uow.ExecuteStoredProcByParam<DbContext.Entities.Clientes>("SPRMDS_LIST_HISTORIACLINICA_MAD_ASEGURADORA_CATEGORIA", parameters);
+
+                List<ClientesDto> listCliente = new List<ClientesDto>();
+
+                listCliente = clientes.Select(c => new ClientesDto
+                {
+                    id_cliente = c.CCLT_ID,
+                    nombre = c.SCLT_NOMBRE,
+                    descripcion = c.SSCE_DESCRIPCION
+                }).ToList();
+
+
+                if (!listCliente.Any())
+                    return ServiceResponse.Return404();
+
+                return ServiceResponse.ReturnResultWith200(listCliente);
+            }
+            catch (Exception e)
+            {
+                //_logger.Error(e);
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By William Vilca
+        //LISTADO DE GENERO = (COMBOBOX)
+        public async Task<ServiceResponse> GetHistoriaClinica_Mad_Genero()
+        {
+            try
+            {
+
+                List<DbContext.Entities.Parametro> parametros = new List<DbContext.Entities.Parametro>();
+
+                parametros = await _uow.ExecuteStoredProcAll<DbContext.Entities.Parametro>("SPRMDS_LIST_HISTORIACLINICA_MAD_GENERO");
+
+                List<ParametroDto> listParametro = new List<ParametroDto>();
+
+                listParametro = parametros.Select(g => new ParametroDto
+                {
+                    id = g.CPAR_ID,
+                    descripcion = g.SPAR_NOMBRE
+                }).ToList();
+
+
+                if (!listParametro.Any())
+                    return ServiceResponse.Return404();
+
+                return ServiceResponse.ReturnResultWith200(listParametro);
+            }
+            catch (Exception e)
+            {
+                //_logger.Error(e);
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By William Vilca
+        public async Task<ServiceResponse> GetHistoriaClinica_Mad_TipoDocumento()
+        {
+            try
+            {
+
+                List<DbContext.Entities.TipoDocumento> documentos = new List<DbContext.Entities.TipoDocumento>();
+
+                documentos = await _uow.ExecuteStoredProcAll<DbContext.Entities.TipoDocumento>("SPRMDS_LIST_HISTORIACLINICA_MAD_TIPODOCUMENTO");
+
+                List<TipoDocumentoDto> listDocumento = new List<TipoDocumentoDto>();
+
+                listDocumento = documentos.Select(d => new TipoDocumentoDto
+                {
+                    id = d.CTDO_ID,
+                    descripcion = d.STDO_DESCRIPCION,
+                    codigo_sunat = d.STDO_SUNAT,
+                    codigo_susalud = d.STDO_SUSALUD,
+                    estado = d.FTDO_ESTADO
+                }).ToList();
+
+
+                if (!listDocumento.Any())
+                    return ServiceResponse.Return404();
+
+                return ServiceResponse.ReturnResultWith200(listDocumento);
+            }
+            catch (Exception e)
+            {
+                //_logger.Error(e);
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By William Vilca
+        public async Task<ServiceResponse> GetHistoriaClinica_Mad_Vip()
+        {
+            try
+            {
+
+                List<DbContext.Entities.Parametro> parametros = new List<DbContext.Entities.Parametro>();
+
+                parametros = await _uow.ExecuteStoredProcAll<DbContext.Entities.Parametro>("SPRMDS_LIST_HISTORIACLINICA_MAD_VIP");
+
+                List<ParametroDto> listParametro = new List<ParametroDto>();
+
+                listParametro = parametros.Select(g => new ParametroDto
+                {
+                    id = g.CPAR_ID,
+                    descripcion = g.SPAR_NOMBRE
+                }).ToList();
+
+
+                if (!listParametro.Any())
+                    return ServiceResponse.Return404();
+
+                return ServiceResponse.ReturnResultWith200(listParametro);
+            }
+            catch (Exception e)
+            {
+                //_logger.Error(e);
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By William Vilca
+        public async Task<ServiceResponse> GetHistoriaClinica_Mad_Seguro()
+        {
+            try
+            {
+
+                List<DbContext.Entities.TipoSeguro> seguros = new List<DbContext.Entities.TipoSeguro>();
+
+                seguros = await _uow.ExecuteStoredProcAll<DbContext.Entities.TipoSeguro>("SPRMDS_LIST_HISTORIACLINICA_MAD_SEGURO");
+
+                List<TipoSeguroDto> listSeguro = new List<TipoSeguroDto>();
+
+                listSeguro = seguros.Select(s => new TipoSeguroDto
+                {
+                    id = s.NSEG_ID,
+                    nombre = s.SSEG_NOMBRE
+                }).ToList();
+
+                if (!listSeguro.Any())
+                    return ServiceResponse.Return404();
+
+                return ServiceResponse.ReturnResultWith200(listSeguro);
+            }
+            catch (Exception e)
+            {
+                //_logger.Error(e);
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By William Vilca
+        public async Task<ServiceResponse> GetHistoriaClinica_Mad_Clasificacion()
+        {
+            try
+            {
+
+                List<DbContext.Entities.ServicioNegocio> negocios = new List<DbContext.Entities.ServicioNegocio>();
+
+                negocios = await _uow.ExecuteStoredProcAll<DbContext.Entities.ServicioNegocio>("SPRMDS_LIST_HISTORIACLINICA_MAD_CLASIFICACION");
+
+                List<ServicioNegocioDto> listNegocio = new List<ServicioNegocioDto>();
+
+                listNegocio = negocios.Select(n => new ServicioNegocioDto
+                {
+                    id_servicio = n.CSER_ID,
+                    nombre = n.SSER_NOMBRE
+                }).ToList();
+
+
+                if (!listNegocio.Any())
+                    return ServiceResponse.Return404();
+
+                return ServiceResponse.ReturnResultWith200(listNegocio);
+            }
+            catch (Exception e)
+            {
+                //_logger.Error(e);
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By William Vilca
+        public async Task<ServiceResponse> GetHistoriaClinica_Mad_Ubigeo_Codigo(string vDepartamento, string vProvincia, string vDistrito)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@DEPARTAMENTO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vDepartamento },
+                    new SqlParameter("@PROVINCIA", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vProvincia },
+                    new SqlParameter("@DISTRITO", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vDistrito },
+                };
+
+                List<DbContext.Entities.UbigeoCodigo> ubigeos = new List<DbContext.Entities.UbigeoCodigo>();
+
+                ubigeos = await _uow.ExecuteStoredProcByParam<DbContext.Entities.UbigeoCodigo>("SPRMDS_LIST_HISTORIACLINICA_MAD_UBIGEO_CODIGO", parameters);
+
+                List<UbigeoCodigoDto> listUbigeo = new List<UbigeoCodigoDto>();
+
+                listUbigeo = ubigeos.Select(u => new UbigeoCodigoDto
+                {
+                    codigo_ubigeo = u.CUBI_ID
+                }).ToList();
+
+
+                if (!listUbigeo.Any())
+                    return ServiceResponse.Return404();
+
+                return ServiceResponse.ReturnResultWith200(listUbigeo);
+            }
+            catch (Exception e)
+            {
+                //_logger.Error(e);
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By William Vilca
+        public async Task<ServiceResponse> GetHistoriaClinica_Mad_Ubigeo(string vDistrito)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@isDistrito", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vDistrito },
+                };
+
+                List<DbContext.Entities.Ubigeo> ubigeos = new List<DbContext.Entities.Ubigeo>();
+
+                ubigeos = await _uow.ExecuteStoredProcByParam<DbContext.Entities.Ubigeo>("SPRMDS_LIST_HISTORIACLINICA_MAD_UBIGEO", parameters);
+
+                List<UbigeosDto> listUbigeo = new List<UbigeosDto>();
+
+                listUbigeo = ubigeos.Select(u => new UbigeosDto
+                {
+                    codigo = u.CUBI_ID,
+                    departamento = u.SUBI_DEPARTAMENTO,
+                    provincia = u.SUBI_PROVINCIA,
+                    distrito = u.SUBI_DISTRITO
+                }).ToList();
+
+
+                if (!listUbigeo.Any())
+                    return ServiceResponse.Return404();
+
+                return ServiceResponse.ReturnResultWith200(listUbigeo);
+            }
+            catch (Exception e)
+            {
+                //_logger.Error(e);
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By William Vilca
+        public async Task<ServiceResponse> GetHistoriaClinica_Mad_Dni()
+        {
+            try
+            {
+
+                List<DbContext.Entities.PacienteFiltro> pacientes = new List<DbContext.Entities.PacienteFiltro>();
+
+                pacientes = await _uow.ExecuteStoredProcAll<DbContext.Entities.PacienteFiltro>("SPRMDS_LIST_HISTORIACLINICA_MAD_PACIENTE");
+
+                List<PacienteDto> listPacientes = new List<PacienteDto>();
+
+                //listPacientes = pacientes.Select(p => new PacienteDto { dni = p.DNI, nombres = p.NOMBRES }).ToList();
+
+
+                return ServiceResponse.ReturnResultWith200(listPacientes);
+            }
+            catch (Exception e)
+            {
+                return ServiceResponse.Return500(e);
+            }
+
+        }
+
+        //By William Vilca
+        public async Task<ServiceResponse> GetHistoriaClinica_Paciente_x_Dni(string vDni, string vNumero)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@isDni", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vDni },
+                    new SqlParameter("@isNumero", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vNumero },
+                };
+
+                List<DbContext.Entities.HistoriaClinicaPaciente_x_Dni> pacientes = new List<DbContext.Entities.HistoriaClinicaPaciente_x_Dni>();
+
+                pacientes = await _uow.ExecuteStoredProcByParam<DbContext.Entities.HistoriaClinicaPaciente_x_Dni>("SPRMDS_LIST_HISTORIACLINICA_PACIENTE_X_DNI", parameters);
+
+                List<HistoriaClinicaPaciente_x_DniDto> listPacientes = new List<HistoriaClinicaPaciente_x_DniDto>();
+
+                listPacientes = pacientes.Select(p => new HistoriaClinicaPaciente_x_DniDto
+                {
+                    dni = p.DNI,
+                    nombres = p.NOMBRES,
+                    codigo = p.CODIGO
+                }
+
+                    ).ToList();
+
+
+                return ServiceResponse.ReturnResultWith200(listPacientes);
+            }
+            catch (Exception e)
+            {
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By William Vilca
+        //TODAS LAS HISTORIAS CLINICAS
+        public async Task<ServiceResponse> GetHistoriaClinicas()
+        {
+            try
+            {
+
+                List<DbContext.Entities.HistoriaClinicas> historias = new List<DbContext.Entities.HistoriaClinicas>();
+
+                historias = await _uow.ExecuteStoredProcAll<DbContext.Entities.HistoriaClinicas>("SPRMDS_LIST_HISTORIACLINICAS");
+
+                List<ListadoHistoriaClinicaDto> listHistorias = new List<ListadoHistoriaClinicaDto>();
+
+                listHistorias = historias.Select(h => new ListadoHistoriaClinicaDto
+                {
+                    chis_id = h.CHIS_ID,
+                    e = h.E,
+                    prog = h.PROG,
+                    codate = h.CODATE,
+                    clasif = h.CLASIF,
+                    e_tablet = h.E_TABLET,
+                    codautorizacion = h.CODAUTORIZACION,
+                    feclla = h.FECLLA,
+                    hrlla = h.HRLLA,
+                    tiempo = h.TIEMPO,
+                    fecate = h.FECATE,
+                    hrxdefecto = h.HRXDEFECTO,
+                    hrestimada = h.HRESTIMADA,
+                    hrllegada = h.HRLLEGADA,
+                    provincia = h.PROVINCIA,
+                    distrito = h.DISTRITO,
+                    paciente = h.PACIENTE,
+                    fpago = h.FPAGO,
+                    vip = h.VIP,
+                    grupo = h.GRUPO,
+                    periodo = h.PERIODO,
+                    cont = h.CONT,
+                    perfil = h.PERFIL,
+                    espec = h.ESPEC,
+                    doctor = h.DOCTOR,
+                    grupos = h.GRUPOS,
+                    empresa = h.EMPRESA,
+                    usuario = h.USUARIO,
+                    cod_doc = h.COD_DOC
+                }).ToList();
+
+                if (!listHistorias.Any())
+                    return ServiceResponse.Return404();
+
+                return ServiceResponse.ReturnResultWith200(listHistorias);
+            }
+            catch (Exception e)
+            {
+                //_logger.Error(e);
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By William Vilca
+        public async Task<ServiceResponse> GetHistoriasClinicas(string vFechaIni, string vFechaFin, string vConsulta)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@isFechaIni", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vFechaIni },
+                    new SqlParameter("@isFechaFin", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vFechaFin },
+                    new SqlParameter("@isCondicion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vConsulta },
+                };
+
+                int vOpcion = 0;
+                List<DbContext.Entities.HistoriaClinicas> historias = new List<DbContext.Entities.HistoriaClinicas>();
+                List<ListadoHistoriaClinicaDto> listHistorias = new List<ListadoHistoriaClinicaDto>();
+
+                if (vConsulta.Equals("1"))
+                {
+                    vOpcion = 1;
+                    historias = await _uow.ExecuteStoredProcByParam<DbContext.Entities.HistoriaClinicas>("SPRMDS_LIST_HISTORIA_CLINICAS", parameters);
+                    listHistorias = historias.Select(h => new ListadoHistoriaClinicaDto
+                    {
+                        chis_id = h.CHIS_ID,
+                        e = h.E,
+                        prog = h.PROG,
+                        codate = h.CODATE,
+                        clasif = h.CLASIF,
+                        e_tablet = h.E_TABLET,
+                        codautorizacion = h.CODAUTORIZACION,
+                        feclla = h.FECLLA,
+                        hrlla = h.HRLLA,
+                        tiempo = h.TIEMPO,
+                        fecate = h.FECATE,
+                        hrxdefecto = h.HRXDEFECTO,
+                        hrestimada = h.HRESTIMADA,
+                        hrllegada = h.HRLLEGADA,
+                        provincia = h.PROVINCIA,
+                        distrito = h.DISTRITO,
+                        paciente = h.PACIENTE,
+                        fpago = h.FPAGO,
+                        vip = h.VIP,
+                        grupo = h.GRUPO,
+                        periodo = h.PERIODO,
+                        cont = h.CONT,
+                        perfil = h.PERFIL,
+                        espec = h.ESPEC,
+                        doctor = h.DOCTOR,
+                        grupos = h.GRUPOS,
+                        empresa = h.EMPRESA,
+                        usuario = h.USUARIO,
+                        cod_doc = h.COD_DOC
+                    }).ToList();
+                }
+                else
+                {
+                    vOpcion = 2;
+                    historias = await _uow.ExecuteStoredProcByParam<DbContext.Entities.HistoriaClinicas>("SPRMDS_LIST_HISTORIA_CLINICAS", parameters);
+                    listHistorias = historias.Select(h => new ListadoHistoriaClinicaDto
+                    {
+                        chis_id = h.CHIS_ID,
+                        e = h.E,
+                        prog = h.PROG,
+                        codate = h.CODATE,
+                        clasif = h.CLASIF,
+                        e_tablet = h.E_TABLET,
+                        codautorizacion = h.CODAUTORIZACION,
+                        feclla = h.FECLLA,
+                        hrlla = h.HRLLA,
+                        tiempo = h.TIEMPO,
+                        fecate = h.FECATE,
+                        hrxdefecto = h.HRXDEFECTO,
+                        hrestimada = h.HRESTIMADA,
+                        hrllegada = h.HRLLEGADA,
+                        provincia = h.PROVINCIA,
+                        distrito = h.DISTRITO,
+                        paciente = h.PACIENTE,
+                        fpago = h.FPAGO,
+                        vip = h.VIP,
+                        grupo = h.GRUPO,
+                        periodo = h.PERIODO,
+                        cont = h.CONT,
+                        perfil = h.PERFIL,
+                        espec = h.ESPEC,
+                        doctor = h.DOCTOR,
+                        grupos = h.GRUPOS,
+                        empresa = h.EMPRESA,
+                        usuario = h.USUARIO,
+                        cod_doc = h.COD_DOC
+                    }).ToList();
+                }
+
+                if (vOpcion == 0)
+                    return ServiceResponse.ReturnResultWith204();
+
+
+                return ServiceResponse.ReturnResultWith200(listHistorias);
+            }
+            catch (Exception e)
+            {
+                //_logger.Error(e);
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By William Vilca
+        public async Task<ServiceResponse> RegistrarHistoriaClinica(RegistrarHistoriaClinicaDto dto)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@E",SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.e},
+                    new SqlParameter("@PROG",SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.prog},
+                    new SqlParameter("@CODATE",SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.codate},
+                    new SqlParameter("@CLASIF",SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.clasif},
+                    new SqlParameter("@E_TABLET",SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.e_tablet},
+                    new SqlParameter("@CODAUTORIZACION",SqlDbType.Int) {Direction = ParameterDirection.Input, Value = dto.codautorizacion},
+                    new SqlParameter("@FECLLA",SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.feclla},
+                    new SqlParameter("@HRLLA",SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.hrlla},
+                    new SqlParameter("@TIEMPO",SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.tiempo},
+                    new SqlParameter("@FECATE",SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.fecate},
+                    new SqlParameter("@HRXDEFECTO",SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.hrxdefecto},
+                    new SqlParameter("@HRESTIMADA",SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.hrestimada},
+                    new SqlParameter("@HRLLEGADA",SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.hrllegada},
+                    new SqlParameter("@PROVINCIA",SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.provincia},
+                    new SqlParameter("@DISTRITO",SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.distrito},
+                    new SqlParameter("@PACIENTE",SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.paciente},
+                    new SqlParameter("@FPAGO",SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.fpago},
+                    new SqlParameter("@VIP",SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.vip},
+                    new SqlParameter("@GRUPO",SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.grupo},
+                    new SqlParameter("@PERIODO",SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.periodo},
+                    new SqlParameter("@CONT",SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.cont},
+                    new SqlParameter("@PERFIL",SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.perfil},
+                    new SqlParameter("@ESPEC",SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.espec},
+                    new SqlParameter("@DOCTOR",SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.doctor},
+                    new SqlParameter("@GRUPOS",SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.grupos},
+                    new SqlParameter("@EMPRESA",SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.empresa},
+                    new SqlParameter("@USUARIO",SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.usuario},
+                    new SqlParameter("@COD_DOC",SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = dto.cod_doc},
+                    new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
+                };
+
+                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_REGISTRAR_HISTORIACLINICA", parameters);
+
+                dto.numero_historia = Convert.ToInt64(response);
+
+                return ServiceResponse.ReturnResultWith201(dto);
+
+            }
+            catch (Exception e)
+            {
+                //_logger.Error(e);
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By William Vilca
+        public async Task<ServiceResponse> AddHistoriaClinicaSiteds(SitedsMtoDto dto)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+
+                            new SqlParameter("@CHIS_ID"                             ,SqlDbType.Int) {Direction = ParameterDirection.Input,Value = dto.id_historia },
+                            new SqlParameter("@SSIT_DOCUMENTOAUTORIZACION"          ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.documentoautorizacion },
+                            new SqlParameter("@SSIT_CODIGOAFILIADO"                 ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codigoafiliado },
+                            new SqlParameter("@SSIT_NUMEROPOLIZA"                   ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.numeropoliza },
+                            new SqlParameter("@SSIT_NUMEROCONTRATO"                 ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.numerocontrato },
+                            new SqlParameter("@SSIT_NUMEROCERTIFICADO"              ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.numerocertificado },
+                            new SqlParameter("@SSIT_CODPRODUCTO"                    ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codproducto },
+                            new SqlParameter("@SSIT_DESPRODUCTO"                    ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.desproducto },
+                            new SqlParameter("@SSIT_APELLIDOPATERNOAFILIADO"        ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.apellidopaternoafiliado },
+                            new SqlParameter("@SSIT_APELLIDOMATERNOAFILIADO"        ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.apellidomaternoafiliado },
+                            new SqlParameter("@SSIT_NOMBRESAFILIADO"                ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.nombresafiliado },
+                            new SqlParameter("@SSIT_CODGENERO"                      ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codgenero },
+                            new SqlParameter("@SSIT_DESGENERO"                      ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.desgenero },
+                            new SqlParameter("@SSIT_CODFECHANACIMIENTO"             ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codfechanacimiento },
+                            new SqlParameter("@SSIT_FECHANACIMIENTO"                ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.fechanacimiento },
+                            new SqlParameter("@SSIT_CODPARENTESCO"                  ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codparentesco },
+                            new SqlParameter("@SSIT_DESPARENTESCO"                  ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.desparentesco },
+                            new SqlParameter("@SSIT_CODTIPODOCUMENTOAFILIADO"       ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codtipodocumentoafiliado },
+                            new SqlParameter("@SSIT_DESTIPODOCUMENTOAFILIADO"       ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.destipodocumentoafiliado },
+                            new SqlParameter("@SSIT_NUMERODOCUMENTOAFILIADO"        ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.numerodocumentoafiliado },
+                            new SqlParameter("@NSIT_EDAD"                           ,SqlDbType.Int) {Direction = ParameterDirection.Input,Value =     dto.edad },
+                            new SqlParameter("@SSIT_CODFECHAINICIOVIGENCIA"         ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codfechainiciovigencia },
+                            new SqlParameter("@SSIT_FECHAINICIOVIGENCIA"            ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.fechainiciovigencia },
+                            new SqlParameter("@SSIT_CODFECHAFINVIGENCIA"            ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codfechafinvigencia },
+                            new SqlParameter("@SSIT_FECHAFINVIGENCIA"               ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.fechafinvigencia },
+                            new SqlParameter("@SSIT_CODESTADOCIVIL"                 ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codestadocivil },
+                            new SqlParameter("@SSIT_DESESTADOCIVIL"                 ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.desestadocivil },
+                            new SqlParameter("@NSIT_CODTIPOPLAN"                    ,SqlDbType.Int) {Direction = ParameterDirection.Input,Value = dto.codtipoplan },
+                            new SqlParameter("@SSIT_DESTIPOPLAN"                    ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.destipoplan },
+                            new SqlParameter("@NSIT_NUMEROPLAN"                     ,SqlDbType.Int) {Direction = ParameterDirection.Input,Value = dto.numeroplan },
+                            new SqlParameter("@SSIT_CODESTADO"                      ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codestado },
+                            new SqlParameter("@SSIT_DESESTADO"                      ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.desestado },
+                            new SqlParameter("@SSIT_CODFECHAACTUALIZACIONFOTO"      ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codfechaactualizacionfoto },
+                            new SqlParameter("@SSIT_FECHAACTUALIZACIONFOTO"         ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.fechaactualizacionfoto },
+                            new SqlParameter("@SSIT_APELLIDOPATERNOTITULAR"         ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.apellidopaternotitular },
+                            new SqlParameter("@SSIT_APELLIDOMATERNOTITULAR"         ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.apellidomaternotitular },
+                            new SqlParameter("@SSIT_NOMBRESTITULAR"                 ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.nombrestitular },
+                            new SqlParameter("@SSIT_CODIGOTITULAR"                  ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codigotitular },
+                            new SqlParameter("@SSIT_CODTIPODOCUMENTOTITULAR"        ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codtipodocumentotitular },
+                            new SqlParameter("@SSIT_DESTIPODOCUMENTOTITULAR"        ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.destipodocumentotitular },
+                            new SqlParameter("@SSIT_NUMERODOCUMENTOTITULAR"         ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.numerodocumentotitular },
+                            new SqlParameter("@NSIT_CODMONEDA"                      ,SqlDbType.Int) {Direction = ParameterDirection.Input,Value =     dto.codmoneda },
+                            new SqlParameter("@SSIT_DESMONEDA"                      ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.desmoneda },
+                            new SqlParameter("@SSIT_NOMBRECONTRATANTE"              ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.nombrecontratante },
+                            new SqlParameter("@SSIT_CODTIPODOCUMENTOCONTRATANTE"    ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codtipodocumentocontratante },
+                            new SqlParameter("@SSIT_DESTIPODOCUMENTOCONTRATANTE"    ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.destipodocumentocontratante },
+                            new SqlParameter("@SSIT_CODTIPOAFILIACION"              ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codtipoafiliacion },
+                            new SqlParameter("@SSIT_DESTIPOAFILIACION"              ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.destipoafiliacion },
+                            new SqlParameter("@SSIT_CODFECHAAFILIACION"             ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codfechaafiliacion },
+                            new SqlParameter("@SSIT_FECHAAFILIACION"                ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.fechaafiliacion },
+                            new SqlParameter("@SSIT_NUMERODOCUMENTOCONTRATANTE"     ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.numerodocumentocontratante },
+                            new SqlParameter("@SSIT_CODIGOTIPOCOBERTURA"            ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codigotipocobertura },
+                            new SqlParameter("@SSIT_CODIGOSUBTIPOCOBERTURA"         ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codigosubtipocobertura },
+                            new SqlParameter("@SSIT_CODIGOCOBERTURA"                ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codigocobertura },
+                            new SqlParameter("@SSIT_BENEFICIOS"                     ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.beneficios },
+                            new SqlParameter("@SSIT_CODINDICADORRESTRICCION"        ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codindicadorrestriccion },
+                            new SqlParameter("@SSIT_RESTRICCIONES"                  ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.restricciones },
+                            new SqlParameter("@NSIT_CODCOPAGOFIJO"                  ,SqlDbType.Decimal) {Direction = ParameterDirection.Input,Value = dto.codcopagofijo },
+                            new SqlParameter("@SSIT_DESCOPAGOFIJO"                  ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.descopagofijo },
+                            new SqlParameter("@NSIT_CODCOPAGOVARIABLE"              ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codcopagovariable },
+                            new SqlParameter("@SSIT_DESCOPAGOVARIABLE"              ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.descopagovariable },
+                            new SqlParameter("@SSIT_CODFECHAFINCARENCIA"            ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codfechafincarencia },
+                            new SqlParameter("@SSIT_FECHAFINCARENCIA"               ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.fechafincarencia },
+                            new SqlParameter("@SSIT_CONDICIONESESPECIALES"          ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.condicionesespeciales },
+                            new SqlParameter("@SSIT_OBSERVACIONES"                  ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.observaciones },
+                            new SqlParameter("@SSIT_CODCALIFICACIONSERVICIO"        ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codcalificacionservicio },
+                            new SqlParameter("@SSIT_DESCALIFICACIONSERVICIO"        ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.descalificacionservicio },
+                            new SqlParameter("@SSIT_BENEFICIOMAXIMOINICIAL"         ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.beneficiomaximoinicial },
+                            new SqlParameter("@SSIT_NUMEROCOBERTURA"                ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.numerocobertura },
+                            new SqlParameter("@SSIT_FECHA_CREACION_DOC_AUT"         ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.fecha_creacion_doc_aut },
+                            new SqlParameter("@DSIT_HORA_CREACION_DOC_AUT"          ,SqlDbType.DateTime) {Direction = ParameterDirection.Input,Value = dto.hora_creacion_doc_aut },
+                            new SqlParameter("@SSIT_DESCRIPCION_PRODUCTO"           ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.descripcion_producto },
+                            new SqlParameter("@NSIT_USUARIO_CREACION"               ,SqlDbType.Int) {Direction = ParameterDirection.Input,Value = dto.usuario_creacion },
+                            new SqlParameter("@DSIT_FECHA_CREACION"                 ,SqlDbType.DateTime) {Direction = ParameterDirection.Input,Value = dto.fecha_creacion },
+                            new SqlParameter("@NSIT_USUARIO_MODIFICACION"           ,SqlDbType.Int) {Direction = ParameterDirection.Input,Value = dto.usuario_modificacion },
+                            new SqlParameter("@DSIT_FECHA_MODIFICACION"             ,SqlDbType.DateTime) {Direction = ParameterDirection.Input,Value = dto.fecha_modificacion },
+
+                            new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
+
+                };
+
+                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_ADD_SITEDS", parameters);
+
+                dto.id_siteds = Convert.ToInt64(response);
+
+                return ServiceResponse.ReturnResultWith201(dto);
+
+            }
+            catch (Exception e)
+            {
+                //_logger.Error(e);
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //////////////////          FIN SERVICIO MAD          //////////////////
+
+        //////////////////          SERVICIO SCTR          //////////////////
+
         //By Henrry Torres
         public async Task<ServiceResponse> GetHistoriasClinicasSctrBandeja(string fechaInicio, string fechaFin, string condicion)
         {
@@ -376,7 +1625,7 @@ namespace MDS.Services.HistoriaClinica.Implementation
                     new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
                 };
 
-                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_DELETE_HISTORIA_CLINICA", parameters);
+                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_DELETE_HISTORIA_CLINICA_SCTR", parameters);
 
                 dto.cod_historia_clinica = Convert.ToInt64(response);
                 dto.observacion = "borrado";
@@ -389,9 +1638,11 @@ namespace MDS.Services.HistoriaClinica.Implementation
                 return ServiceResponse.Return500(e);
             }
         }
-        //FIN SERVICIO SCTR
 
-        //SERVICIO AMBULANCIA
+        //////////////////          FIN SERVICIO SCTR          //////////////////
+
+        //////////////////          SERVICIO AMBULANCIA          //////////////////
+
         //By Henrry Torres
         public async Task<ServiceResponse> GetHistoriasClinicasAmbulanciaBandeja(AmbulanciaResource dto)
         {
@@ -764,211 +2015,8 @@ namespace MDS.Services.HistoriaClinica.Implementation
                 return ServiceResponse.Return500(e);
             }
         }
-        //FIN SERVICIO AMBULANCIA
 
-        //SERVICIO MAD
-        //By Henrry Torres
-        public async Task<ServiceResponse> GetHistoriaClinicaMadByCodigo(int historiaClinicaId)
-        {
-            try
-            {
-                SqlParameter[] parameters =
-                {
-                    new SqlParameter("@isCodigoHistoriaClinica", SqlDbType.BigInt) {Direction = ParameterDirection.Input, Value = historiaClinicaId },
-                };
+        //////////////////          FIN SERVICIO AMBULANCIA          //////////////////
 
-                List<DbContext.Entities.HistoriaClinicaMad> historiasClinicas = new List<DbContext.Entities.HistoriaClinicaMad>();
-
-                historiasClinicas = await _uow.ExecuteStoredProcByParam<DbContext.Entities.HistoriaClinicaMad>("SPRMDS_LIST_HISTORIA_CLINICA_BY_CODIGO_MAD", parameters);
-
-                List<HistoriaClinicaDto> listHistoriasClinicas = new List<HistoriaClinicaDto>();
-
-                listHistoriasClinicas = historiasClinicas.Select(p => new HistoriaClinicaDto
-                {
-                    cod_historia_clinica = p.cod_historia_clinica,
-                    id_paciente = p.id_paciente,
-                    id_medico = p.id_medico,
-                    id_cliente = p.id_cliente,
-                    vip = p.vip,
-                    hora_atencion = p.hora_atencion,
-                    fecha_creacion = p.fecha_creacion,
-                    sintomas = p.sintomas,
-                    tipo_atencion = p.tipo_atencion,
-                    programacion = p.programacion,
-                    nro_descanso_medico = p.nro_descanso_medico,
-                    cambio_realizar = p.cambio_realizar,
-                    moneda_deducible = p.moneda_deducible,
-                    monto_deducible = p.monto_deducible,
-                    coaseguro = p.coaseguro,
-                    tipo_documento_pago = p.tipo_documento_pago,
-                    numero_documento_pago = p.numero_documento_pago,
-                    forma_pago = p.forma_pago,
-                    moneda_denominacion = p.moneda_denominacion,
-                    monto_denominacion = p.monto_denominacion,
-                    fecha_nacimiento = p.fecha_nacimiento,
-                    paciente = p.paciente,
-                    medico = p.medico,
-                    aseguradora = p.aseguradora,
-                    especialidad = p.especialidad,
-                    telefono = p.telefono,
-                    celular = p.celular,
-                    anexo = p.anexo,
-                    referencia = p.referencia,
-                    direccion = p.direccion,
-                    provincia = p.provincia,
-                    distrito = p.distrito
-                }).ToList();
-
-                if (!historiasClinicas.Any())
-                    return ServiceResponse.ReturnResultWith204();
-
-                return ServiceResponse.ReturnResultWith200(listHistoriasClinicas);
-            }
-            catch (Exception e)
-            {
-                return ServiceResponse.Return500(e);
-            }
-        }
-
-        //By Willian Vilca
-        //CONSULTA POR ASEGURADORA = CAJA TEXTO
-        public async Task<ServiceResponse> GetHistoriaClinica_Mad_Aseguradora(string vAseguradora)
-        {
-            try
-            {
-
-                SqlParameter[] parameters =
-                {
-            new SqlParameter("@isAseguradora", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vAseguradora },
-        };
-
-                List<DbContext.Entities.ClienteAseguradora> clientes = new List<DbContext.Entities.ClienteAseguradora>();
-
-                clientes = await _uow.ExecuteStoredProcByParam<DbContext.Entities.ClienteAseguradora>("SPRMDS_LIST_HISTORIACLINICA_MAD_ASEGURADORA", parameters);
-
-                List<ClienteAseguradoraDto> listCliente = new List<ClienteAseguradoraDto>();
-
-                listCliente = clientes.Select(c => new ClienteAseguradoraDto
-                {
-                    //id_cliente = c.CCLT_ID,
-                    id_cliente = c.SIAF_FINANCIAMIENTO,
-                    nombre = c.SCLT_NOMBRE
-                }).ToList();
-
-
-                if (!listCliente.Any())
-                    return ServiceResponse.Return404();
-
-                return ServiceResponse.ReturnResultWith200(listCliente);
-            }
-            catch (Exception e)
-            {
-                return ServiceResponse.Return500(e);
-            }
-        }
-
-        //By Willian Vilca
-        public async Task<ServiceResponse> AddHistoriaClinicaSiteds(SitedsMtoDto dto)
-        {
-            try
-            {
-                SqlParameter[] parameters =
-                {
-
-                            new SqlParameter("@CHIS_ID"                             ,SqlDbType.Int) {Direction = ParameterDirection.Input,Value = dto.id_historia },
-                            new SqlParameter("@SSIT_DOCUMENTOAUTORIZACION"          ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.documentoautorizacion },
-                            new SqlParameter("@SSIT_CODIGOAFILIADO"                 ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codigoafiliado },
-                            new SqlParameter("@SSIT_NUMEROPOLIZA"                   ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.numeropoliza },
-                            new SqlParameter("@SSIT_NUMEROCONTRATO"                 ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.numerocontrato },
-                            new SqlParameter("@SSIT_NUMEROCERTIFICADO"              ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.numerocertificado },
-                            new SqlParameter("@SSIT_CODPRODUCTO"                    ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codproducto },
-                            new SqlParameter("@SSIT_DESPRODUCTO"                    ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.desproducto },
-                            new SqlParameter("@SSIT_APELLIDOPATERNOAFILIADO"        ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.apellidopaternoafiliado },
-                            new SqlParameter("@SSIT_APELLIDOMATERNOAFILIADO"        ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.apellidomaternoafiliado },
-                            new SqlParameter("@SSIT_NOMBRESAFILIADO"                ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.nombresafiliado },
-                            new SqlParameter("@SSIT_CODGENERO"                      ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codgenero },
-                            new SqlParameter("@SSIT_DESGENERO"                      ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.desgenero },
-                            new SqlParameter("@SSIT_CODFECHANACIMIENTO"             ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codfechanacimiento },
-                            new SqlParameter("@SSIT_FECHANACIMIENTO"                ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.fechanacimiento },
-                            new SqlParameter("@SSIT_CODPARENTESCO"                  ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codparentesco },
-                            new SqlParameter("@SSIT_DESPARENTESCO"                  ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.desparentesco },
-                            new SqlParameter("@SSIT_CODTIPODOCUMENTOAFILIADO"       ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codtipodocumentoafiliado },
-                            new SqlParameter("@SSIT_DESTIPODOCUMENTOAFILIADO"       ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.destipodocumentoafiliado },
-                            new SqlParameter("@SSIT_NUMERODOCUMENTOAFILIADO"        ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.numerodocumentoafiliado },
-                            new SqlParameter("@NSIT_EDAD"                           ,SqlDbType.Int) {Direction = ParameterDirection.Input,Value =     dto.edad },
-                            new SqlParameter("@SSIT_CODFECHAINICIOVIGENCIA"         ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codfechainiciovigencia },
-                            new SqlParameter("@SSIT_FECHAINICIOVIGENCIA"            ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.fechainiciovigencia },
-                            new SqlParameter("@SSIT_CODFECHAFINVIGENCIA"            ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codfechafinvigencia },
-                            new SqlParameter("@SSIT_FECHAFINVIGENCIA"               ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.fechafinvigencia },
-                            new SqlParameter("@SSIT_CODESTADOCIVIL"                 ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codestadocivil },
-                            new SqlParameter("@SSIT_DESESTADOCIVIL"                 ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.desestadocivil },
-                            new SqlParameter("@NSIT_CODTIPOPLAN"                    ,SqlDbType.Int) {Direction = ParameterDirection.Input,Value = dto.codtipoplan },
-                            new SqlParameter("@SSIT_DESTIPOPLAN"                    ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.destipoplan },
-                            new SqlParameter("@NSIT_NUMEROPLAN"                     ,SqlDbType.Int) {Direction = ParameterDirection.Input,Value = dto.numeroplan },
-                            new SqlParameter("@SSIT_CODESTADO"                      ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codestado },
-                            new SqlParameter("@SSIT_DESESTADO"                      ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.desestado },
-                            new SqlParameter("@SSIT_CODFECHAACTUALIZACIONFOTO"      ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codfechaactualizacionfoto },
-                            new SqlParameter("@SSIT_FECHAACTUALIZACIONFOTO"         ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.fechaactualizacionfoto },
-                            new SqlParameter("@SSIT_APELLIDOPATERNOTITULAR"         ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.apellidopaternotitular },
-                            new SqlParameter("@SSIT_APELLIDOMATERNOTITULAR"         ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.apellidomaternotitular },
-                            new SqlParameter("@SSIT_NOMBRESTITULAR"                 ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.nombrestitular },
-                            new SqlParameter("@SSIT_CODIGOTITULAR"                  ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codigotitular },
-                            new SqlParameter("@SSIT_CODTIPODOCUMENTOTITULAR"        ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codtipodocumentotitular },
-                            new SqlParameter("@SSIT_DESTIPODOCUMENTOTITULAR"        ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.destipodocumentotitular },
-                            new SqlParameter("@SSIT_NUMERODOCUMENTOTITULAR"         ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.numerodocumentotitular },
-                            new SqlParameter("@NSIT_CODMONEDA"                      ,SqlDbType.Int) {Direction = ParameterDirection.Input,Value =     dto.codmoneda },
-                            new SqlParameter("@SSIT_DESMONEDA"                      ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.desmoneda },
-                            new SqlParameter("@SSIT_NOMBRECONTRATANTE"              ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.nombrecontratante },
-                            new SqlParameter("@SSIT_CODTIPODOCUMENTOCONTRATANTE"    ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codtipodocumentocontratante },
-                            new SqlParameter("@SSIT_DESTIPODOCUMENTOCONTRATANTE"    ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.destipodocumentocontratante },
-                            new SqlParameter("@SSIT_CODTIPOAFILIACION"              ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codtipoafiliacion },
-                            new SqlParameter("@SSIT_DESTIPOAFILIACION"              ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.destipoafiliacion },
-                            new SqlParameter("@SSIT_CODFECHAAFILIACION"             ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codfechaafiliacion },
-                            new SqlParameter("@SSIT_FECHAAFILIACION"                ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.fechaafiliacion },
-                            new SqlParameter("@SSIT_NUMERODOCUMENTOCONTRATANTE"     ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.numerodocumentocontratante },
-                            new SqlParameter("@SSIT_CODIGOTIPOCOBERTURA"            ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codigotipocobertura },
-                            new SqlParameter("@SSIT_CODIGOSUBTIPOCOBERTURA"         ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codigosubtipocobertura },
-                            new SqlParameter("@SSIT_CODIGOCOBERTURA"                ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codigocobertura },
-                            new SqlParameter("@SSIT_BENEFICIOS"                     ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.beneficios },
-                            new SqlParameter("@SSIT_CODINDICADORRESTRICCION"        ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codindicadorrestriccion },
-                            new SqlParameter("@SSIT_RESTRICCIONES"                  ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.restricciones },
-                            new SqlParameter("@NSIT_CODCOPAGOFIJO"                  ,SqlDbType.Decimal) {Direction = ParameterDirection.Input,Value = dto.codcopagofijo },
-                            new SqlParameter("@SSIT_DESCOPAGOFIJO"                  ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.descopagofijo },
-                            new SqlParameter("@NSIT_CODCOPAGOVARIABLE"              ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codcopagovariable },
-                            new SqlParameter("@SSIT_DESCOPAGOVARIABLE"              ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.descopagovariable },
-                            new SqlParameter("@SSIT_CODFECHAFINCARENCIA"            ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codfechafincarencia },
-                            new SqlParameter("@SSIT_FECHAFINCARENCIA"               ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.fechafincarencia },
-                            new SqlParameter("@SSIT_CONDICIONESESPECIALES"          ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.condicionesespeciales },
-                            new SqlParameter("@SSIT_OBSERVACIONES"                  ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.observaciones },
-                            new SqlParameter("@SSIT_CODCALIFICACIONSERVICIO"        ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.codcalificacionservicio },
-                            new SqlParameter("@SSIT_DESCALIFICACIONSERVICIO"        ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.descalificacionservicio },
-                            new SqlParameter("@SSIT_BENEFICIOMAXIMOINICIAL"         ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.beneficiomaximoinicial },
-                            new SqlParameter("@SSIT_NUMEROCOBERTURA"                ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.numerocobertura },
-                            new SqlParameter("@SSIT_FECHA_CREACION_DOC_AUT"         ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.fecha_creacion_doc_aut },
-                            new SqlParameter("@DSIT_HORA_CREACION_DOC_AUT"          ,SqlDbType.DateTime) {Direction = ParameterDirection.Input,Value = dto.hora_creacion_doc_aut },
-                            new SqlParameter("@SSIT_DESCRIPCION_PRODUCTO"           ,SqlDbType.VarChar) {Direction = ParameterDirection.Input,Value = dto.descripcion_producto },
-                            new SqlParameter("@NSIT_USUARIO_CREACION"               ,SqlDbType.Int) {Direction = ParameterDirection.Input,Value = dto.usuario_creacion },
-                            new SqlParameter("@DSIT_FECHA_CREACION"                 ,SqlDbType.DateTime) {Direction = ParameterDirection.Input,Value = dto.fecha_creacion },
-                            new SqlParameter("@NSIT_USUARIO_MODIFICACION"           ,SqlDbType.Int) {Direction = ParameterDirection.Input,Value = dto.usuario_modificacion },
-                            new SqlParameter("@DSIT_FECHA_MODIFICACION"             ,SqlDbType.DateTime) {Direction = ParameterDirection.Input,Value = dto.fecha_modificacion },
-
-                            new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output}
-
-                };
-
-                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_ADD_SITEDS", parameters);
-
-                dto.id_siteds = Convert.ToInt64(response);
-
-                return ServiceResponse.ReturnResultWith201(dto);
-
-            }
-            catch (Exception e)
-            {
-                //_logger.Error(e);
-                return ServiceResponse.Return500(e);
-            }
-        }
-        //FIN SERVICIO MAD
     }
 }

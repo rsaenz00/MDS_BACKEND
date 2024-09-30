@@ -1,5 +1,69 @@
 ﻿namespace MDS.Dto
 {
+    public class SitedsCodigoDto
+    {
+        public string id_cliente { get; set; }
+
+        public string numero { get; set; }
+
+        public string nombre { get; set; }
+    }
+    public class SitedsListaDto
+    {
+
+        public long numero { get; set; }
+        public string paterno { get; set; }
+
+        public string materno { get; set; }
+
+        public string nombres { get; set; }
+
+        public int edad { get; set; }
+
+        public string fechanacimiento { get; set; }
+
+        public string tipodocumento { get; set; }
+
+        public string numerodocumento { get; set; }
+
+        public string genero { get; set; }
+
+        public string producto { get; set; }
+
+        public string numeroautorizacion { get; set; }
+
+        public string numerocontrato { get; set; }
+
+        public string codigoafiliado { get; set; }
+
+        public string numeropoliza { get; set; }
+
+        public string moneda { get; set; }
+
+        public decimal copagofijo { get; set; }
+
+        public decimal copagovariable { get; set; }
+
+
+    }
+
+    public class SitedsMtoPruebaDto
+    {
+        public long csit_id { get; set; }
+
+        public long chis_id { get; set; }
+
+        public string ssit_documentoautorizacion { get; set; }
+
+        public string ssit_codigoafiliado { get; set; }
+
+        public int nsit_usuario_creacion { get; set; }
+
+        public DateTime dsit_fecha_creacion { get; set; }
+
+    }
+
+
     public class SitedsMtoDto
     {
         public long id_siteds { get; set; }

@@ -30,6 +30,16 @@ namespace MDS.Api.Controllers.Test
             return ReturnFormattedResponse(response);
         }
 
+        //By William Vilca
+        [HttpGet, Route("GetPaciente_By_Dni")]
+        public async Task<IActionResult> GetPaciente_By_Dni(string? vBusqueda, string? vValor)
+        {
+            var response = await _pacienteService.GetPaciente_By_Dni(vBusqueda,vValor);
+
+            return ReturnFormattedResponse(response);
+        }
+
+
         //By Henrry Torres
         [HttpGet, Route("GetPacientesFiltro")]
         public async Task<IActionResult> GetPacientesFiltro(string? busqueda, string? condicion)

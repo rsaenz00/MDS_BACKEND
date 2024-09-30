@@ -23,6 +23,7 @@ namespace MDS.Api.Models
         public char? SDIR_LONGITUD { get; set; }
         public char? SDIR_LATITUD { get; set; }
     }
+    
     public class UpdateDireccionViewModel
     {
         [Required]

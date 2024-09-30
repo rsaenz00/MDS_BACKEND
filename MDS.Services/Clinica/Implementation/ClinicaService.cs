@@ -68,6 +68,48 @@ namespace MDS.Services.Clinica.Implementation
                 return ServiceResponse.Return500(e);
             }
         }
+        
+        public async Task<ServiceResponse> GetHistoriaClinicaFiltro_x_Dni(string busqueda, string condicion)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@isTextoBusqueda", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = busqueda },
+                    new SqlParameter("@isCondicion", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = condicion },
+                };
+
+                List<DbContext.Entities.HistoriaClinicaFiltro_x_Dni> clinicas = new List<DbContext.Entities.HistoriaClinicaFiltro_x_Dni>();
+
+                clinicas = await _uow.ExecuteStoredProcByParam<DbContext.Entities.HistoriaClinicaFiltro_x_Dni>("SPRMDS_LIST_HISTORIACLINICA_X_DNI_PRUEBA", parameters);
+
+                List<HistoriaClinica_x_DniDto> listClinicas = new List<HistoriaClinica_x_DniDto>();
+
+                listClinicas = clinicas.Select(d => new HistoriaClinica_x_DniDto
+                {
+                    codigo = d.CODIGO,
+                    nombres = d.NOMBRES,
+                    paterno = d.PATERNO,
+                    materno = d.MATERNO,
+                    dni = d.DNI,
+                    email = d.EMAIL,
+                    paciente = d.PACIENTE,
+                    //codigo = d.CPER_ID,
+                    //nombres = d.SPER_NOMBRES,
+                    //paterno = d.SPER_APELLIDO_PATERNO,
+                    //materno = d.SPER_APELLIDO_MATERNO,
+                    //dni = d.SPER_NUMERO_DOCUMENTO,
+                    //email = d.SPER_EMAIL,
+                }).ToList();
+
+
+                return ServiceResponse.ReturnResultWith200(listClinicas);
+            }
+            catch (Exception e)
+            {
+                return ServiceResponse.Return500(e);
+            }
+        }
 
         //By Henrry Torres
         public async Task<ServiceResponse> AddClinica(ClinicaMtoDto dto)

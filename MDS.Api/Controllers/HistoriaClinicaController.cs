@@ -24,7 +24,440 @@ namespace MDS.Api.Controllers
             _historiaClinicaService = historiaClinicaService;
         }
 
-        //SERVICIO SCTR
+        //////////////////          SERVICIO MAD          //////////////////
+
+        //By William Vilca
+        [HttpGet, Route("GetHistoriaClinica_Mad_Cliente")]
+        public async Task<IActionResult> GetHistoriaClinica_Mad_Cliente(string vNumero)
+        {
+            var response = await _historiaClinicaService.GetHistoriaClinica_Mad_Cliente_Codigo(vNumero);
+            return ReturnFormattedResponse(response);
+        }
+
+        //By William Vilca
+        [HttpGet, Route("GetSiteds_Codigo")]
+        public async Task<IActionResult> GetSiteds_Codigo(string vCodigo)
+        {
+            var response = await _historiaClinicaService.GetHistoriaClinica_Mad_Siteds_Codigo(vCodigo);
+            return ReturnFormattedResponse(response);
+        }
+
+        //By William Vilca
+        [HttpGet, Route("GetSiteds_Numero")]
+        public async Task<IActionResult> GetSiteds_Numero(string vNumero)
+        {
+            var response = await _historiaClinicaService.GetSiteds_Numero(vNumero);
+            return ReturnFormattedResponse(response);
+        }
+
+        //By William Vilca
+        [HttpGet, Route("GetHistoriaClinica_Mad_Filtro")]
+        public async Task<IActionResult> GetHistoriaClinica_Mad_Filtro(string? vCampoBusqueda = null, string? vValorBusqueda = null, string? vFechaInicio = null, string? vFechaFinal = null)
+        {
+            var response = await _historiaClinicaService.GetHistoriasClinicasMadFiltro(vCampoBusqueda, vValorBusqueda, vFechaInicio, vFechaFinal);
+            return ReturnFormattedResponse(response);
+        }
+
+        //By William Vilca
+        [HttpGet, Route("GetHistoriaClinica_Mad_Filtro_Rango_By_Fechas")]
+        public async Task<IActionResult> GetHistoriaClinica_Mad_Filtro_Rango_By_Fechas(string? vFechaInicio = null, string? vFechaFinal = null)
+        {
+            var response = await _historiaClinicaService.GetHistoriasClinicasMadFiltro_Rango_By_Fechas(vFechaInicio, vFechaFinal);
+            return ReturnFormattedResponse(response);
+        }
+
+        //By William Vilca
+        [HttpGet, Route("GetHistoriaClinica_Mad_Filtro_Campos")]
+        public async Task<IActionResult> GetHistoriaClinica_Mad_Filtro_Campos(string? vCampoBusqueda = null, string? vValorBusqueda = null)
+        {
+            var response = await _historiaClinicaService.GetHistoriasClinicasMadFiltro_Campos(vCampoBusqueda, vValorBusqueda);
+            return ReturnFormattedResponse(response);
+        }
+
+        //By William Vilca
+        [HttpGet, Route("GetHistoriaClinica_Paciente_x_Numero")]
+        public async Task<IActionResult> GetHistoriaClinica_Paciente_x_Numero(string vNumero)
+        {
+            var response = await _historiaClinicaService.GetHistoriaClinica_Mad_Paciente_Dni(vNumero);
+            return ReturnFormattedResponse(response);
+        }
+
+        //By William Vilca
+        [HttpGet, Route("GetHistoriaClinica_Clientes_Siteds")]
+        public async Task<IActionResult> GetHistoriaClinica_Clientes_Siteds()
+        {
+            var response = await _historiaClinicaService.GetHistoriaClinica_Mad_Clientes_Siteds();
+            return ReturnFormattedResponse(response);
+        }
+
+        //By William Vilca
+        [HttpGet, Route("GetHistoriaClinica_Clientes_Siteds_By_Nombre")]
+        public async Task<IActionResult> GetHistoriaClinica_Clientes_Siteds_By_Nombre(string vCliente)
+        {
+            var response = await _historiaClinicaService.GetHistoriaClinica_Mad_Clientes_Siteds_By_Nombre(vCliente);
+            return ReturnFormattedResponse(response);
+        }
+
+        //By William Vilca
+        [HttpGet, Route("GetHistoriaClinica_Paciente_Distrito")]
+        public async Task<IActionResult> GetHistoriaClinica_Paciente_Distrito(string vDistrito)
+        {
+            var response = await _historiaClinicaService.GetHistoriaClinica_Mad_Paciente_Distrito(vDistrito);
+            return ReturnFormattedResponse(response);
+        }
+
+        //By William Vilca
+        [HttpGet, Route("GetHistoriaClinica_Aseguradora")]
+        public async Task<IActionResult> GetHistoriaClinica_Aseguradora(string vAseguradora)
+        {
+            var response = await _historiaClinicaService.GetHistoriaClinica_Mad_Aseguradora(vAseguradora);
+            return ReturnFormattedResponse(response);
+        }
+
+        //By William Vilca
+        [HttpGet, Route("GetHistoriaClinica_Aseguradora_Categoria")]
+        public async Task<IActionResult> GetHistoriaClinica_Aseguradora_Categoria(string vAseguradora)
+        {
+            var response = await _historiaClinicaService.GetHistoriaClinica_Mad_Aseguradora_Categoria(vAseguradora);
+            return ReturnFormattedResponse(response);
+        }
+
+        //By William Vilca
+        [HttpGet, Route("GetHistoriaClinica_Genero")]
+        public async Task<IActionResult> GetHistoriaClinica_Genero()
+        {
+            var response = await _historiaClinicaService.GetHistoriaClinica_Mad_Genero();
+            return ReturnFormattedResponse(response);
+        }
+
+        //By William Vilca
+        [HttpGet, Route("GetHistoriaClinica_TipoDocumento")]
+        public async Task<IActionResult> GetHistoriaClinica_TipoDocumento()
+        {
+            var response = await _historiaClinicaService.GetHistoriaClinica_Mad_TipoDocumento();
+            return ReturnFormattedResponse(response);
+        }
+
+        //By William Vilca
+        [HttpGet, Route("GetHistoriaClinica_Vip")]
+        public async Task<IActionResult> GetHistoriaClinica_Vip()
+        {
+            var response = await _historiaClinicaService.GetHistoriaClinica_Mad_Vip();
+            return ReturnFormattedResponse(response);
+        }
+
+        //By William Vilca
+        [HttpGet, Route("GetHistoriaClinica_Seguro")]
+        public async Task<IActionResult> GetHistoriaClinica_Seguro()
+        {
+            var response = await _historiaClinicaService.GetHistoriaClinica_Mad_Seguro();
+            return ReturnFormattedResponse(response);
+        }
+
+        //By William Vilca
+        [HttpGet, Route("GetHistoriaClinica_Clasificacion")]
+        public async Task<IActionResult> GetHistoriaClinica_Clasificacion()
+        {
+            var response = await _historiaClinicaService.GetHistoriaClinica_Mad_Clasificacion();
+            return ReturnFormattedResponse(response);
+        }
+
+        //By William Vilca
+        [HttpGet, Route("GetHistoriaClinica_Ubigeo_Codigo")]
+        public async Task<IActionResult> GetHistoriaClinica_Ubigeo_Codigo(string vDepartamento, string vProvincia, string vDistrito)
+        {
+            var response = await _historiaClinicaService.GetHistoriaClinica_Mad_Ubigeo_Codigo(vDepartamento, vProvincia, vDistrito);
+            return ReturnFormattedResponse(response);
+        }
+
+        //By William Vilca
+        [HttpGet, Route("GetHistoriaClinica_Ubigeo")]
+        public async Task<IActionResult> GetHistoriaClinica_Ubigeo(string vDistrito)
+        {
+            var response = await _historiaClinicaService.GetHistoriaClinica_Mad_Ubigeo(vDistrito);
+            return ReturnFormattedResponse(response);
+        }
+
+        //By William Vilca
+        [HttpGet, Route("GetHistoriaClinica_Dni")]
+        public async Task<IActionResult> GetHistoriaClinica_Dni()
+        {
+            var response = await _historiaClinicaService.GetHistoriaClinica_Mad_Dni();
+            return ReturnFormattedResponse(response);
+        }
+
+        //By William Vilca
+        [HttpGet, Route("GetHistoriaClinica_Paciente_x_Dni")]
+        public async Task<IActionResult> GetHistoriaClinica_Paciente_x_Dni(string vDni, string vNumero)
+        {
+            var response = await _historiaClinicaService.GetHistoriaClinica_Paciente_x_Dni(vDni, vNumero);
+            return ReturnFormattedResponse(response);
+        }
+
+        //By William Vilca
+        [HttpGet, Route("GetHistoriaClinica")]
+        public async Task<IActionResult> GetHistoriaClinicas()
+        {
+            var response = await _historiaClinicaService.GetHistoriaClinicas();
+
+            return ReturnFormattedResponse(response);
+        }
+
+        //By William Vilca
+        [HttpGet, Route("GetHistoriasClinicas")]
+        public async Task<IActionResult> GetHistoriasClinicas(string vFechaIni, string vFechaFin, string vCondicion)
+        {
+            var response = await _historiaClinicaService.GetHistoriasClinicas(vFechaFin, vFechaFin, vCondicion);
+
+            return ReturnFormattedResponse(response);
+        }
+
+        //By Henrry Torres
+        [HttpGet, Route("GetHistoriaClinicaMadByCodigo")]
+        public async Task<IActionResult> GetHistoriaClinicaMadByCodigo(int historiaClinicaId)
+        {
+            var response = await _historiaClinicaService.GetHistoriaClinicaMadByCodigo(historiaClinicaId);
+
+            return ReturnFormattedResponse(response);
+        }
+
+        //By William Vilca
+        [HttpPost, Route("AddHistoriaClinicaSiteds")]
+        public async Task<IActionResult> AddHistoriaClinicaSiteds(CreateSitedsViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelStateExtensions.GetErrorMessage(ModelState));
+
+            SitedsMtoDto dto = new SitedsMtoDto
+            {
+                //csit_id = model.csit_id,
+                id_historia = model.id_historia,
+                documentoautorizacion = model.documentoautorizacion,
+                codigoafiliado = model.codigoafiliado,
+                numeropoliza = model.numeropoliza,
+                numerocontrato = model.numerocontrato,
+                numerocertificado = model.numerocertificado,
+                codproducto = model.codproducto,
+                desproducto = model.desproducto,
+                apellidopaternoafiliado = model.apellidopaternoafiliado,
+                apellidomaternoafiliado = model.apellidomaternoafiliado,
+                nombresafiliado = model.nombresafiliado,
+                codgenero = model.codgenero,
+                desgenero = model.desgenero,
+                codfechanacimiento = model.codfechanacimiento,
+                fechanacimiento = model.fechanacimiento,
+                codparentesco = model.codparentesco,
+                desparentesco = model.codparentesco,
+                codtipodocumentoafiliado = model.codtipodocumentoafiliado,
+                destipodocumentoafiliado = model.destipodocumentoafiliado,
+                numerodocumentoafiliado = model.numerodocumentoafiliado,
+                edad = model.edad,
+                codfechainiciovigencia = model.codfechafinvigencia,
+                fechainiciovigencia = model.fechainiciovigencia,
+                codfechafinvigencia = model.codfechafinvigencia,
+                fechafinvigencia = model.fechafinvigencia,
+                codestadocivil = model.codestadocivil,
+                desestadocivil = model.desestadocivil,
+                codtipoplan = model.codtipoplan,
+                destipoplan = model.destipoplan,
+                numeroplan = model.numeroplan,
+                codestado = model.codestado,
+                desestado = model.desestado,
+                codfechaactualizacionfoto = model.codfechaactualizacionfoto,
+                fechaactualizacionfoto = model.fechaactualizacionfoto,
+                apellidopaternotitular = model.apellidopaternotitular,
+                apellidomaternotitular = model.apellidomaternotitular,
+                nombrestitular = model.nombrestitular,
+                codigotitular = model.codigotitular,
+                codtipodocumentotitular = model.codtipodocumentotitular,
+                destipodocumentotitular = model.destipodocumentotitular,
+                numerodocumentotitular = model.numerodocumentotitular,
+                codmoneda = model.codmoneda,
+                desmoneda = model.desmoneda,
+                nombrecontratante = model.nombrecontratante,
+                codtipodocumentocontratante = model.codtipodocumentocontratante,
+                destipodocumentocontratante = model.destipodocumentocontratante,
+                codtipoafiliacion = model.codtipoafiliacion,
+                destipoafiliacion = model.destipoafiliacion,
+                codfechaafiliacion = model.codfechaafiliacion,
+                fechaafiliacion = model.fechaafiliacion,
+                numerodocumentocontratante = model.numerodocumentocontratante,
+                codigotipocobertura = model.codigosubtipocobertura,
+                codigosubtipocobertura = model.codigosubtipocobertura,
+                codigocobertura = model.codigocobertura,
+                beneficios = model.beneficios,
+                codindicadorrestriccion = model.codindicadorrestriccion,
+                restricciones = model.restricciones,
+                codcopagofijo = model.codcopagofijo,
+                descopagofijo = model.descopagofijo,
+                codcopagovariable = model.codcopagovariable,
+                descopagovariable = model.descopagovariable,
+                codfechafincarencia = model.codfechafincarencia,
+                fechafincarencia = model.fechafincarencia,
+                condicionesespeciales = model.condicionesespeciales,
+                observaciones = model.observaciones,
+                codcalificacionservicio = model.codcalificacionservicio,
+                descalificacionservicio = model.descalificacionservicio,
+                beneficiomaximoinicial = model.beneficiomaximoinicial,
+                numerocobertura = model.numerocobertura,
+                fecha_creacion_doc_aut = model.fecha_creacion_doc_aut,
+                hora_creacion_doc_aut = model.hora_creacion_doc_aut,
+                descripcion_producto = model.descripcion_producto,
+                usuario_creacion = model.usuario_creacion,
+                fecha_creacion = model.fecha_creacion,
+                usuario_modificacion = model.usuario_modificacion,
+                fecha_modificacion = model.fecha_modificacion
+            };
+
+            var response = await _historiaClinicaService.AddHistoriaClinicaSiteds(dto);
+
+            return ReturnFormattedResponse(response);
+        }
+
+        //By William Vilca
+        [HttpPost, Route("AddHistoriaClinicaMedioComunicacionMad")]
+        public async Task<IActionResult> AddHistoriaClinicaMedioComunicacionMad(CreateHistoriaClinicaMedioComunicacionMadViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelStateExtensions.GetErrorMessage(ModelState));
+
+            HistoriaClinicaMedioComunicacionMtoMadDto dto = new HistoriaClinicaMedioComunicacionMtoMadDto
+            {
+                id_comunicacion = model.id_comunicacion,
+                numero = model.numero,
+                usuario_creacion = model.usuario_creacion,
+                fecha_creacion = model.fecha_creacion,
+            };
+
+            var response = await _historiaClinicaService.AddHistoriaClinicaMedioComunicacionMad(dto);
+
+            return ReturnFormattedResponse(response);
+        }
+
+        //By William Vilca
+        [HttpPost, Route("RegistrarHistoriaClinica")]
+        public async Task<IActionResult> RegistrarHistoriaClinica(RegistrarHistoriaClinicaModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelStateExtensions.GetErrorMessage(ModelState));
+
+            RegistrarHistoriaClinicaDto dto = new RegistrarHistoriaClinicaDto
+            {
+                e = model.e,
+                prog = model.prog,
+                codate = model.codate,
+                clasif = model.clasif,
+                e_tablet = model.e_tablet,
+                codautorizacion = model.codautorizacion,
+                feclla = model.feclla,
+                hrlla = model.hrlla,
+                tiempo = model.tiempo,
+                fecate = model.fecate,
+                hrxdefecto = model.hrxdefecto,
+                hrestimada = model.hrestimada,
+                hrllegada = model.hrllegada,
+                provincia = model.provincia,
+                distrito = model.distrito,
+                paciente = model.paciente,
+                fpago = model.fpago,
+                vip = model.vip,
+                grupo = model.grupo,
+                periodo = model.periodo,
+                cont = model.cont,
+                perfil = model.perfil,
+                espec = model.espec,
+                doctor = model.doctor,
+                grupos = model.grupos,
+                empresa = model.empresa,
+                usuario = model.usuario,
+                cod_doc = model.cod_doc,
+            };
+
+            var response = await _historiaClinicaService.RegistrarHistoriaClinica(dto);
+
+            return ReturnFormattedResponse(response);
+        }
+
+        //By William Vilca
+        [HttpPost, Route("AddHistoriaClinicaMad")]
+        public async Task<IActionResult> AddHistoriaClinicaMad(CreateHistoriaClinicaMadViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelStateExtensions.GetErrorMessage(ModelState));
+
+            HistoriaClinicaMtoMadDto dto = new HistoriaClinicaMtoMadDto
+            {
+                cmed_id = model.cmed_id,
+
+                cpac_id = model.cpac_id,
+
+                cesp_id = model.cesp_id,
+
+                cest_id = model.cest_id,
+
+                cper_id = model.cper_id,
+
+                cser_id = model.cser_id,
+
+                cpai_id = model.cpai_id,
+
+                cubi_id = model.cubi_id,
+
+                cmep_id = model.cmep_id,
+
+                ctdo_id = model.ctdo_id,
+
+                cclt_id = model.cclt_id,
+
+                cdsn_id = model.cdsn_id,
+
+                estado = model.estado,
+
+                prog = model.prog,
+
+                codautorizacion = model.codautorizacion,
+
+                feclla = model.feclla,
+
+                horlla = model.horlla,
+
+                tiempo = model.tiempo,
+
+                fecate = model.fecate,
+
+                horate = model.horate,
+
+                hrlledr = model.hrlledr,
+
+                horoplla = model.horoplla,
+
+                fpago = model.fpago,
+
+                vip = model.vip,
+
+                grupo = model.grupo,
+
+                cont = model.cont,
+
+                perfil = model.perfil,
+
+                empresa = model.empresa,
+
+
+                usuariocreacion = model.usuariocreacion,
+
+                //fechacreacion = model.fechacreacion,
+
+            };
+
+            var response = await _historiaClinicaService.AddHistoriaClinicaMad(dto);
+
+            return ReturnFormattedResponse(response);
+        }
+        //////////////////          FIN SERVICIO MAD          //////////////////
+
+        //////////////////          SERVICIO SCTR          //////////////////
+
         //By Henrry Torres
         [HttpGet, Route("GetHistoriaClinicaSctrByCodigo")]
         public async Task<IActionResult> GetHistoriaClinicaSctrByCodigo(string cod_historia_clinica)
@@ -160,9 +593,11 @@ namespace MDS.Api.Controllers
 
             return ReturnFormattedResponse(response);
         }
-        //FIN SERVICIO SCTR
 
-        //SERVICIO AMBULANCIA
+        //////////////////          FIN SERVICIO SCTR          //////////////////
+
+        //////////////////          SERVICIO AMBULANCIA          //////////////////
+
         //By Henrry Torres
         [HttpGet, Route("GetHistoriasClinicasAmbulanciaBandeja")]
         public async Task<IActionResult> GetHistoriasClinicasAmbulanciaBandeja([FromQuery] AmbulanciaResource ambulanciaResource)
@@ -265,7 +700,7 @@ namespace MDS.Api.Controllers
                 id_persona = model.id_persona,
                 NHIS_EDAD_ATE = model.NHIS_EDAD_ATE,
                 SHIS_CEL_PAC = model.SHIS_CEL_PAC,
-                SHIS_CM_REF_DIR= model.SHIS_CM_REF_DIR,
+                SHIS_CM_REF_DIR = model.SHIS_CM_REF_DIR,
                 NHIS_COD_TARIFA = model.NHIS_COD_TARIFA,
                 SHIS_F_PROG = model.SHIS_F_PROG,
                 SHIS_COD_AMB_TIPO_SERV = model.SHIS_COD_AMB_TIPO_SERV,
@@ -454,118 +889,8 @@ namespace MDS.Api.Controllers
 
             return ReturnFormattedResponse(response);
         }
-        //FIN SERVICIO AMBULANCIA
 
-        //SERVICIO MAD
-        //By Henrry Torres
-        [HttpGet, Route("GetHistoriaClinicaMadByCodigo")]
-        public async Task<IActionResult> GetHistoriaClinicaMadByCodigo(int historiaClinicaId)
-        {
-            var response = await _historiaClinicaService.GetHistoriaClinicaMadByCodigo(historiaClinicaId);
+        //////////////////          FIN SERVICIO AMBULANCIA          //////////////////
 
-            return ReturnFormattedResponse(response);
-        }
-
-        //By William Vilca
-        [HttpGet, Route("GetHistoriaClinica_Aseguradora")]
-        public async Task<IActionResult> GetHistoriaClinica_Aseguradora(string vAseguradora)
-        {
-            var response = await _historiaClinicaService.GetHistoriaClinica_Mad_Aseguradora(vAseguradora);
-            return ReturnFormattedResponse(response);
-        }
-
-        //By William Vilca
-        [HttpPost, Route("AddHistoriaClinicaSiteds")]
-        public async Task<IActionResult> AddHistoriaClinicaSiteds(CreateSitedsViewModel model)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelStateExtensions.GetErrorMessage(ModelState));
-
-            SitedsMtoDto dto = new SitedsMtoDto
-            {
-                //csit_id = model.csit_id,
-                id_historia = model.id_historia,
-                documentoautorizacion = model.documentoautorizacion,
-                codigoafiliado = model.codigoafiliado,
-                numeropoliza = model.numeropoliza,
-                numerocontrato = model.numerocontrato,
-                numerocertificado = model.numerocertificado,
-                codproducto = model.codproducto,
-                desproducto = model.desproducto,
-                apellidopaternoafiliado = model.apellidopaternoafiliado,
-                apellidomaternoafiliado = model.apellidomaternoafiliado,
-                nombresafiliado = model.nombresafiliado,
-                codgenero = model.codgenero,
-                desgenero = model.desgenero,
-                codfechanacimiento = model.codfechanacimiento,
-                fechanacimiento = model.fechanacimiento,
-                codparentesco = model.codparentesco,
-                desparentesco = model.codparentesco,
-                codtipodocumentoafiliado = model.codtipodocumentoafiliado,
-                destipodocumentoafiliado = model.destipodocumentoafiliado,
-                numerodocumentoafiliado = model.numerodocumentoafiliado,
-                edad = model.edad,
-                codfechainiciovigencia = model.codfechafinvigencia,
-                fechainiciovigencia = model.fechainiciovigencia,
-                codfechafinvigencia = model.codfechafinvigencia,
-                fechafinvigencia = model.fechafinvigencia,
-                codestadocivil = model.codestadocivil,
-                desestadocivil = model.desestadocivil,
-                codtipoplan = model.codtipoplan,
-                destipoplan = model.destipoplan,
-                numeroplan = model.numeroplan,
-                codestado = model.codestado,
-                desestado = model.desestado,
-                codfechaactualizacionfoto = model.codfechaactualizacionfoto,
-                fechaactualizacionfoto = model.fechaactualizacionfoto,
-                apellidopaternotitular = model.apellidopaternotitular,
-                apellidomaternotitular = model.apellidomaternotitular,
-                nombrestitular = model.nombrestitular,
-                codigotitular = model.codigotitular,
-                codtipodocumentotitular = model.codtipodocumentotitular,
-                destipodocumentotitular = model.destipodocumentotitular,
-                numerodocumentotitular = model.numerodocumentotitular,
-                codmoneda = model.codmoneda,
-                desmoneda = model.desmoneda,
-                nombrecontratante = model.nombrecontratante,
-                codtipodocumentocontratante = model.codtipodocumentocontratante,
-                destipodocumentocontratante = model.destipodocumentocontratante,
-                codtipoafiliacion = model.codtipoafiliacion,
-                destipoafiliacion = model.destipoafiliacion,
-                codfechaafiliacion = model.codfechaafiliacion,
-                fechaafiliacion = model.fechaafiliacion,
-                numerodocumentocontratante = model.numerodocumentocontratante,
-                codigotipocobertura = model.codigosubtipocobertura,
-                codigosubtipocobertura = model.codigosubtipocobertura,
-                codigocobertura = model.codigocobertura,
-                beneficios = model.beneficios,
-                codindicadorrestriccion = model.codindicadorrestriccion,
-                restricciones = model.restricciones,
-                codcopagofijo = model.codcopagofijo,
-                descopagofijo = model.descopagofijo,
-                codcopagovariable = model.codcopagovariable,
-                descopagovariable = model.descopagovariable,
-                codfechafincarencia = model.codfechafincarencia,
-                fechafincarencia = model.fechafincarencia,
-                condicionesespeciales = model.condicionesespeciales,
-                observaciones = model.observaciones,
-                codcalificacionservicio = model.codcalificacionservicio,
-                descalificacionservicio = model.descalificacionservicio,
-                beneficiomaximoinicial = model.beneficiomaximoinicial,
-                numerocobertura = model.numerocobertura,
-                fecha_creacion_doc_aut = model.fecha_creacion_doc_aut,
-                hora_creacion_doc_aut = model.hora_creacion_doc_aut,
-                descripcion_producto = model.descripcion_producto,
-                usuario_creacion = model.usuario_creacion,
-                fecha_creacion = model.fecha_creacion,
-                usuario_modificacion = model.usuario_modificacion,
-                fecha_modificacion = model.fecha_modificacion
-            };
-
-            var response = await _historiaClinicaService.AddHistoriaClinicaSiteds(dto);
-
-            return ReturnFormattedResponse(response);
-        }
-        //FIN SERVICIO MAD
     }
 }

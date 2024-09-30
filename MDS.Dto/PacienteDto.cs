@@ -1,5 +1,12 @@
 ﻿namespace MDS.Dto
 {
+
+    public class PacienteDniDto
+    {
+        public long id_paciente { get; set; }
+        public string dni { get; set; }
+        public string paciente { get; set; }
+    }
     public class PacienteDto
     {
         public long id_paciente { get; set; }

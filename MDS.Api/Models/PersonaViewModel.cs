@@ -2,10 +2,45 @@
 
 namespace MDS.Api.Models
 {
+    public class CreatePersonaMadViewModel
+    {
+        public long id_documento { get; set; }
+        public long id_pais { get; set; }
+        public string numero_documento { get; set; }
+        public string nombres { get; set; }
+        public string apellido_paterno { get; set; }
+        public string apellido_materno { get; set; }
+        //public DateTime fecha_nacimiento { get; set; }
+        public int genero { get; set; }
+        //public string descripcion { get; set; }
+        public string telefono_celular { get; set; }
+        public bool estado { get; set; }
+        public int usuario_creacion { get; set; }
+        //public DateTime fecha_creacion { get; set; }
+    }
+
+    public class ActualizarPersonaMadViewModel
+    {
+        public long id_persona { get; set; }
+        public long id_documento { get; set; }
+        public long id_pais { get; set; }
+        public string numero_documento { get; set; }
+        public string nombres { get; set; }
+        public string apellido_paterno { get; set; }
+        public string apellido_materno { get; set; }
+        public DateTime fecha_nacimiento { get; set; }
+        public string email { get; set; }
+        public int genero { get; set; }
+        public string telefono_celular { get; set; }
+        public bool estado { get; set; }
+        public int usuario_modificacion { get; set; }
+        public DateTime fecha_modificacion { get; set; }
+    }
+    
     public class CreatePersonaViewModel
     {
         //[Required]
-        public int? CPER_ID { get; set; }
+        //public int? CPER_ID { get; set; }
         //[Required]
         public int? CPAI_IDPAIS { get; set; }
         //[Required]

@@ -32,7 +32,7 @@ namespace MDS.Services.ServicioNegocio.Implementation
 
                 List<ServicioNegocioDto> listServicio = new List<ServicioNegocioDto>();
 
-                listServicio = servicio.Select(s => new ServicioNegocioDto { id_servicio = s.CSER_IDSERVICIO, nombre = s.SSER_NOMBRE, grupo = s.SSER_GRUPO, estado = s.FSER_ESTADO }).ToList();
+                listServicio = servicio.Select(s => new ServicioNegocioDto { id_servicio = s.CSER_ID, nombre = s.SSER_NOMBRE, grupo = s.SSER_GRUPO, estado = s.FSER_ESTADO }).ToList();
 
                 if (!servicio.Any())
                     return ServiceResponse.ReturnResultWith204();
@@ -63,7 +63,7 @@ namespace MDS.Services.ServicioNegocio.Implementation
 
                 List<ServicioNegocioDto> listServicio = new List<ServicioNegocioDto>();
 
-                listServicio = servicio.Select(s => new ServicioNegocioDto { id_servicio = s.CSER_IDSERVICIO, nombre = s.SSER_NOMBRE, grupo = s.SSER_GRUPO, estado = s.FSER_ESTADO }).ToList();
+                listServicio = servicio.Select(s => new ServicioNegocioDto { id_servicio = s.CSER_ID, nombre = s.SSER_NOMBRE, grupo = s.SSER_GRUPO, estado = s.FSER_ESTADO }).ToList();
 
                 if (!listServicio.Any())
                     return ServiceResponse.ReturnResultWith204();

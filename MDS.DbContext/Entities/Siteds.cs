@@ -2,6 +2,49 @@
 
 namespace MDS.DbContext.Entities
 {
+    public class SitedsCodigo
+    {
+        public string ID_CLIENTE { get; set; }
+
+        public string NUMERO { get; set; }
+
+        public string NOMBRE { get; set; }
+    }
+    public class SitedsLista
+    {
+        public long NUMERO { get; set; }
+        public string PATERNO { get; set; }
+
+        public string MATERNO { get; set; }
+
+        public string NOMBRES { get; set; }
+
+        public int EDAD { get; set; }
+
+        public string FECHANACIMIENTO { get; set; }
+
+        public string TIPODOCUMENTO { get; set; }
+
+        public string NUMERODOCUMENTO { get; set; }
+
+        public string GENERO { get; set; }
+
+        public string PRODUCTO { get; set; }
+
+        public string NUMEROAUTORIZACION { get; set; }
+
+        public string NUMEROCONTRATO { get; set; }
+
+        public string CODIGOAFILIADO { get; set; }
+
+        public string NUMEROPOLIZA { get; set; }
+
+        public string MONEDA { get; set; }
+
+        public decimal COPAGOFIJO  { get; set; }
+
+        public decimal COPAGOVARIABLE { get; set; }
+    }
     public class Siteds
     {
         public long CSIT_ID { get; set; }

@@ -7,7 +7,7 @@ namespace MDS.Services.Direccion
     public interface IDireccionService : IService
     {
         //By William Vilca
-        Task<ServiceResponse> GetListaDirecciones();
+        Task<ServiceResponse> GetListaDirecciones(long vIdPersona);
 
         //By Henrry Torres
         Task<ServiceResponse> GetDirecciones(long CPER_ID);

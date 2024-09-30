@@ -48,4 +48,41 @@
         public string FCLI_AFILIADO { get; set; }
         public string FCLI_PLAN_HUERFANO_ILIMITADO { get; set; }
     }
+
+    public class HistoriaClinicaFiltro_x_Dni
+    {
+
+        public long CODIGO { get; set; }
+
+        public string NOMBRES { get; set; }
+
+        public string PATERNO { get; set; }
+
+        public string MATERNO { get; set; }
+
+        public string DNI { get; set; }
+
+        public string EMAIL { get; set; }
+
+        public string PACIENTE { get; set; }
+
+        //public long CPER_ID { get; set; } //CPER_ID
+
+        //public string SPER_NOMBRES { get; set; } //SPER_NOMBRES
+
+        //public string SPER_APELLIDO_PATERNO { get; set; }
+
+        //public string SPER_APELLIDO_MATERNO { get; set; }
+
+        //public string SPER_NUMERO_DOCUMENTO { get; set; } //SPER_NUMERO_DOCUMENTO
+
+        //public string SPER_EMAIL { get; set; }
+
+
+
+
+    }
+
+
+
 }

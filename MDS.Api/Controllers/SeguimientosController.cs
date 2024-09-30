@@ -39,7 +39,7 @@ namespace MDS.Api.Controllers
             {
                 cod_historia_clinica = model.cod_historia_clinica,
                 observacion = model.observacion,
-                cod_servicio = 5,
+                cod_servicio = model.id_servicio,
                 usuario = model.usuario
             };
 

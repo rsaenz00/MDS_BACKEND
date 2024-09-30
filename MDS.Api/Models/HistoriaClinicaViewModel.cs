@@ -2,6 +2,112 @@
 
 namespace MDS.Api.Models
 {
+
+    public class RegistrarHistoriaClinicaModel
+    {
+        public string e { get; set; }
+        public string prog { get; set; }
+        public long codate { get; set; }
+        public string clasif { get; set; }
+        public string e_tablet { get; set; }
+        public long codautorizacion { get; set; }
+        public string feclla { get; set; }
+        public string hrlla { get; set; }
+        public string tiempo { get; set; }
+        public string fecate { get; set; }
+        public string hrxdefecto { get; set; }
+        public string hrestimada { get; set; }
+        public string hrllegada { get; set; }
+        public string provincia { get; set; }
+        public string distrito { get; set; }
+        public string paciente { get; set; }
+        public string fpago { get; set; }
+        public string vip { get; set; }
+        public string grupo { get; set; }
+        public string periodo { get; set; }
+        public string cont { get; set; }
+        public string perfil { get; set; }
+        public string espec { get; set; }
+        public string doctor { get; set; }
+        public string grupos { get; set; }
+        public string empresa { get; set; }
+        public string usuario { get; set; }
+        public string cod_doc { get; set; }
+    }
+
+
+    public class CreateHistoriaClinicaMedioComunicacionMadViewModel
+    {
+        public long id_comunicacion { get; set; }
+        public long numero { get; set; }
+        public int usuario_creacion { get; set; }
+        public string fecha_creacion { get; set; }
+    }
+
+    public class CreateHistoriaClinicaMadViewModel
+    {
+            public long cmed_id { get; set; }
+
+            public int cpac_id { get; set; }
+
+            public int cesp_id { get; set; }
+
+            public int cest_id { get; set; }
+
+            public int cper_id { get; set; }
+
+            public int cser_id { get; set; }
+
+            public int cpai_id { get; set; }
+
+            public string cubi_id { get; set; }
+
+            public int cmep_id { get; set; }
+
+            public int ctdo_id { get; set; }
+
+            public int cclt_id { get; set; }
+
+            public int cdsn_id { get; set; }
+
+            public string estado { get; set; }
+
+            public string prog { get; set; }
+
+            public string codautorizacion { get; set; }
+
+            public DateTime feclla { get; set; }
+
+            public DateTime horlla { get; set; }
+
+            public int tiempo { get; set; }
+
+            public DateTime fecate { get; set; }
+
+            public DateTime horate { get; set; }
+
+            public DateTime hrlledr { get; set; }
+
+            public DateTime horoplla { get; set; }
+
+            public string fpago { get; set; }
+
+            public string vip { get; set; }
+
+            public string grupo { get; set; }
+
+            public int cont { get; set; }
+
+            public string perfil { get; set; }
+
+            public string empresa { get; set; }
+
+            public int usuariocreacion { get; set; }
+
+            //public DateTime fechacreacion { get; set; }
+
+
+    }
     public class CreateHistoriaClinicaViewModel
     {
         //[Required]

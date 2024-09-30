@@ -23,6 +23,9 @@ namespace MDS.Services.Paciente
         Task<ServiceResponse> GetPaciente(string pacienteId);
 
         //By William Vilca
+        Task<ServiceResponse> GetPaciente_By_Dni(string vBusqueda,string vValor);
+
+        //By William Vilca
         Task<ServiceResponse> AddPaciente(MantenimientoPacienteDto dto);
     }
 }

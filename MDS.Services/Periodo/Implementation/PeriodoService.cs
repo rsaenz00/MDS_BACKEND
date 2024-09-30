@@ -27,7 +27,7 @@ namespace MDS.Services.Periodo.Implementation
 
                 List<PeriodoDto> listPeriodo = new List<PeriodoDto>();
 
-                listPeriodo = periodos.Select(p => new PeriodoDto { id_periodo = p.CPER_IDPERIODO, Nombre = p.SPER_NOMBRE, Estado = p.FPER_ESTADO }).ToList();
+                listPeriodo = periodos.Select(p => new PeriodoDto { id_periodo = p.CPDO_ID, Nombre = p.SPDO_NOMBRE, Estado = p.FPDO_ESTADO }).ToList();
 
 
                 return ServiceResponse.ReturnResultWith200(listPeriodo);
@@ -55,7 +55,7 @@ namespace MDS.Services.Periodo.Implementation
 
                 List<PeriodoDto> listPeriodo = new List<PeriodoDto>();
 
-                listPeriodo = periodos.Select(p => new PeriodoDto { id_periodo = p.CPER_IDPERIODO, Nombre = p.SPER_NOMBRE, Estado = p.FPER_ESTADO }).ToList();
+                listPeriodo = periodos.Select(p => new PeriodoDto { id_periodo = p.CPDO_ID, Nombre = p.SPDO_NOMBRE, Estado = p.FPDO_ESTADO }).ToList();
 
 
                 return ServiceResponse.ReturnResultWith200(listPeriodo);

@@ -22,9 +22,9 @@ namespace MDS.Api.Controllers.Test
 
         //By William Vilca
         [HttpGet, Route("GetListaDirecciones")]
-        public async Task<IActionResult> GetListaDirecciones()
+        public async Task<IActionResult> GetListaDirecciones(int vIdPersona)
         {
-            var response = await _direccionService.GetListaDirecciones();
+            var response = await _direccionService.GetListaDirecciones(vIdPersona);
 
             return ReturnFormattedResponse(response);
         }

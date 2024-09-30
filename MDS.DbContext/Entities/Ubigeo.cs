@@ -1,5 +1,23 @@
 ﻿namespace MDS.DbContext.Entities
 {
+    public class UbigeoDatos
+    {
+        public string SUBI_DEPARTAMENTO { get; set; }
+        public string SUBI_PROVINCIA { get; set; }
+        public string SUBI_DISTRITO { get; set; }
+    }
+    public class UbigeoCodigo
+    {
+        public  string CUBI_ID { get; set; }
+    }
+    public class Ubigeo
+    {
+        public string CUBI_ID { get; set; }
+        public string SUBI_DEPARTAMENTO { get; set; }
+        public string SUBI_PROVINCIA { get; set; }
+        public string SUBI_DISTRITO { get; set; }
+
+    }
     public class Ubigeos
     {
         public string CUBI_UBIGEO { get; set; }

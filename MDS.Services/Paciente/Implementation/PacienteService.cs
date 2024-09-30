@@ -43,6 +43,44 @@ namespace MDS.Services.Paciente.Implementation
         }
 
         //By Henrry Torres
+        public async Task<ServiceResponse> GetPaciente_By_Dni(string vBusqueda, string vValor)
+        {
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@isCriterioBusqueda", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vBusqueda },
+                    new SqlParameter("@isValor", SqlDbType.VarChar) {Direction = ParameterDirection.Input, Value = vValor },
+                    new SqlParameter("@onRespuesta", SqlDbType.Int) {Direction = ParameterDirection.Output},
+                };
+
+                List<DbContext.Entities.PacienteDni> pacientes = new List<DbContext.Entities.PacienteDni>();
+
+                pacientes = await _uow.ExecuteStoredProcByParam<DbContext.Entities.PacienteDni>("SPRMDS_LIST_PACIENTE_BY_DNI", parameters);
+
+                List<PacienteDniDto> listPacientes = new List<PacienteDniDto>();
+
+                listPacientes = pacientes.Select(p => new PacienteDniDto 
+                { 
+                    dni = p.DNI,
+                    paciente = p.PACIENTE,
+                }).ToList();
+
+                PacienteDniDto dto = new PacienteDniDto();
+
+                int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_LIST_PACIENTE_BY_DNI", parameters);
+
+                dto.id_paciente = Convert.ToInt64(response);
+
+                return ServiceResponse.ReturnResultWith200(listPacientes);
+            }
+            catch (Exception e)
+            {
+                return ServiceResponse.Return500(e);
+            }
+        }
+
+        //By Henrry Torres
         public async Task<ServiceResponse> GetPacientesFiltro(string busqueda, string condicion)
         {
             try

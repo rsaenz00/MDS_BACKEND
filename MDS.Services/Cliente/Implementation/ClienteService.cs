@@ -127,7 +127,7 @@ namespace MDS.Services.Cliente.Implementation
 
                 int response = await _uow.ExecuteStoredProcReturnValue("SPRMDS_CREATE_CLIENTE", parameters);
 
-                dto.id_cliente = response.ToString();
+                dto.id_cliente = Convert.ToInt64(response).ToString();
 
                 return ServiceResponse.ReturnResultWith201(dto);
 
@@ -231,11 +231,11 @@ namespace MDS.Services.Cliente.Implementation
 
                 clientes = await _uow.ExecuteStoredProcAll<DbContext.Entities.ClientesSiteds>("SPRMDS_LIST_CLIENTE_SITEDS");
 
-                List<ClientesSitedsDto> listCliente = new List<ClientesSitedsDto>();
+                List<ClienteSitedsDto> listCliente = new List<ClienteSitedsDto>();
 
-                listCliente = clientes.Select(c => new ClientesSitedsDto
+                listCliente = clientes.Select(c => new ClienteSitedsDto
                 {
-                    id = c.id,
+                    id_cliente = c.id,
                     codigo_financiamiento = c.codigo_financiamiento,
                     nombre = c.nombre
                 }).ToList();

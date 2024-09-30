@@ -3,7 +3,7 @@ namespace MDS.DbContext.Entities
 {
     public class ServicioNegocio
     {
-        public long CSER_IDSERVICIO { get; set; }
+        public long CSER_ID { get; set; }
 
         public string? SSER_NOMBRE { get; set; }
 

@@ -1,5 +1,31 @@
 ﻿namespace MDS.Dto
 {
+
+    public class ClienteSitedsAseguradoDto
+    {
+        public string id_cliente { get; set; }
+
+        public string id_financiamiento { get; set; }
+
+    }
+
+    public class ClienteSitedsDto
+    {
+        public string id_cliente { get; set; }
+
+        public string codigo_financiamiento { get; set; }
+
+        public string nombre { get; set; }
+    }
+
+    public class ClientesDto
+    {
+        public string id_cliente { get; set; }
+        public string? nombre { get; set; }
+        public string? descripcion { get; set; }
+
+    }
+
     public class ClienteDto
     {
         public string id_cliente { get; set; }        
@@ -55,13 +81,5 @@
         public DateTime? fecha_creacion { get; set; }
         public int? usuario_modificacion { get; set; }
         public DateTime? fecha_modificacion { get; set; }
-    }
-
-    public class ClientesSitedsDto
-    {
-        public string id { get; set; }
-        public string codigo_financiamiento { get; set; }
-        public string? nombre { get; set; }
-
     }
 }

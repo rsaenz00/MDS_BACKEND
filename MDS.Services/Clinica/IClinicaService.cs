@@ -12,6 +12,9 @@ namespace MDS.Services.Clinica
         //By Henrry Torres
         Task<ServiceResponse> GetClinicasFiltro(string busqueda, string condicion);
 
+        //By William Vilca
+        Task<ServiceResponse> GetHistoriaClinicaFiltro_x_Dni(string busqueda, string condicion);
+
         //By Henrry Torres
         Task<ServiceResponse> AddClinica(ClinicaMtoDto dto);
 

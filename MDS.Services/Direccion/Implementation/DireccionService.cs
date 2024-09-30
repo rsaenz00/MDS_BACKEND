@@ -17,14 +17,18 @@ namespace MDS.Services.Blog.Implementation
         }
 
         //By William Vilca
-        public async Task<ServiceResponse> GetListaDirecciones()
+        public async Task<ServiceResponse> GetListaDirecciones(long vIdPersona)
         {
             try
             {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@CODIGOPERSONA", SqlDbType.Int) {Direction = ParameterDirection.Input, Value = vIdPersona }
+                };
 
                 List<DbContext.Entities.ListaDireccion> direcciones = new List<DbContext.Entities.ListaDireccion>();
 
-                direcciones = await _uow.ExecuteStoredProcAll<DbContext.Entities.ListaDireccion>("SPRMDS_LIST_DIRECCIONES");
+                direcciones = await _uow.ExecuteStoredProcByParam<DbContext.Entities.ListaDireccion>("SPRMDS_LIST_DIRECCIONES",parameters);
 
                 List<ListaDireccionDto> listDireccion = new List<ListaDireccionDto>();
 

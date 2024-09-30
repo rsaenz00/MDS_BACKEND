@@ -16,6 +16,10 @@ namespace MDS.Services.Blog
 
         //By Henrry Torres
         Task<ServiceResponse> GetDistritos(string SUBI_COD_DPTO, string SUBI_COD_PROV);
+
+        //By William Vilca
+        Task<ServiceResponse> GetUbigeo_By_Codigo(string vCodigo);
+
     }
 }
 

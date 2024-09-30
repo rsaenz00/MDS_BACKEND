@@ -16,7 +16,14 @@ namespace MDS.Api.Controllers
         {
             _ubigeoService = ubigeoService;
         }
-
+        //By William Vilca
+        [HttpGet, Route("GetUbigeo_Codigo")]
+        public async Task<IActionResult> GetUbigeo_Codigo(string vCodigoUbigeo)
+        {
+            var response = await _ubigeoService.GetUbigeo_By_Codigo(vCodigoUbigeo);
+            return ReturnFormattedResponse(response);
+        }
+        
         //By Henrry Torres
         [HttpGet, Route("GetUbigeos")]
         public async Task<IActionResult> GetUbigeos()
