@@ -992,8 +992,8 @@ namespace MDS.Services.HistoriaClinica.Implementation
                     cod_doc = h.COD_DOC
                 }).ToList();
 
-                if (!listHistorias.Any())
-                    return ServiceResponse.Return404();
+                /*if (!listHistorias.Any())
+                    return ServiceResponse.Return404();*/
 
                 return ServiceResponse.ReturnResultWith200(listHistorias);
             }
