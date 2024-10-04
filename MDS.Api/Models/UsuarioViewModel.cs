@@ -13,4 +13,45 @@ namespace MDS.Api.Models
         [DataType(DataType.Password)]
         public string contrasena { get; set; }
     }
+
+    public class UpdateUsuarioViewModel
+    {
+        public int? id_persona { get; set; }
+        public int? id_usuario { get; set; }
+        public DateTime? fecha_nacimiento { get; set; }
+        public int? sexo { get; set; }
+        public string contrasena { get; set; }
+        public string? email { get; set; }
+        public string? telefonoMovil { get; set; }
+        public string usuario_modificacion { get; set; }
+    }
+
+    public class CreateUsuarioViewModel
+    {
+        public int? id_persona { get; set; }
+        public int? tipo_documento { get; set; }
+        public string? numero_documento { get; set; }
+        public DateTime? fecha_nacimiento { get; set; }
+        public string? nombres { get; set; }
+        public string? apellidoPaterno { get; set; }
+        public string? apellidoMaterno { get; set; }
+        public int? sexo { get; set; }
+        public string usuario { get; set; }
+        public string contrasena { get; set; }
+        public string? email { get; set; }
+        public string? telefonoMovil { get; set; }
+        public string usuario_creacion { get; set; }
+    }
+
+    public class ActivarUsuarioViewModel
+    {
+        public int id_persona { get; set; }
+        public string usuario_creacion { get; set; }
+    }
+
+    public class DesactivarUsuarioViewModel
+    {
+        public int id_persona { get; set; }
+        public string usuario_creacion { get; set; }
+    }
 }
